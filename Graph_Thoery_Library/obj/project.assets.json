@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\llama\\Desktop\\programming shit\\Network_Library\\Graph_Thoery_Library\\Graph_Thoery_Library.csproj",
+      "projectUniqueName": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\Graph_Thoery_Library\\Graph_Thoery_Library.csproj",
       "projectName": "Graph_Thoery_Library",
-      "projectPath": "C:\\Users\\llama\\Desktop\\programming shit\\Network_Library\\Graph_Thoery_Library\\Graph_Thoery_Library.csproj",
+      "projectPath": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\Graph_Thoery_Library\\Graph_Thoery_Library.csproj",
       "packagesPath": "C:\\Users\\llama\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\llama\\Desktop\\programming shit\\Network_Library\\Graph_Thoery_Library\\obj\\",
+      "outputPath": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\Graph_Thoery_Library\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\llama\\AppData\\Roaming\\NuGet\\NuGet.Config",
