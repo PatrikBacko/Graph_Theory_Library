@@ -1,7 +1,5 @@
 ﻿namespace Graph_Thoery_Library
 {
-	public class Class1
-	{
+	public class Class1{ }
 
-	}
 }
