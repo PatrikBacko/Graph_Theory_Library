@@ -1,4 +1,4 @@
-﻿namespace Graph_Thoery_Library
+﻿namespace GraphThoeryLibrary
 {
 	public class Class1{ }
 
