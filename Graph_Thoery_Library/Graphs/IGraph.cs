@@ -11,21 +11,21 @@ namespace GraphThoeryLibrary.Graphs
 {
     public interface IGraph
     {
-        List<IVertex> GetVertices();
+        List<Vertex> GetVertices();
         List<IEdge> GetEdges();
-        List<IVertex> GetAdjacentVertices(IVertex vertex);
-        List<IEdge> GetIncidentEdges(IVertex vertex);
-        int GetDegree(IVertex vertex);
+        List<Vertex> GetAdjacentVertices(Vertex vertex);
+        List<IEdge> GetIncidentEdges(Vertex vertex);
+        int GetDegree(Vertex vertex);
         int GetVertexCount();
         int GetEdgeCount();
-        bool IsAdjacent(IVertex vertex1, IVertex vertex2);
-        bool IsIncident(IVertex vertex, IEdge edge);
-        bool IsIncident(IVertex vertex1, IVertex vertex2);
+        bool IsAdjacent(Vertex vertex1, Vertex vertex2);
+        bool IsIncident(Vertex vertex, IEdge edge);
+        bool IsIncident(Vertex vertex1, Vertex vertex2);
         bool IsIncident(IEdge edge1, IEdge edge2);
 
-        IGraph AddVertex(IVertex vertex);
+        IGraph AddVertex(Vertex vertex);
         IGraph AddEdge(IEdge edge);
-        IGraph RemoveVertex(IVertex vertex);
+        IGraph RemoveVertex(Vertex vertex);
         IGraph RemoveEdge(IEdge edge);
 
     }
