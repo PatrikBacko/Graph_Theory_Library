@@ -9,10 +9,10 @@ namespace GraphThoeryLibrary.Edges
 {
     public class OrientedEdge : IOrientedEdge
     {
-        public IOrientedVertex VertexIn { get; init; }
-        public IOrientedVertex VertexOut { get; init; }
+        public Vertex VertexIn { get; init; }
+        public Vertex VertexOut { get; init; }
 
-        public OrientedEdge(IOrientedVertex VertexIn, IOrientedVertex VertexOut)
+        public OrientedEdge(Vertex VertexIn, Vertex VertexOut)
 		{
 			this.VertexIn = VertexIn;
 			this.VertexOut = VertexOut;

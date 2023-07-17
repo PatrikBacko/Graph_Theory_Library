@@ -45,15 +45,15 @@ namespace GraphThoeryLibrary.Vertices
     //	}
     //}
     public class OrientedVertex : Vertex, IOrientedVertex
-	{
-        //public int DegreeIn { get; internal set; }
-        //public int DegreeOut { get; internal set; }
+    {
+        public int DegreeIn { get; internal set; }
+        public int DegreeOut { get; internal set; }
 
 
         public OrientedVertex(string Name) : base(Name)
         {
-            //DegreeIn = -1;
-            //DegreeOut = -1;
+            DegreeIn = -1;
+            DegreeOut = -1;
         }
     }
 }

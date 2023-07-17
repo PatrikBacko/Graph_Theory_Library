@@ -9,7 +9,7 @@ namespace GraphThoeryLibrary.Edges
 {
     public interface IOrientedEdge
     {
-		IOrientedVertex VertexIn { get; }
-		IOrientedVertex VertexOut { get; }
+		Vertex VertexIn { get; }
+		Vertex VertexOut { get; }
     }
 }

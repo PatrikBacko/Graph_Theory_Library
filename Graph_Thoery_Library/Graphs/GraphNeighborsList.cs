@@ -9,7 +9,6 @@ using GraphThoeryLibrary.Vertices;
 
 namespace GraphThoeryLibrary.Graphs
 {
-
 	public class GraphNeighborsList : IOrientedGraph
 	{
 		private class Degree {
@@ -22,108 +21,108 @@ namespace GraphThoeryLibrary.Graphs
 			}
 		}
 
-		private Dictionary<IOrientedVertex, Degree> Degrees { get; set; }
-		internal Dictionary<IOrientedVertex, HashSet<IOrientedVertex>> NeighboursList { get; private set; }
+		private Dictionary<Vertex, Degree> Degrees { get; set; }
+		internal Dictionary<Vertex, HashSet<Vertex>> NeighboursList { get; private set; }
 		private int EdgeCount { get; set; }
 
 		public GraphNeighborsList()
 		{
-			Degrees = new Dictionary<IOrientedVertex, Degree>();
-			NeighboursList = new Dictionary<IOrientedVertex, HashSet<IOrientedVertex>>();
+			Degrees = new Dictionary<Vertex, Degree>();
+			NeighboursList = new Dictionary<Vertex, HashSet<Vertex>>();
 			EdgeCount = 0;
 		}
 
-		private void CheckVertexInGraph(IOrientedVertex vertex) {
+		private void CheckVertexInGraph(Vertex vertex) {
 			if (!IsVertex(vertex))
 				throw new VertexException("Vertex is not in graph");
 		}
-		private void CheckVertexNotInGraph(IOrientedVertex vertex)
+		private void CheckVertexNotInGraph(Vertex vertex)
 		{
 			if (IsVertex(vertex))
 				throw new VertexException("Vertex is already in graph");
 		}
-		private void CheckEdgeInGraph(IOrientedVertex VertexIn, IOrientedVertex VertexOut) {
+		private void CheckEdgeInGraph(Vertex VertexIn, Vertex VertexOut) {
 			if (!IsEdge(VertexIn, VertexOut))
 				throw new EdgeException("Edge is not in graph");
 		}
-		private void CheckEdgeNotInGraph(IOrientedVertex VertexIn, IOrientedVertex VertexOut)
+		private void CheckEdgeNotInGraph(Vertex VertexIn, Vertex VertexOut)
 		{
 			if (IsEdge(VertexIn, VertexOut))
 				throw new EdgeException("Edge is already in graph");
 		}
 
-		public IOrientedVertex ReturnVertexWithName(string name) {
-			IOrientedVertex vertex = new OrientedVertex(name);
+		public Vertex ReturnVertexWithName(string name) {
+			Vertex vertex = new OrientedVertex(name);
 			CheckVertexInGraph(vertex);
 			return vertex;
 		}
 
-		public IEnumerable<IOrientedVertex> GetVertices() => NeighboursList.Keys;
+		public IEnumerable<Vertex> GetVertices() => NeighboursList.Keys;
 		public IEnumerable<IOrientedEdge> GetEdges() =>
 			NeighboursList.SelectMany(v => v.Value.Select(v2 => (IOrientedEdge)new OrientedEdge(v.Key, v2)));
 
-		public IEnumerable<IOrientedVertex> GetInAdjacentVertices(IOrientedVertex vertex) {
+		public IEnumerable<Vertex> GetInAdjacentVertices(Vertex vertex) {
 			CheckVertexInGraph(vertex);
 			return NeighboursList.Where(v => v.Value.Contains(vertex)).Select(v => v.Key);
 		}
-		public IEnumerable<IOrientedVertex> GetInAdjacentVertices(string vertexName)
+		public IEnumerable<Vertex> GetInAdjacentVertices(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 			return GetInAdjacentVertices(vertex);
 		}
 
-		public IEnumerable<IOrientedVertex> GetOutAdjacentVertices(IOrientedVertex vertex)
+		public IEnumerable<Vertex> GetOutAdjacentVertices(Vertex vertex)
 		{
 			CheckVertexInGraph(vertex);
 			return NeighboursList[vertex];
 		}
-		public IEnumerable<IOrientedVertex> GetOutAdjacentVertices(string vertexName)
+		public IEnumerable<Vertex> GetOutAdjacentVertices(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 			return GetOutAdjacentVertices(vertex);
 		}
 
-		public IEnumerable<IOrientedEdge> GetInEdges(IOrientedVertex vertex)
+		public IEnumerable<IOrientedEdge> GetInEdges(Vertex vertex)
 		{
 			CheckVertexInGraph(vertex);
 			return NeighboursList.Where(v => v.Value.Contains(vertex)).Select(v => (IOrientedEdge)new OrientedEdge(v.Key, vertex));
 		}
 		public IEnumerable<IOrientedEdge> GetInEdges(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 			return GetInEdges(vertex);
 		}
 
-		public IEnumerable<IOrientedEdge> GetOutEdges(IOrientedVertex vertex)
+		public IEnumerable<IOrientedEdge> GetOutEdges(Vertex vertex)
 		{
 			CheckVertexInGraph(vertex);
 			return NeighboursList[vertex].Select(v => (IOrientedEdge)new OrientedEdge(vertex, v));
 		}
 		public IEnumerable<IOrientedEdge> GetOutEdges(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 			return GetOutEdges(vertex);
 		}
 
 
 
-		public int GetInDegree(IOrientedVertex vertex) {
+		public int GetInDegree(Vertex vertex) {
 			CheckVertexInGraph(vertex);
 			return Degrees[vertex].In;
 		}
 		public int GetInDegree(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 			return GetInDegree(vertex);
 		}
 
-		public int GetOutDegree(IOrientedVertex vertex) {
+		public int GetOutDegree(Vertex vertex) {
 			CheckVertexInGraph(vertex);
 			return Degrees[vertex].Out;
 		}
 		public int GetOutDegree(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 			return GetOutDegree(vertex);
 		}
 
@@ -132,15 +131,15 @@ namespace GraphThoeryLibrary.Graphs
 
 
 
-		public bool IsVertex(IOrientedVertex vertex) => NeighboursList.ContainsKey(vertex);
+		public bool IsVertex(Vertex vertex) => NeighboursList.ContainsKey(vertex);
 		public bool IsVertex(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 			return NeighboursList.ContainsKey(vertex);
 		}
 
 		//porozmýšlať či nechať vyhadzovať vertex exception alebo pridať vyhadzovanie inej exception alebo returnovať false keď nie vertex v grafe
-		public bool IsEdge(IOrientedVertex vertexIn, IOrientedVertex vertexOut) {
+		public bool IsEdge(Vertex vertexIn, Vertex vertexOut) {
 			CheckVertexInGraph(vertexIn);
 			CheckVertexInGraph(vertexOut);
 
@@ -148,8 +147,8 @@ namespace GraphThoeryLibrary.Graphs
 		}
 		public bool IsEdge(string NameOfVertexIn, string NameOfVertexOut)
 		{
-			IOrientedVertex vertexIn = new OrientedVertex(NameOfVertexIn);
-			IOrientedVertex vertexOut = new OrientedVertex(NameOfVertexOut);
+			Vertex vertexIn = new OrientedVertex(NameOfVertexIn);
+			Vertex vertexOut = new OrientedVertex(NameOfVertexOut);
 			
 			return IsEdge(vertexIn, vertexOut);
 		}
@@ -166,24 +165,24 @@ namespace GraphThoeryLibrary.Graphs
 			return this;
 		}
 
-		public IOrientedGraph AddVertex(IOrientedVertex vertex){
+		public IOrientedGraph AddVertex(Vertex vertex){
 			CheckVertexInGraph(vertex);
 
 			Degrees[vertex] = new Degree(0, 0);
-			NeighboursList[vertex] = new HashSet<IOrientedVertex>();
+			NeighboursList[vertex] = new HashSet<Vertex>();
 
 			return this;
 		}
 		public IOrientedGraph AddVertex(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 			return AddVertex(vertex);
 		}
 
 		public IOrientedGraph AddEdge(IOrientedEdge edge){
 			return AddEdge(edge.VertexIn, edge.VertexOut);
 		}
-		public IOrientedGraph AddEdge(IOrientedVertex vertexIn, IOrientedVertex vertexOut)
+		public IOrientedGraph AddEdge(Vertex vertexIn, Vertex vertexOut)
 		{
 			CheckEdgeInGraph(vertexIn, vertexOut);
 
@@ -196,13 +195,13 @@ namespace GraphThoeryLibrary.Graphs
 		}
 		public IOrientedGraph AddEdge(string vertexInName, string vertexOutName)
 		{
-			IOrientedVertex vertexIn = new OrientedVertex(vertexInName);
-			IOrientedVertex vertexOut = new OrientedVertex(vertexOutName);
+			Vertex vertexIn = new OrientedVertex(vertexInName);
+			Vertex vertexOut = new OrientedVertex(vertexOutName);
 
 			return AddEdge(vertexIn, vertexOut);
 		}
 
-		public IOrientedGraph RemoveVertex(IOrientedVertex vertex){
+		public IOrientedGraph RemoveVertex(Vertex vertex){
 			CheckVertexNotInGraph(vertex);
 
 			EdgeCount -= NeighboursList[vertex].Count;
@@ -218,7 +217,7 @@ namespace GraphThoeryLibrary.Graphs
 		}
 		public IOrientedGraph RemoveVertex(string vertexName)
 		{
-			IOrientedVertex vertex = new OrientedVertex(vertexName);
+			Vertex vertex = new OrientedVertex(vertexName);
 
 			return RemoveVertex(vertex);
 		}
@@ -226,7 +225,7 @@ namespace GraphThoeryLibrary.Graphs
 		public IOrientedGraph RemoveEdge(IOrientedEdge edge){
 			return RemoveEdge(edge.VertexIn, edge.VertexOut);
 		}
-		public IOrientedGraph RemoveEdge(IOrientedVertex vertexIn, IOrientedVertex vertexOut){
+		public IOrientedGraph RemoveEdge(Vertex vertexIn, Vertex vertexOut){
 			CheckEdgeNotInGraph(vertexIn, vertexOut);
 
 			EdgeCount--;
@@ -237,8 +236,8 @@ namespace GraphThoeryLibrary.Graphs
 			return this;
 		}
 		public IOrientedGraph RemoveEdge(string vertexInName, string vertexOutName){
-			IOrientedVertex vertexIn = new OrientedVertex(vertexInName);
-			IOrientedVertex vertexOut = new OrientedVertex(vertexOutName);
+			Vertex vertexIn = new OrientedVertex(vertexInName);
+			Vertex vertexOut = new OrientedVertex(vertexOutName);
 
 			return RemoveEdge(vertexIn, vertexOut);
 		}
