@@ -9,11 +9,17 @@ namespace GraphLibrary.Vertices
 {
 	public class WeightedOrientedVertex<TWeight> : OrientedVertex where TWeight : INumber<TWeight>
 	{
-		public TWeight Weight { get; init; }
+		public TWeight Weight { get; protected set; }
 
-		public WeightedOrientedVertex(string name, TWeight weight) : base(name)
+		public WeightedOrientedVertex(VertexName name, TWeight weight) : base(name)
 		{
 			Weight = weight;
+		}
+
+		virtual public WeightedOrientedVertex<TWeight> ChangeWeight(TWeight weight)
+		{
+			Weight = weight;
+			return this;
 		}
 	}
 }

@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Graph_Thoery_Library",
+    "\\Graph_Thoery_Library\\Graphs"
   ],
+  "SelectedNode": "\\Graph_Thoery_Library\\Graphs\\GraphNeighborsList2.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -10,6 +10,6 @@ namespace GraphLibrary.Graphs
 	{
 		int GetVertexCount();
 		int GetEdgeCount();
-		IGraph Clear();
+		IGraph ClearGraph();
 	}
 }

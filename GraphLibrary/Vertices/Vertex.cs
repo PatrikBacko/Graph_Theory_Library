@@ -8,9 +8,9 @@ namespace GraphLibrary.Vertices
 {
 	public abstract class Vertex
 	{
-		string Name { get; init; }
+		public VertexName Name { get; init; }
 
-		public Vertex(string name)
+		public Vertex(VertexName name)
 		{
 			Name = name;
 		}

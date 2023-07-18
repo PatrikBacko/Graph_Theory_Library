@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphLibrary.Graphs
+namespace GraphLibrary.MaybeLater
 {
-	public interface INonOrientedGraph : IGraph
-	{
-	}
+    public interface IWeightedNonOrientedGraph : INonOrientedGraph
+    {
+
+    }
 }

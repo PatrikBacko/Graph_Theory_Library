@@ -10,7 +10,7 @@ namespace GraphLibrary.Vertices
 	{
 		public int DegreeIn { get; internal set; }
 		public int DegreeOut { get; internal set; }
-		public OrientedVertex(string name) : base(name)
+		public OrientedVertex(VertexName name) : base(name)
 		{
 			DegreeIn = 0;
 			DegreeOut = 0;

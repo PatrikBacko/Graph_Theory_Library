@@ -10,11 +10,17 @@ namespace GraphLibrary.Edges
 {
 	public class WeightedOrientedEdge<TWeight> : OrientedEdge where TWeight : INumber<TWeight>
 	{
-		public TWeight Weight { get; set; }
+		public TWeight Weight { get; protected set; }
 
-		public WeightedOrientedEdge(OrientedVertex source, OrientedVertex destination, TWeight weight) : base(source, destination)
+		public WeightedOrientedEdge(VertexName source, VertexName destination, TWeight weight) : base(source, destination)
 		{
 			Weight = weight;
+		}
+
+		virtual public WeightedOrientedEdge<TWeight> ChangeWeight(TWeight weight)
+		{
+			Weight = weight;
+			return this;
 		}
 	}
 }
