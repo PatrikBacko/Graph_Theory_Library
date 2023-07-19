@@ -18,9 +18,9 @@ namespace GraphLibrary.Graphs
 		TWeight GetWeight(VertexName vertexOut, VertexName vertexIn);
 
 		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeVertexWeight(VertexName vertex, TWeight weight);
-		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeVertexWeight(TVertex vertex, TWeight weight);
+		//IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeVertexWeight(TVertex vertex, TWeight weight);
 
 		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeEdgeWeight(VertexName vertexOut, VertexName vertexIn, TWeight weight);
-		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeEdgeWeight(TEdge edge, TWeight weight);
+		//IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeEdgeWeight(TEdge edge, TWeight weight);
 	}
 }

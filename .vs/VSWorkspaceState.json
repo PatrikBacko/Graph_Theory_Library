@@ -1,9 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Graph_Thoery_Library",
-    "\\Graph_Thoery_Library\\Graphs"
+    "\\GraphLibrary",
+    "\\GraphLibrary\\Edges",
+    "\\GraphLibrary\\Graphs",
+    "\\GraphLibrary\\Vertices",
+    "\\Graph_Thoery_Library"
   ],
-  "SelectedNode": "\\Graph_Thoery_Library\\Graphs\\GraphNeighborsList2.cs",
+  "SelectedNode": "\\GraphLibrary\\Graphs\\OrientedGraph.cs",
   "PreviewInSolutionExplorer": false
 }
