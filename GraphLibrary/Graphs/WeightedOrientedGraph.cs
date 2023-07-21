@@ -36,6 +36,5 @@ namespace GraphLibrary.Graphs
 			=> ChangeVertexWeight(vertex, weight);
 		IWeightedOrientedGraph<TVertex, TEdge, TWeight> IWeightedOrientedGraph<TVertex, TEdge, TWeight>.ChangeEdgeWeight(VertexName vertexOut, VertexName vertexIn, TWeight weight) 
 			=> ChangeEdgeWeight(vertexOut, vertexIn, weight);
-
 	}
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace GraphLibrary.Vertices
 {
@@ -19,6 +20,16 @@ namespace GraphLibrary.Vertices
 
 		public OrientedVertex ToorientedVertex(){
 			return new OrientedVertex(this);
+		}
+		
+		public WeightedOrientedEdge<TWeight> ToWeightedOrientedEdge<TWeight>(VertexName vertexIn, TWeight weight) 
+			where TWeight : INumber<TWeight>{
+			return new WeightedOrientedEdge<TWeight>(this, vertexIn, weight);
+		}
+
+		public WeightedOrientedVertex<TWeight> ToWeightedOrientedVertex<TWeight>(TWeight weight) 
+			where TWeight : INumber<TWeight>{
+			return new WeightedOrientedVertex<TWeight>(this, weight);
 		}
 	}
 }
