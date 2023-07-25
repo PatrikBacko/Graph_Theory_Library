@@ -10,6 +10,7 @@ namespace GraphLibrary.Vertices
 	{
 		public VertexName Name { get; init; }
 
+		public Vertex() { }
 		public Vertex(VertexName name)
 		{
 			Name = name;

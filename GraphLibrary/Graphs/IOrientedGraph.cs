@@ -17,10 +17,16 @@ namespace GraphLibrary.Graphs
 		int GetVertexCount();
 		int GetEdgeCount();
 
-		IEnumerable<TVertex> GetVerticies();
+		IEnumerable<TVertex> GetVertices();
 		IEnumerable<TVertex> GetVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate);
 		IEnumerable<TEdge> GetEdges();
 		IEnumerable<TEdge> GetEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate);
+
+		IOrientedGraph<TVertex, TEdge> ApplyToVertices(OrientedVertexAction<TVertex> vertexAction);
+		IOrientedGraph<TVertex, TEdge> ApplyToVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate, OrientedVertexAction<TVertex> vertexAction);
+
+		IOrientedGraph<TVertex, TEdge> ApplyToEdges(OrientedEdgeAction<TEdge> edgeAction);
+		IOrientedGraph<TVertex, TEdge> ApplyToEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate, OrientedEdgeAction<TEdge> edgeAction);
 
 		TVertex GetVertex(VertexName vertex);
 		TEdge GetEdge(VertexName vertexOut, VertexName vertexIn);

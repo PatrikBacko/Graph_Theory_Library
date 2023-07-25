@@ -60,7 +60,7 @@ namespace GraphLibrary.Graphs
 			return false;
 		}
 
-		public IEnumerable<TVertex> GetVerticies() => vertices.Values;
+		public IEnumerable<TVertex> GetVertices() => vertices.Values;
 		public IEnumerable<TVertex> GetVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate) {
 			List<TVertex> returnVertices = new List<TVertex>();
 			foreach (var vertex in vertices.Values)
@@ -83,6 +83,31 @@ namespace GraphLibrary.Graphs
 			return returnEdges;
 		}
 
+		public OrientedGraph<TVertex, TEdge> ApplyToVertices(OrientedVertexAction<TVertex> vertexAction) {
+			var vertices = GetVertices();
+			foreach (var vertex in vertices)
+				vertexAction(vertex);
+			return this;
+		}
+		public OrientedGraph<TVertex, TEdge> ApplyToVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate, OrientedVertexAction<TVertex> vertexAction) {
+			var vertices = GetVerticesWith(vertexPredicate);
+			foreach (var vertex in vertices)
+				vertexAction(vertex);
+			return this;
+		}
+		public OrientedGraph<TVertex, TEdge> ApplyToEdges(OrientedEdgeAction<TEdge> edgeAction) {
+			var edges = GetEdges();
+			foreach (var edge in edges)
+				edgeAction(edge);
+			return this;
+		}
+		public OrientedGraph<TVertex, TEdge> ApplyToEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate, OrientedEdgeAction<TEdge> edgeAction) {
+			var edges = GetEdgesWith(edgePredicate);
+			foreach (var edge in edges)
+				edgeAction(edge);
+			return this;
+		}
+
 		public TVertex GetVertex(VertexName vertex) {
 			ConteinsVertex(vertex);
 			return vertices[vertex];
@@ -97,7 +122,7 @@ namespace GraphLibrary.Graphs
 		public IEnumerable<TVertex> GetInAdjacentVertices(VertexName vertex) {
 			ConteinsVertex(vertex);
 			List<TVertex> adjVerticesIn = new List<TVertex>();
-			foreach (var v in GetVerticies())
+			foreach (var v in GetVertices())
 				if (IsEdge(v.Name, vertex))
 					adjVerticesIn.Add(v);
 			return adjVerticesIn;
@@ -105,7 +130,7 @@ namespace GraphLibrary.Graphs
 		public IEnumerable<TVertex> GetOutAdjacentVertices(VertexName vertex) {
 			ConteinsVertex(vertex);
 			List<TVertex> adjVerticesOut = new List<TVertex>();
-			foreach (var v in GetVerticies())
+			foreach (var v in GetVertices())
 				if (IsEdge(vertex, v.Name))
 					adjVerticesOut.Add(v);
 			return adjVerticesOut;
@@ -114,7 +139,7 @@ namespace GraphLibrary.Graphs
 		public IEnumerable<TEdge> GetInEdges(VertexName vertex) {
 			ConteinsVertex(vertex);
 			List<TEdge> edgesIn = new List<TEdge>();
-			foreach (var v in GetVerticies())
+			foreach (var v in GetVertices())
 				if (IsEdge(v.Name, vertex))
 					edgesIn.Add(GetEdge(v.Name, vertex));
 			return edgesIn;
@@ -123,7 +148,7 @@ namespace GraphLibrary.Graphs
 		public IEnumerable<TEdge> GetOutEdges(VertexName vertex) {
 			ConteinsVertex(vertex);
 			List<TEdge> edgesOut = new List<TEdge>();
-			foreach (var v in GetVerticies())
+			foreach (var v in GetVertices())
 				if (IsEdge(vertex, v.Name))
 					edgesOut.Add(GetEdge(vertex, v.Name));
 			return edgesOut;
@@ -270,22 +295,40 @@ namespace GraphLibrary.Graphs
 		//	return this;
 		//}
 
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertex(TVertex vertex) => AddVertex(vertex);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToVertices(OrientedVertexAction<TVertex> vertexAction) 
+			=> ApplyToVertices(vertexAction);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate, OrientedVertexAction<TVertex> vertexAction) 
+			=> ApplyToVerticesWith(vertexPredicate, vertexAction);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToEdges(OrientedEdgeAction<TEdge> edgeAction) 
+			=>	ApplyToEdges(edgeAction);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate, OrientedEdgeAction<TEdge> edgeAction) 
+			=>	ApplyToEdgesWith(edgePredicate, edgeAction);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertex(TVertex vertex) 
+			=> AddVertex(vertex);
 		//IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertex(VertexName vertex) => AddVertex(vertex);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertices(IEnumerable<TVertex> vertices) => AddVertices(vertices);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertices(IEnumerable<TVertex> vertices) 
+			=> AddVertices(vertices);
 
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddEdge(TEdge edge) => AddEdge(edge);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddEdge(TEdge edge) 
+			=> AddEdge(edge);
 		//IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddEdge(VertexName vertexOut, VertexName vertexIn) => AddEdge(vertexOut, vertexIn);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddEdges(IEnumerable<TEdge> edges) => AddEdges(edges);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddEdges(IEnumerable<TEdge> edges) 
+			=> AddEdges(edges);
 
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVertex(VertexName vertex) => RemoveVertex(vertex);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVertex(TVertex vertex) => RemoveVertex(vertex);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVertex(VertexName vertex) 
+			=> RemoveVertex(vertex);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVertex(TVertex vertex) 
+			=> RemoveVertex(vertex);
 
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdge(VertexName vertexOut, VertexName vertexIn) => RemoveEdge(vertexOut, vertexIn);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdge(TEdge edge) => RemoveEdge(edge);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdge(VertexName vertexOut, VertexName vertexIn) 
+			=> RemoveEdge(vertexOut, vertexIn);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdge(TEdge edge) 
+			=> RemoveEdge(edge);
 
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ClearGraph() => ClearGraph();
-		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.CreateGraph() => CreateGraph();
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ClearGraph()
+			=> ClearGraph();
+		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.CreateGraph() 
+			=> CreateGraph();
 		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.CreateGraph(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges) 
 			=> CreateGraph(vertices, edges);
 	}
