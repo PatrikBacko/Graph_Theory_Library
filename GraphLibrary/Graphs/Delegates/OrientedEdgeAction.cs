@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphLibrary.Edges;
 
-namespace GraphLibrary.Graphs
+namespace GraphLibrary.Graphs.Delegates
 {
-	public delegate void OrientedEdgeAction<TEdge>(TEdge edge)
-		where TEdge : OrientedEdge;
+    public delegate void OrientedEdgeAction<TEdge>(TEdge edge)
+        where TEdge : OrientedEdge;
 }

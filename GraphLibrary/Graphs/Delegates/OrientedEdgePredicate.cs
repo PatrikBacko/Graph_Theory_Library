@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphLibrary.Graphs
+namespace GraphLibrary.Graphs.Delegates
 {
-	public delegate bool OrientedEdgePredicate<TEdge>(TEdge edge) where TEdge : OrientedEdge;
+    public delegate bool OrientedEdgePredicate<TEdge>(TEdge edge) where TEdge : OrientedEdge;
 }

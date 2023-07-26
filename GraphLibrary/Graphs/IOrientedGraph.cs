@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Edges;
+using GraphLibrary.Graphs.Delegates;
 using GraphLibrary.Vertices;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GraphLibrary.Graphs
 {
-	public interface IOrientedGraph<TVertex, TEdge> 
+    public interface IOrientedGraph<TVertex, TEdge> 
 		where TVertex : OrientedVertex
 		where TEdge : OrientedEdge
 	{

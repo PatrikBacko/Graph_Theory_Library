@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GraphLibrary.Graphs.Delegates;
 
 //maybe prejsť z eager na lazy a detekovať zmeny
 
 namespace GraphLibrary.Graphs
 {
-	public class OrientedGraph<TVertex, TEdge> : IOrientedGraph<TVertex, TEdge>
+    public class OrientedGraph<TVertex, TEdge> : IOrientedGraph<TVertex, TEdge>
 		where TVertex : OrientedVertex//, new()
 		where TEdge : OrientedEdge//, new()
 	{

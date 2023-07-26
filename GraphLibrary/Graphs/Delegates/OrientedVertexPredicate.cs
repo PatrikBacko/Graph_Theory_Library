@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphLibrary.Graphs
+namespace GraphLibrary.Graphs.Delegates
 {
-	public delegate bool OrientedVertexPredicate<TVertex>(TVertex vertex) where TVertex : OrientedVertex;
+    public delegate bool OrientedVertexPredicate<TVertex>(TVertex vertex) where TVertex : OrientedVertex;
 }

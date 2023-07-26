@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphLibrary.Vertices;
 
-namespace GraphLibrary.Graphs
+namespace GraphLibrary.Graphs.Delegates
 {
-	public delegate void OrientedVertexAction<TVertex>(TVertex vertex) where TVertex : OrientedVertex;
+    public delegate void OrientedVertexAction<TVertex>(TVertex vertex) where TVertex : OrientedVertex;
 }
