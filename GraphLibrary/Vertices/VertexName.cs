@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GraphLibrary.Vertices
 {
@@ -30,6 +31,31 @@ namespace GraphLibrary.Vertices
 		public WeightedOrientedVertex<TWeight> ToWeightedOrientedVertex<TWeight>(TWeight weight) 
 			where TWeight : INumber<TWeight>{
 			return new WeightedOrientedVertex<TWeight>(this, weight);
+		}
+
+		public override string ToString(){
+			return Value;
+		}
+
+		public override bool Equals([NotNullWhen(true)] object? obj)
+		{
+			return base.Equals(obj);
+		}
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
+		}
+
+		static public implicit operator VertexName(string value){
+			return new VertexName(value);
+		}
+
+		static public bool operator ==(VertexName vertexName1, VertexName vertexName2){
+			return vertexName1.Equals(vertexName2);
+		}
+		static public bool operator !=(VertexName vertexName1, VertexName vertexName2)
+		{
+			return !vertexName1.Equals(vertexName2);
 		}
 	}
 }

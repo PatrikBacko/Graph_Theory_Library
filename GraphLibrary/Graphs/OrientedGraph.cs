@@ -166,6 +166,7 @@ namespace GraphLibrary.Graphs
 		}
 
 		public OrientedGraph<TVertex, TEdge> AddVertex(TVertex vertex) {
+			ValidVertexName(vertex.Name);
 			if (IsVertex(vertex))
 				throw new VertexException("Vertex already exists in Graph");
 			vertices.Add(vertex.Name, vertex);
@@ -188,6 +189,8 @@ namespace GraphLibrary.Graphs
 		//}
 
 		public OrientedGraph<TVertex, TEdge> AddEdge(TEdge edge) {
+			ValidVertexName(edge.VertexOut);
+			ValidVertexName(edge.VertexIn);
 			ConteinsVertex(edge.VertexOut);
 			ConteinsVertex(edge.VertexIn);
 
@@ -289,6 +292,11 @@ namespace GraphLibrary.Graphs
 		{
 			if (!IsEdge(vertexOut, vertexIn))
 				throw new EdgeException("Edge doesn't exist in Graph");
+		}
+		protected void ValidVertexName(VertexName vertex)
+		{
+			if (vertex.Value == "")
+				throw new VertexException("Vertex name can't be empty string");
 		}
 
 		//public OrientedGraph<TVertex, TEdge> ReverseEdge(){
