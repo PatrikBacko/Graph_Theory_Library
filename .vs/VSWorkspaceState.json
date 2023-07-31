@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\GraphLibrary",
+    "\\GraphLibrary\\Edges",
+    "\\GraphLibrary\\Graphs",
+    "\\GraphLibrary\\Vertices",
+    "\\Graph_Thoery_Library"
   ],
+  "SelectedNode": "\\GraphLibrary\\Algorithms.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -7,15 +7,15 @@ using GraphThoeryLibrary.Vertices;
 
 namespace GraphThoeryLibrary.Edges
 {
-    public struct OrientedEdge : IOrientedEdge
+    public class OrientedEdge : IOrientedEdge
     {
-        public IVertex InVertex { get; init; }
-        public IVertex OutVertex { get; init; }
+        public Vertex VertexIn { get; init; }
+        public Vertex VertexOut { get; init; }
 
-        public OrientedEdge(IVertex InVertex, IVertex OutVertex)
+        public OrientedEdge(Vertex VertexIn, Vertex VertexOut)
 		{
-			this.InVertex = InVertex;
-			this.OutVertex = OutVertex;
+			this.VertexIn = VertexIn;
+			this.VertexOut = VertexOut;
 		}
     }
 }

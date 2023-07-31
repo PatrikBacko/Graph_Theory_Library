@@ -1,0 +1,5 @@
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\GraphLibrary.csproj.AssemblyReference.cache
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\GraphLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\GraphLibrary.AssemblyInfoInputs.cache
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\GraphLibrary.AssemblyInfo.cs
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\GraphLibrary.csproj.CoreCompileInputs.cache
