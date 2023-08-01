@@ -4,9 +4,8 @@
     "\\GraphLibrary",
     "\\GraphLibrary\\Edges",
     "\\GraphLibrary\\Graphs",
-    "\\GraphLibrary\\Vertices",
-    "\\Graph_Thoery_Library"
+    "\\GraphLibrary\\Vertices"
   ],
-  "SelectedNode": "\\GraphLibrary\\Algorithms.cs",
+  "SelectedNode": "\\GraphLibrary\\GraphLibrary.csproj",
   "PreviewInSolutionExplorer": false
 }

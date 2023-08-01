@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphLibrary.Graphs.Exceptions
 {
-	internal class VertexException : Exception
+	public class VertexException : Exception
 	{
 		public VertexException() : base() { }
 		public VertexException(string message) : base(message) { }

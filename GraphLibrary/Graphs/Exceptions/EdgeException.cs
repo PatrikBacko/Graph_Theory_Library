@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphLibrary.Graphs.Exceptions
 {
-	internal class EdgeException : Exception
+	public class EdgeException : Exception
 	{
 		public EdgeException() : base() { }
 		public EdgeException(string message) : base(message) { }
