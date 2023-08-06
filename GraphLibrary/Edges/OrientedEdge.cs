@@ -12,7 +12,7 @@ namespace GraphLibrary.Edges
 		public VertexName VertexIn { get; init; }	//internal set for reverse maybe ?
 		public VertexName VertexOut { get; init; }
 
-		public OrientedEdge(VertexName vertexIn, VertexName vertexOut)
+		public OrientedEdge(VertexName vertexOut, VertexName vertexIn)
 		{
 			VertexIn = vertexIn;
 			VertexOut = vertexOut;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphLibrary.Algorithms.Exceptions
 {
-	public class NoPathException : Exception
+	public class NoPathException : GraphException
 	{
 		public NoPathException() : base() { }
 		public NoPathException(string message) : base(message) { }

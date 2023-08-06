@@ -64,12 +64,12 @@ namespace GraphLibrary.Algorithms
 			where TEdge : OrientedEdge
 		{
 			var visited = new Dictionary<VertexName, VertexState>();
-			var vertices = graph.GetVertices().Select(v => v.Name).ToHashSet();
-			while (visited.Count < vertices.Count)
+			var unvisited = graph.GetVertices().Select(v => v.Name).ToHashSet();
+			while (unvisited.Count > 0)
 			{
-				var vertex = vertices.First();
-				Dfs(graph, vertex, vertexActionOpened, vertexActionClosed, edgeAction, visited);
-				vertices = vertices.Where(v => !visited.ContainsKey(v)).ToHashSet();
+				var vertex = unvisited.First();
+				Dfs(graph, vertex, vertexActionOpened, v => { vertexActionClosed(v); unvisited.Remove(v.Name); }, edgeAction, visited);
+
 			}
 		}
 		static public void Dfs<TVertex, TEdge>
@@ -83,22 +83,41 @@ namespace GraphLibrary.Algorithms
 			if (visited is null)
 				visited = new Dictionary<VertexName, VertexState>();
 
-			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, edgeAction, visited); 
+			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, v => { }, edgeAction, visited);
 		}
-		static private void DfsRecursion<TVertex, TEdge>
+		static public void DfsSpecial<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexActionOpened,
-		OrientedVertexAction<TVertex> vertexActionClosed, OrientedEdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState> visited)
+		OrientedVertexAction<TVertex> vertexActionClosed, OrientedVertexAction<TVertex> beforeVisitedCheckAction, OrientedEdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
+			if (!graph.IsVertex(sourceVertex)) throw new ArgumentException("Source Vertex is not in the given Graph");
+
+			if (visited is null)
+				visited = new Dictionary<VertexName, VertexState>();
+
+			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, beforeVisitedCheckAction, edgeAction, visited); 
+		}
+		static private void DfsRecursion<TVertex, TEdge>
+		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexActionOpened,
+		OrientedVertexAction<TVertex> vertexActionClosed, OrientedVertexAction<TVertex> beforeVisitedCheckAction,OrientedEdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState> visited)
+			where TVertex : OrientedVertex
+			where TEdge : OrientedEdge
+		{
+			var sourceGraphVertex = graph.GetVertex(sourceVertex);
+
+			beforeVisitedCheckAction(sourceGraphVertex);
+			if (visited.ContainsKey(sourceVertex)) return;
+
+			vertexActionOpened(sourceGraphVertex);
 			visited.Add(sourceVertex, VertexState.OPENED);
-			vertexActionOpened(graph.GetVertex(sourceVertex));
-			foreach (var vertex in graph.GetOutAdjacentVertices(sourceVertex).Where(v => !visited.ContainsKey(v.Name)))
+
+			foreach (var vertex in graph.GetOutAdjacentVertices(sourceVertex))
 			{
 				edgeAction(graph.GetEdge(sourceVertex, vertex.Name));
-				DfsRecursion(graph, vertex.Name, vertexActionOpened, vertexActionClosed, edgeAction, visited);
+				DfsRecursion(graph, vertex.Name, vertexActionOpened, vertexActionClosed, beforeVisitedCheckAction, edgeAction, visited);
 			}
-			vertexActionClosed(graph.GetVertex(sourceVertex));
+			vertexActionClosed(sourceGraphVertex);
 			visited[sourceVertex] = VertexState.CLOSED;
 		}
 
@@ -251,34 +270,63 @@ namespace GraphLibrary.Algorithms
 
 				if (distances[edge.VertexOut] + edge.Weight < distances[edge.VertexIn])
 				{
-					throw new NegativeCycleException("Graph contains a negative-weight cycle");
+					throw new GraphHasNegativeCycleException("Graph contains a negative-weight cycle");
 				}
 			}
 
 			return (distances, predecessors);
 		}
 
-		static public List<VertexName>? TopologicalSorting<TVertex, TEdge>
+		static public List<VertexName> TopologicalSorting<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
-			if (!IsDag(graph, out var topologicalSorting))
-				throw new GraphIsNotDAGException("Graph is not acyclic");
+			List<VertexName> topologicalSorting;
+
+			if (!HasTopologicalSorting(graph, out topologicalSorting!))
+				throw new GraphIsNotDAGException("Graph is not a DAG");
+
 			return topologicalSorting;
 		}
 
 		static public bool IsDag<TVertex, TEdge>
+		(IOrientedGraph<TVertex, TEdge> graph)
+			where TVertex : OrientedVertex
+			where TEdge : OrientedEdge
+		{
+			return HasTopologicalSorting(graph, out var topologicalSorting);
+		}
+
+		static private bool HasTopologicalSorting<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, out List<VertexName>? topologicalSorting)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
 			var stack = new Stack<VertexName>();
 			var visited = new Dictionary<VertexName, VertexState>();
+			var unvisited = graph.GetVertices().Select(v => v.Name).ToHashSet();
 
-			Dfs(graph, v => { }, v => stack.Push(v.Name), e => { });
+			var isDag = true;
 
-			topologicalSorting = stack.ToList();
+			while (unvisited.Count > 0 && isDag)
+			{
+				var vertex = unvisited.First();
+
+				DfsSpecial(graph,
+					vertex,
+					v => { unvisited.Remove(v.Name); }, 
+					v => { stack.Push(v.Name); }, 
+					v => { if (visited.ContainsKey(v.Name) && visited[v.Name] == VertexState.OPENED) isDag = false; },
+					e => { },
+					visited);
+			}
+
+			if (isDag)
+				topologicalSorting = stack.ToList();
+			else
+				topologicalSorting = null;
+			return isDag;
 		}
 	}
 }

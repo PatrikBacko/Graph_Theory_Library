@@ -43,8 +43,8 @@ namespace GraphLibrary.Graphs
 
 		public bool IsEdge(VertexName vertexOut, VertexName vertexIn)
 		{
-			ConteinsVertex(vertexOut);
-			ConteinsVertex(vertexIn);
+			ContainsVertex(vertexOut);
+			ContainsVertex(vertexIn);
 
 			if (neighbors[vertexOut].ContainsKey(vertexIn))
 				return true;
@@ -52,8 +52,8 @@ namespace GraphLibrary.Graphs
 		}
 		public bool IsEdge(TEdge edge)
 		{
-			ConteinsVertex(edge.VertexOut);
-			ConteinsVertex(edge.VertexIn);
+			ContainsVertex(edge.VertexOut);
+			ContainsVertex(edge.VertexIn);
 
 			if (!IsEdge(edge.VertexOut, edge.VertexIn))
 				return false;
@@ -113,7 +113,7 @@ namespace GraphLibrary.Graphs
 		}
 
 		public TVertex GetVertex(VertexName vertex) {
-			ConteinsVertex(vertex);
+			ContainsVertex(vertex);
 			return vertices[vertex];
 		}
 		public TEdge GetEdge(VertexName vertexOut, VertexName vertexIn) {
@@ -124,7 +124,7 @@ namespace GraphLibrary.Graphs
 		public int GetVertexCount() => vertices.Count;
 		public int GetEdgeCount() => edgeCount;
 		public IEnumerable<TVertex> GetInAdjacentVertices(VertexName vertex) {
-			ConteinsVertex(vertex);
+			ContainsVertex(vertex);
 			List<TVertex> adjVerticesIn = new List<TVertex>();
 			foreach (var v in GetVertices())
 				if (IsEdge(v.Name, vertex))
@@ -132,16 +132,15 @@ namespace GraphLibrary.Graphs
 			return adjVerticesIn;
 		}
 		public IEnumerable<TVertex> GetOutAdjacentVertices(VertexName vertex) {
-			ConteinsVertex(vertex);
+			ContainsVertex(vertex);
 			List<TVertex> adjVerticesOut = new List<TVertex>();
-			foreach (var v in GetVertices())
-				if (IsEdge(vertex, v.Name))
-					adjVerticesOut.Add(v);
+			foreach (var e in neighbors[vertex].Values)
+				adjVerticesOut.Add(GetVertex(e.VertexIn));
 			return adjVerticesOut;
 		}
 
 		public IEnumerable<TEdge> GetInEdges(VertexName vertex) {
-			ConteinsVertex(vertex);
+			ContainsVertex(vertex);
 			List<TEdge> edgesIn = new List<TEdge>();
 			foreach (var v in GetVertices())
 				if (IsEdge(v.Name, vertex))
@@ -150,28 +149,27 @@ namespace GraphLibrary.Graphs
 		}
 
 		public IEnumerable<TEdge> GetOutEdges(VertexName vertex) {
-			ConteinsVertex(vertex);
+			ContainsVertex(vertex);
 			List<TEdge> edgesOut = new List<TEdge>();
-			foreach (var v in GetVertices())
-				if (IsEdge(vertex, v.Name))
-					edgesOut.Add(GetEdge(vertex, v.Name));
+			foreach (var v in neighbors[vertex].Values)
+				edgesOut.Add(v);
 			return edgesOut;
 		}
 
 		public int GetInDegree(VertexName vertexName) {
-			ConteinsVertex(vertexName);
+			ContainsVertex(vertexName);
 			var vertex = GetVertex(vertexName);
 			return vertex.DegreeIn;
 		}
 		public int GetOutDegree(VertexName vertexName) {
-			ConteinsVertex(vertexName);
+			ContainsVertex(vertexName);
 			var vertex = GetVertex(vertexName);
 			return vertex.DegreeOut;
 		}
 
 		public OrientedGraph<TVertex, TEdge> AddVertex(TVertex vertex) {
 			ValidVertexName(vertex.Name);
-			if (IsVertex(vertex))
+			if (IsVertex(vertex.Name))
 				throw new VertexException("Vertex already exists in Graph");
 			vertices.Add(vertex.Name, vertex);
 			neighbors.Add(vertex.Name, new Dictionary<VertexName, TEdge>());
@@ -186,8 +184,8 @@ namespace GraphLibrary.Graphs
 		public OrientedGraph<TVertex, TEdge> AddEdge(TEdge edge) {
 			ValidVertexName(edge.VertexOut);
 			ValidVertexName(edge.VertexIn);
-			ConteinsVertex(edge.VertexOut);
-			ConteinsVertex(edge.VertexIn);
+			ContainsVertex(edge.VertexOut);
+			ContainsVertex(edge.VertexIn);
 
 			if (IsEdge(edge))
 				throw new EdgeException("Edge already exists in Graph");
@@ -206,7 +204,7 @@ namespace GraphLibrary.Graphs
 		}
 
 		public OrientedGraph<TVertex, TEdge> RemoveVertex(VertexName vertexName) {
-			ConteinsVertex(vertexName);
+			ContainsVertex(vertexName);
 			edgeCount -= neighbors[vertexName].Count;
 			vertices.Remove(vertexName);
 			neighbors.Remove(vertexName);
@@ -262,7 +260,7 @@ namespace GraphLibrary.Graphs
 		public static OrientedGraph<TVertex, TEdge> operator -(OrientedGraph<TVertex, TEdge> graph, TVertex vertex) => graph.RemoveVertex(vertex);
 		public static OrientedGraph<TVertex, TEdge> operator -(OrientedGraph<TVertex, TEdge> graph, TEdge edge) => graph.RemoveEdge(edge);
 
-		protected void ConteinsVertex(VertexName vertex)
+		protected void ContainsVertex(VertexName vertex)
 		{
 			if (!IsVertex(vertex))
 				throw new VertexException("Vertex doesn't exist in Graph");

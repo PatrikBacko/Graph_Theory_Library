@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3VQy0U9FyooJCT5XBVSTvi5HYWCSkOBUwfgEibRPoRaTvcTYTr8b1Gpl2mrP+3uoZBdHdCFMrkyc5sOKzLhyJg==",
+  "dgSpecHash": "nmeEDiLWKOC/ESCRMvLO1xeIR6b3fmOLdacxhACyL1/iD98I/n3YkYHiGzBIWstucYQ5QaqdbsdZEjlmo/5/5Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibraryTests\\GraphLibraryTests.csproj",
+  "projectFilePath": "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibraryTests\\GraphLibraryTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\llama\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
     "C:\\Users\\llama\\.nuget\\packages\\microsoft.codecoverage\\17.5.0\\microsoft.codecoverage.17.5.0.nupkg.sha512",

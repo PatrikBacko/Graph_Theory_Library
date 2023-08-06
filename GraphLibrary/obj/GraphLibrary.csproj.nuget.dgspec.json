@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibrary\\GraphLibrary.csproj": {}
+    "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibrary\\GraphLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibrary\\GraphLibrary.csproj": {
+    "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibrary\\GraphLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibrary\\GraphLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibrary\\GraphLibrary.csproj",
         "projectName": "GraphLibrary",
-        "projectPath": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibrary\\GraphLibrary.csproj",
+        "projectPath": "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibrary\\GraphLibrary.csproj",
         "packagesPath": "C:\\Users\\llama\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibrary\\obj\\",
+        "outputPath": "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibrary\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\llama\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

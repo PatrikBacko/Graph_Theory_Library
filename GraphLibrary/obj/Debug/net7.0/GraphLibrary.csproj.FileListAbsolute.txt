@@ -15,3 +15,10 @@ C:\Users\llama\Desktop\programming shit\C#_zapoctak\GraphLibrary\obj\Debug\net7.
 C:\Users\llama\Desktop\programming shit\C#_zapoctak\GraphLibrary\obj\Debug\net7.0\refint\GraphLibrary.dll
 C:\Users\llama\Desktop\programming shit\C#_zapoctak\GraphLibrary\obj\Debug\net7.0\GraphLibrary.pdb
 C:\Users\llama\Desktop\programming shit\C#_zapoctak\GraphLibrary\obj\Debug\net7.0\ref\GraphLibrary.dll
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\bin\Debug\net7.0\GraphLibrary.deps.json
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\bin\Debug\net7.0\GraphLibrary.dll
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\bin\Debug\net7.0\GraphLibrary.pdb
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\GraphLibrary.dll
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\refint\GraphLibrary.dll
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\GraphLibrary.pdb
+C:\Users\llama\Desktop\programmig shit\C#_zapoctak\Graph_Theory_Library\GraphLibrary\obj\Debug\net7.0\ref\GraphLibrary.dll
