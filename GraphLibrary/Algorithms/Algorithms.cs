@@ -18,6 +18,7 @@ namespace GraphLibrary.Algorithms
 	public enum VertexState { OPENED, CLOSED, UNVISITED }
 	public static class Algorithms
 	{
+		//TODO: Add Tests
 		static public void Bfs<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexAction, OrientedEdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
@@ -58,6 +59,7 @@ namespace GraphLibrary.Algorithms
 				Bfs(graph, vertex, v => { vertices.Remove(v.Name); vertexAction(v); }, edgeAction);
 			}
 		}
+		//TODO: Add Tests
 		static public void Dfs<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, OrientedVertexAction<TVertex> vertexActionOpened, OrientedVertexAction<TVertex> vertexActionClosed, OrientedEdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
@@ -121,6 +123,7 @@ namespace GraphLibrary.Algorithms
 			visited[sourceVertex] = VertexState.CLOSED;
 		}
 
+		//TODO: add tests
 		static public List<List<VertexName>> GetStronglyConnectedComponents<TVertex, TEdge>(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -154,6 +157,7 @@ namespace GraphLibrary.Algorithms
 			return true;
 		}
 
+		//TODO: add tests
 		static public List<VertexName> ShortestPath<TVertex, TEdge, TWeight>
 		(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, VertexName sourceVertex, VertexName destinationVertex, out TWeight pathWeight)
 			where TVertex : WeightedOrientedVertex<TWeight>

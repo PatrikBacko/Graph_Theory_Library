@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphLibrary.Graphs.Delegates;
 
-//maybe prejsť z eager na lazy a detekovať zmeny
+//TODO: (maybe) prejsť z eager na lazy a detekovať zmeny
+//TODO: Add Tests
 
 namespace GraphLibrary.Graphs
 {
