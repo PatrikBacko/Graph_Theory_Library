@@ -4,10 +4,11 @@
     "\\GraphLibrary",
     "\\GraphLibraryTests",
     "\\GraphLibraryTests\\AlgorithmsTests",
+    "\\GraphLibrary\\Algorithms",
     "\\GraphLibrary\\Edges",
     "\\GraphLibrary\\Graphs",
     "\\GraphLibrary\\Vertices"
   ],
-  "SelectedNode": "\\GraphLibraryTests\\AlgorithmsTests\\TopologicalSortingTests.cs",
+  "SelectedNode": "\\GraphLibrary\\Algorithms\\Algorithms.cs",
   "PreviewInSolutionExplorer": false
 }
