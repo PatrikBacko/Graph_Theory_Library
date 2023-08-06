@@ -14,7 +14,7 @@ namespace GraphLibraryTests.AlgorithmsTests
 		[TestMethod]
 		public void DAGTest(){
 			var graph = TestGraphs.GetTestGraphDAG1();
-			var expected = new List<VertexName>() { "4", "5", "2", "3", "0", "1" };
+			var expected = new List<VertexName>() { "4", "5", "0", "2", "3", "1" };
 			var actual = Algorithms.TopologicalSorting(graph);
 			CollectionAssert.AreEqual(expected, actual);
 		}

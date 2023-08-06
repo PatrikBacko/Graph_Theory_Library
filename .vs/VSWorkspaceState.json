@@ -2,10 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\GraphLibrary",
+    "\\GraphLibraryTests",
+    "\\GraphLibraryTests\\AlgorithmsTests",
     "\\GraphLibrary\\Edges",
     "\\GraphLibrary\\Graphs",
     "\\GraphLibrary\\Vertices"
   ],
-  "SelectedNode": "\\GraphLibrary\\GraphLibrary.csproj",
+  "SelectedNode": "\\GraphLibraryTests\\AlgorithmsTests\\TopologicalSortingTests.cs",
   "PreviewInSolutionExplorer": false
 }

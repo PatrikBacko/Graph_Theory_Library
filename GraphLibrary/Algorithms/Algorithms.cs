@@ -15,7 +15,7 @@ using System.Linq.Expressions;
 
 namespace GraphLibrary.Algorithms
 {
-	enum VertexState { OPENED, CLOSED, UNVISITED }
+	public enum VertexState { OPENED, CLOSED, UNVISITED }
 	public static class Algorithms
 	{
 		static public void Bfs<TVertex, TEdge>
@@ -59,28 +59,31 @@ namespace GraphLibrary.Algorithms
 			}
 		}
 		static public void Dfs<TVertex, TEdge>
+		(IOrientedGraph<TVertex, TEdge> graph, OrientedVertexAction<TVertex> vertexActionOpened, OrientedVertexAction<TVertex> vertexActionClosed, OrientedEdgeAction<TEdge> edgeAction)
+			where TVertex : OrientedVertex
+			where TEdge : OrientedEdge
+		{
+			var visited = new Dictionary<VertexName, VertexState>();
+			var vertices = graph.GetVertices().Select(v => v.Name).ToHashSet();
+			while (visited.Count < vertices.Count)
+			{
+				var vertex = vertices.First();
+				Dfs(graph, vertex, vertexActionOpened, vertexActionClosed, edgeAction, visited);
+				vertices = vertices.Where(v => !visited.ContainsKey(v)).ToHashSet();
+			}
+		}
+		static public void Dfs<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexActionOpened,
-		OrientedVertexAction<TVertex> vertexActionClosed, OrientedEdgeAction<TEdge> edgeAction)
+		OrientedVertexAction<TVertex> vertexActionClosed, OrientedEdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
 			if (!graph.IsVertex(sourceVertex)) throw new ArgumentException("Source Vertex is not in the given Graph");
 
-			var visited = new Dictionary<VertexName, VertexState>();
+			if (visited is null)
+				visited = new Dictionary<VertexName, VertexState>();
 
-			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, edgeAction, visited);
-		}
-		static public void Dfs<TVertex, TEdge>
-		(IOrientedGraph<TVertex, TEdge> graph, OrientedVertexAction<TVertex> vertexActionOpened, OrientedVertexAction<TVertex> vertexActionClosed, OrientedEdgeAction<TEdge> edgeAction)
-			where TVertex : OrientedVertex
-			where TEdge : OrientedEdge
-		{
-			var vertices = graph.GetVertices().Select(v => v.Name).ToHashSet();
-			while (vertices.Count != 0)
-			{
-				var vertex = vertices.First();
-				Dfs(graph, vertex, v => { vertices.Remove(v.Name); vertexActionOpened(v); }, vertexActionClosed, edgeAction);
-			}
+			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, edgeAction, visited); 
 		}
 		static private void DfsRecursion<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexActionOpened,
@@ -110,13 +113,13 @@ namespace GraphLibrary.Algorithms
 
 			Dfs(graph, v=> { }, v => stack.Push(v.Name), e => { });
 
-			var unvisited = graph.GetVertices().Select(v => v.Name).ToHashSet();
+			var visited = new Dictionary<VertexName, VertexState>();
 			while (stack.Count != 0)
 			{
 				var vertex = stack.Pop();
-				if (!unvisited.Contains(vertex)) continue;
+				if (visited.ContainsKey(vertex)) continue;
 				var component = new List<VertexName>();
-				Dfs(reversedGraph, vertex, v => { unvisited.Remove(v.Name); component.Add(v.Name); }, v => { }, e => { });
+				Dfs(reversedGraph, vertex, v => component.Add(v.Name), v => { }, e => { }, visited);
 				components.Add(component);
 			}
 
@@ -271,29 +274,11 @@ namespace GraphLibrary.Algorithms
 			where TEdge : OrientedEdge
 		{
 			var stack = new Stack<VertexName>();
-			var vertices = graph.GetVertices().Select(v => v.Name).ToHashSet();
-			bool isDag = true;
+			var visited = new Dictionary<VertexName, VertexState>();
 
-			while (vertices.Count > 0 && isDag)
-			{
-				var vertex = vertices.First();
-				var active = new HashSet<VertexName>();
+			Dfs(graph, v => { }, v => stack.Push(v.Name), e => { });
 
-				Dfs(graph, vertex,
-					v => {
-						if (active.Contains(v.Name)) isDag = false;
-						active.Add(v.Name);
-						vertices.Remove(v.Name);
-					},
-					v => stack.Push(v.Name),
-					e => { });
-			}
-
-			topologicalSorting = null;
-			if (isDag)
-				topologicalSorting = stack.ToList();
-			
-			return isDag;
+			topologicalSorting = stack.ToList();
 		}
 	}
 }
