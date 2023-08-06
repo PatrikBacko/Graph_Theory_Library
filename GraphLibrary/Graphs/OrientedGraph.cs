@@ -53,9 +53,6 @@ namespace GraphLibrary.Graphs
 		}
 		public bool IsEdge(TEdge edge)
 		{
-			ContainsVertex(edge.VertexOut);
-			ContainsVertex(edge.VertexIn);
-
 			if (!IsEdge(edge.VertexOut, edge.VertexIn))
 				return false;
 
@@ -183,13 +180,16 @@ namespace GraphLibrary.Graphs
 		}
 
 		public OrientedGraph<TVertex, TEdge> AddEdge(TEdge edge) {
+			try
+			{ 
 			ValidVertexName(edge.VertexOut);
 			ValidVertexName(edge.VertexIn);
-			ContainsVertex(edge.VertexOut);
-			ContainsVertex(edge.VertexIn);
 
-			if (IsEdge(edge))
+			if (IsEdge(edge.VertexOut, edge.VertexIn))
 				throw new EdgeException("Edge already exists in Graph");
+
+			if (edge.VertexIn == edge.VertexOut)
+				throw new EdgeException("Edge cannot be a loop");
 
 			neighbors[edge.VertexOut].Add(edge.VertexIn, edge);
 			edgeCount++;
@@ -197,6 +197,11 @@ namespace GraphLibrary.Graphs
 			vertices[edge.VertexOut].DegreeOut++;
 			vertices[edge.VertexIn].DegreeIn++;
 			return this;
+			}
+			catch (VertexException e)
+			{
+				throw new EdgeException("Edge cannot be added because of a problem with vertices", e);
+			}
 		}
 		public OrientedGraph<TVertex, TEdge> AddEdges(IEnumerable<TEdge> edges) {
 			foreach (var edge in edges)
@@ -206,16 +211,17 @@ namespace GraphLibrary.Graphs
 
 		public OrientedGraph<TVertex, TEdge> RemoveVertex(VertexName vertexName) {
 			ContainsVertex(vertexName);
+
+			foreach (var vertex in vertices.Values)
+			{
+				if (IsEdge(vertex.Name, vertexName))
+					RemoveEdge(vertexName, vertex.Name);
+			}
+
 			edgeCount -= neighbors[vertexName].Count;
 			vertices.Remove(vertexName);
 			neighbors.Remove(vertexName);
-			foreach (var vertex in vertices.Values) {
-				if (IsEdge(vertex.Name, vertexName)) {
-					neighbors[vertex.Name].Remove(vertexName);
-					edgeCount--;
-					vertex.DegreeOut--;
-				}
-			}
+			
 			return this;
 		}
 		public OrientedGraph<TVertex, TEdge> RemoveVertex(TVertex vertex) {
@@ -223,19 +229,58 @@ namespace GraphLibrary.Graphs
 				throw new VertexException("Vertex doesn't exist in Graph");
 			return RemoveVertex(vertex.Name);
 		}
+		public OrientedGraph<TVertex, TEdge> RemoveVertices(IEnumerable<TVertex> vertices) {
+			foreach (var vertex in vertices)
+				RemoveVertex(vertex);
+			return this;
+		}
+		public OrientedGraph<TVertex, TEdge> RemoveVertices(IEnumerable<VertexName> vertices){
+			foreach (var vertex in vertices)
+				RemoveVertex(vertex);
+			return this;
+		}
+		public OrientedGraph<TVertex, TEdge> RemoveVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate) {
+			var vertices = GetVerticesWith(vertexPredicate);
+			foreach (var vertex in vertices)
+				RemoveVertex(vertex);
+			return this;
+		}
 
 		public OrientedGraph<TVertex, TEdge> RemoveEdge(VertexName vertexOut, VertexName vertexIn) {
+			try
+			{
 			ContainsEdge(vertexOut, vertexIn);
 			neighbors[vertexOut].Remove(vertexIn);
 			edgeCount--;
 			vertices[vertexOut].DegreeOut--;
 			vertices[vertexIn].DegreeIn--;
 			return this;
+			}
+			catch (VertexException e)
+			{
+				throw new EdgeException("Edge cannot be removed because of a problem with vertices", e);
+			}
 		}
 		public OrientedGraph<TVertex, TEdge> RemoveEdge(TEdge edge) {
 			if (!IsEdge(edge))
 				throw new EdgeException("Edge doesn't exist in Graph");
 			return RemoveEdge(edge.VertexOut, edge.VertexIn);
+		}
+		public OrientedGraph<TVertex, TEdge> RemoveEdges(IEnumerable<TEdge> edges) {
+			foreach (var edge in edges)
+				RemoveEdge(edge);
+			return this;
+		}
+		public OrientedGraph<TVertex, TEdge> RemoveEdges(IEnumerable<(VertexName vertexOut, VertexName vertexIn)> edges) {
+			foreach (var (vertexIn, vertexOut) in edges)
+					RemoveEdge(vertexOut, vertexIn);
+			return this;
+		}
+		public OrientedGraph<TVertex, TEdge> RemoveEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate) {
+			var edges = GetEdgesWith(edgePredicate);
+			foreach (var edge in edges)
+				RemoveEdge(edge);
+			return this;
 		}
 
 		public OrientedGraph<TVertex, TEdge> ClearGraph()
@@ -291,13 +336,11 @@ namespace GraphLibrary.Graphs
 			=>	ApplyToEdgesWith(edgePredicate, edgeAction);
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertex(TVertex vertex) 
 			=> AddVertex(vertex);
-		//IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertex(VertexName vertex) => AddVertex(vertex);
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertices(IEnumerable<TVertex> vertices) 
 			=> AddVertices(vertices);
 
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddEdge(TEdge edge) 
 			=> AddEdge(edge);
-		//IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddEdge(VertexName vertexOut, VertexName vertexIn) => AddEdge(vertexOut, vertexIn);
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddEdges(IEnumerable<TEdge> edges) 
 			=> AddEdges(edges);
 
@@ -305,11 +348,23 @@ namespace GraphLibrary.Graphs
 			=> RemoveVertex(vertex);
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVertex(TVertex vertex) 
 			=> RemoveVertex(vertex);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVertices(IEnumerable<VertexName> vertices)
+			=> RemoveVertices(vertices);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVertices(IEnumerable<TVertex> vertices)
+			=> RemoveVertices(vertices);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate)
+			=> RemoveVerticesWith(vertexPredicate);
 
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdge(VertexName vertexOut, VertexName vertexIn) 
 			=> RemoveEdge(vertexOut, vertexIn);
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdge(TEdge edge) 
 			=> RemoveEdge(edge);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdges(IEnumerable<TEdge> edges)
+			=> RemoveEdges(edges);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdges(IEnumerable<(VertexName vertexOut, VertexName vertexIn)> edges)
+			=> RemoveEdges(edges);
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate)
+			=> RemoveEdgesWith(edgePredicate);
 
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ClearGraph()
 			=> ClearGraph();

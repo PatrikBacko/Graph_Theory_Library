@@ -56,9 +56,16 @@ namespace GraphLibrary.Graphs
 
 		IOrientedGraph<TVertex, TEdge> RemoveVertex(VertexName vertex);
 		IOrientedGraph<TVertex, TEdge> RemoveVertex(TVertex vertex);
+		IOrientedGraph<TVertex, TEdge> RemoveVertices(IEnumerable<TVertex> vertices);
+		IOrientedGraph<TVertex, TEdge> RemoveVertices(IEnumerable<VertexName> vertices);
+		IOrientedGraph<TVertex, TEdge> RemoveVerticesWith(OrientedVertexPredicate<TVertex> vertices);
 
 		IOrientedGraph<TVertex, TEdge> RemoveEdge(VertexName vertexOut, VertexName vertexIn);
 		IOrientedGraph<TVertex, TEdge> RemoveEdge(TEdge edge);
+		IOrientedGraph<TVertex, TEdge> RemoveEdges(IEnumerable<TEdge> edges);
+		IOrientedGraph<TVertex, TEdge> RemoveEdges(IEnumerable<(VertexName vertexOut, VertexName vertexIn)> edges);
+		IOrientedGraph<TVertex, TEdge> RemoveEdgesWith(OrientedEdgePredicate<TEdge> edges);
+
 
 		static abstract IOrientedGraph<TVertex, TEdge> CreateGraph();
 		static abstract IOrientedGraph<TVertex, TEdge> CreateGraph(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges);

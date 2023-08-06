@@ -14,7 +14,7 @@ namespace GraphLibraryTests.AlgorithmsTests
 	{
 		[TestMethod]
 		public void DAGTest1(){
-			var graph = TestGraphs.GetTestGraphDAG1();
+			var graph = TestGraphs.DagTestGraph1;
 			var expected = new List<VertexName>() { "5", "4", "2", "3", "1", "0" };
 			var actual = Algorithms.TopologicalSorting(graph);
 			CollectionAssert.AreEqual(expected, actual);
@@ -23,7 +23,7 @@ namespace GraphLibraryTests.AlgorithmsTests
 		[TestMethod]
 		public void DAGTest2()
 		{
-			var graph = TestGraphs.GetTestGraphDAG2();
+			var graph = TestGraphs.DagTestGraph2;
 			var expected = new List<VertexName>() { "0", "2", "1", "3" };
 			var actual = Algorithms.TopologicalSorting(graph);
 			CollectionAssert.AreEqual(expected, actual);
@@ -31,7 +31,7 @@ namespace GraphLibraryTests.AlgorithmsTests
 
 		[TestMethod]
 		public void NotDAGTest1(){
-			var graph = TestGraphs.GetTestGraphNotDAG1();
+			var graph = TestGraphs.NotDagTestGraph1;
 			Assert.ThrowsException<GraphIsNotDAGException>(() => Algorithms.TopologicalSorting(graph));
 		}
 	}
