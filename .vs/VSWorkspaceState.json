@@ -6,10 +6,9 @@
     "\\GraphLibraryTests\\AlgorithmsTests",
     "\\GraphLibrary\\Algorithms",
     "\\GraphLibrary\\Edges",
-    "\\GraphLibrary\\Extensions",
     "\\GraphLibrary\\Graphs",
     "\\GraphLibrary\\Vertices"
   ],
-  "SelectedNode": "\\GraphLibraryTests\\AlgorithmsTests\\TopologicalSortingTests.cs",
+  "SelectedNode": "\\GraphLibraryTests\\obj",
   "PreviewInSolutionExplorer": false
 }

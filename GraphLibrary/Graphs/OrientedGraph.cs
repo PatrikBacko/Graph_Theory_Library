@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 using GraphLibrary.Graphs.Delegates;
 
 //TODO: (maybe) prejsť z eager na lazy a detekovať zmeny
-//TODO: Add Tests
 
 namespace GraphLibrary.Graphs
 {
     public class OrientedGraph<TVertex, TEdge> : IOrientedGraph<TVertex, TEdge>
-		where TVertex : OrientedVertex//, new()
-		where TEdge : OrientedEdge//, new()
+		where TVertex : OrientedVertex
+		where TEdge : OrientedEdge
 	{
 		private Dictionary<VertexName, TVertex> vertices;
 		private Dictionary<VertexName, Dictionary<VertexName, TEdge>> neighbors;
@@ -63,6 +62,7 @@ namespace GraphLibrary.Graphs
 		}
 
 		public IEnumerable<TVertex> GetVertices() => vertices.Values;
+		//TODO: tests - GetVerticesWith
 		public IEnumerable<TVertex> GetVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate) {
 			List<TVertex> returnVertices = new List<TVertex>();
 			foreach (var vertex in vertices.Values)
@@ -70,6 +70,7 @@ namespace GraphLibrary.Graphs
 					returnVertices.Add(vertex);
 			return returnVertices;
 		}
+
 		public IEnumerable<TEdge> GetEdges() {
 			List<TEdge> edges = new List<TEdge>();
 			foreach (var vertex in vertices.Values)
@@ -77,6 +78,7 @@ namespace GraphLibrary.Graphs
 					edges.Add(edge);
 			return edges;
 		}
+		//TODO: tests - GetEdgesWith
 		public IEnumerable<TEdge> GetEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate) {
 			List<TEdge> returnEdges = new List<TEdge>();
 			foreach (var edge in GetEdges())
@@ -84,25 +86,28 @@ namespace GraphLibrary.Graphs
 					returnEdges.Add(edge);
 			return returnEdges;
 		}
-
+		//TODO: tests - ApplyToVertices
 		public OrientedGraph<TVertex, TEdge> ApplyToVertices(OrientedVertexAction<TVertex> vertexAction) {
 			var vertices = GetVertices();
 			foreach (var vertex in vertices)
 				vertexAction(vertex);
 			return this;
 		}
+		//TODO: tests - ApplyToVerticesWith
 		public OrientedGraph<TVertex, TEdge> ApplyToVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate, OrientedVertexAction<TVertex> vertexAction) {
 			var vertices = GetVerticesWith(vertexPredicate);
 			foreach (var vertex in vertices)
 				vertexAction(vertex);
 			return this;
 		}
+		//TODO: tests - ApplyToEdges
 		public OrientedGraph<TVertex, TEdge> ApplyToEdges(OrientedEdgeAction<TEdge> edgeAction) {
 			var edges = GetEdges();
 			foreach (var edge in edges)
 				edgeAction(edge);
 			return this;
 		}
+		//TODO: tests - ApplyToEdgesWith
 		public OrientedGraph<TVertex, TEdge> ApplyToEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate, OrientedEdgeAction<TEdge> edgeAction) {
 			var edges = GetEdgesWith(edgePredicate);
 			foreach (var edge in edges)
@@ -114,13 +119,16 @@ namespace GraphLibrary.Graphs
 			ContainsVertex(vertex);
 			return vertices[vertex];
 		}
+
 		public TEdge GetEdge(VertexName vertexOut, VertexName vertexIn) {
 			ContainsEdge(vertexOut, vertexIn);
 			return neighbors[vertexOut][vertexIn];
 		}
 
 		public int GetVertexCount() => vertices.Count;
+
 		public int GetEdgeCount() => edgeCount;
+	
 		public IEnumerable<TVertex> GetInAdjacentVertices(VertexName vertex) {
 			ContainsVertex(vertex);
 			List<TVertex> adjVerticesIn = new List<TVertex>();
@@ -136,7 +144,7 @@ namespace GraphLibrary.Graphs
 				adjVerticesOut.Add(GetVertex(e.VertexIn));
 			return adjVerticesOut;
 		}
-
+		//TODO: tests - GetInEdges
 		public IEnumerable<TEdge> GetInEdges(VertexName vertex) {
 			ContainsVertex(vertex);
 			List<TEdge> edgesIn = new List<TEdge>();
@@ -145,7 +153,7 @@ namespace GraphLibrary.Graphs
 					edgesIn.Add(GetEdge(v.Name, vertex));
 			return edgesIn;
 		}
-
+		//TODO: tests - GetOutEdges
 		public IEnumerable<TEdge> GetOutEdges(VertexName vertex) {
 			ContainsVertex(vertex);
 			List<TEdge> edgesOut = new List<TEdge>();
@@ -153,12 +161,13 @@ namespace GraphLibrary.Graphs
 				edgesOut.Add(v);
 			return edgesOut;
 		}
-
+		//TODO: tests - GetInDegree
 		public int GetInDegree(VertexName vertexName) {
 			ContainsVertex(vertexName);
 			var vertex = GetVertex(vertexName);
 			return vertex.DegreeIn;
-		}
+		} 
+		//TODO: tests - GetOutDegree
 		public int GetOutDegree(VertexName vertexName) {
 			ContainsVertex(vertexName);
 			var vertex = GetVertex(vertexName);
@@ -239,6 +248,7 @@ namespace GraphLibrary.Graphs
 				RemoveVertex(vertex);
 			return this;
 		}
+		//TODO: tests - RemoveVerticesWith
 		public OrientedGraph<TVertex, TEdge> RemoveVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate) {
 			var vertices = GetVerticesWith(vertexPredicate);
 			foreach (var vertex in vertices)
@@ -276,6 +286,7 @@ namespace GraphLibrary.Graphs
 					RemoveEdge(vertexOut, vertexIn);
 			return this;
 		}
+		//TODO: tests - RemoveEdgesWith
 		public OrientedGraph<TVertex, TEdge> RemoveEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate) {
 			var edges = GetEdgesWith(edgePredicate);
 			foreach (var edge in edges)
@@ -283,6 +294,7 @@ namespace GraphLibrary.Graphs
 			return this;
 		}
 
+		//TODO: tests - ClearGraph
 		public OrientedGraph<TVertex, TEdge> ClearGraph()
 		{
 			vertices.Clear();
@@ -291,6 +303,7 @@ namespace GraphLibrary.Graphs
 			return this;
 		}
 
+		//TODO: tests - CreateGraph
 		public static OrientedGraph<TVertex, TEdge> CreateGraph() => new OrientedGraph<TVertex, TEdge>();
 		public static OrientedGraph<TVertex, TEdge> CreateGraph(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges) {
 			var graph = new OrientedGraph<TVertex, TEdge>();

@@ -2319,19 +2319,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\llama\\.nuget\\packages\\": {}
+    "C:\\Users\\llama\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibraryTests\\GraphLibraryTests.csproj",
+      "projectUniqueName": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibraryTests\\GraphLibraryTests.csproj",
       "projectName": "GraphLibraryTests",
-      "projectPath": "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibraryTests\\GraphLibraryTests.csproj",
+      "projectPath": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibraryTests\\GraphLibraryTests.csproj",
       "packagesPath": "C:\\Users\\llama\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibraryTests\\obj\\",
+      "outputPath": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibraryTests\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\llama\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2345,8 +2350,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibrary\\GraphLibrary.csproj": {
-              "projectPath": "C:\\Users\\llama\\Desktop\\programmig shit\\C#_zapoctak\\Graph_Theory_Library\\GraphLibrary\\GraphLibrary.csproj"
+            "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibrary\\GraphLibrary.csproj": {
+              "projectPath": "C:\\Users\\llama\\Desktop\\programming shit\\C#_zapoctak\\GraphLibrary\\GraphLibrary.csproj"
             }
           }
         }
