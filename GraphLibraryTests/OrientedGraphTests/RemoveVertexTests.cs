@@ -20,7 +20,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVertexTest1()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("0");
 
             graph.AddVertex(vertex);
@@ -35,7 +35,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVertexTest2()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("0");
 
             graph.AddVertex(vertex);
@@ -49,7 +49,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVertexTest3()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("0");
 
             graph.AddVertex(new OrientedVertex("1"));
@@ -70,7 +70,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVertexTest4()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
 
             Assert.ThrowsException<VertexException>(() => graph.RemoveVertex("0"));
         }
@@ -78,7 +78,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVertexTest5()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             graph.AddVertex(new OrientedVertex("1"));
             graph.AddVertex(new OrientedVertex("2"));
             graph.RemoveVertex("1");
@@ -90,7 +90,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVertexTest6()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             graph.AddVertex(new OrientedVertex("1"));
             graph.AddVertex(new OrientedVertex("0"));
             graph.RemoveVertex("1");
@@ -102,7 +102,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVertexTest7()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             graph.AddVertex(new OrientedVertex("1"));
             graph.AddVertex(new OrientedVertex("0"));
             graph.RemoveVertex("1");
@@ -115,7 +115,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVerticesTest1()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex0 = new OrientedVertex("0");
             var vertex1 = new OrientedVertex("1");
             var vertex2 = new OrientedVertex("2");
@@ -135,7 +135,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVerticesTest2()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertices = new List<OrientedVertex>() { new OrientedVertex("0"), new OrientedVertex("1"), new OrientedVertex("2") };
 
             graph.AddVertices(vertices);
@@ -149,7 +149,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVerticesTest3()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("1");
 
             var vertices = new List<OrientedVertex>() { new OrientedVertex("0"), vertex, new OrientedVertex("2") };
@@ -165,7 +165,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void RemoveVerticesTest4()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
 
 
             var vertices = new List<OrientedVertex>() { new OrientedVertex("0"), new OrientedVertex("1"), new OrientedVertex("2") };

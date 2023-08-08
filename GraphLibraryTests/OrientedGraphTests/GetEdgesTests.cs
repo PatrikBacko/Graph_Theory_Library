@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Graphs.Exceptions;
+using GraphLibraryTests.TestGraphs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -17,7 +17,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         public void IsVertexTest1()
         {
             // Arrange
-            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             graph.AddVertex(new OrientedVertex("1"));
 
             // Act
@@ -31,7 +31,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         public void IsVertexTest2()
         {
             // Arrange
-            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("1");
             graph.AddVertex(vertex);
 
@@ -46,7 +46,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         public void IsVertexTest3()
         {
             // Arrange
-            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("1");
             graph.AddVertex(new OrientedVertex("1"));
 
@@ -61,7 +61,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         public void IsVertexTest4()
         {
             // Arrange
-            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("2");
             graph.AddVertex(new OrientedVertex("1"));
 
@@ -76,7 +76,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         public void IsVertexTest5()
         {
             // Arrange
-            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            var graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             graph.AddVertex(new OrientedVertex("1"));
 
             // Act

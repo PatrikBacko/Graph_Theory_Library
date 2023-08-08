@@ -20,7 +20,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVertexTest1()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("0");
 
             graph.AddVertex(vertex);
@@ -36,7 +36,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVertexTest2()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("1");
 
             graph.AddVertex(new OrientedVertex("0"));
@@ -53,7 +53,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVertexTest3()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("0");
 
             graph.AddVertex(new OrientedVertex("0"));
@@ -64,7 +64,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVertexTest4()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("0");
 
             graph.AddVertex(vertex);
@@ -76,7 +76,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVerticesTest1()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertices = new List<OrientedVertex>() { new OrientedVertex("0"), new OrientedVertex("1"), new OrientedVertex("2") };
 
             graph.AddVertices(vertices);
@@ -88,7 +88,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVerticesTest2()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertices = new List<OrientedVertex>() { new OrientedVertex("0"), new OrientedVertex("1"), new OrientedVertex("2") };
             var vertex = new OrientedVertex("0");
 
@@ -101,7 +101,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVerticesTest3()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
             var vertex = new OrientedVertex("0");
             var vertices = new List<OrientedVertex>() { vertex, new OrientedVertex("1"), new OrientedVertex("2") };
 
@@ -114,7 +114,7 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVerticesTest4()
         {
-            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.CreateGraph();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
 
             var vertices = new List<OrientedVertex>() { new OrientedVertex("0"), new OrientedVertex("1"), new OrientedVertex("2"), new OrientedVertex("0") };
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GraphLibrary.Graphs.Exceptions;
+using GraphLibraryTests.TestGraphs;
 
 namespace GraphLibraryTests.OrientedGraphTests
 {

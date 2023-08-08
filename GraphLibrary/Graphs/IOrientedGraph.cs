@@ -13,7 +13,7 @@ namespace GraphLibrary.Graphs
 		where TVertex : OrientedVertex
 		where TEdge : OrientedEdge
 	{
-		IOrientedGraph<TVertex, TEdge> ClearGraph();
+		IOrientedGraph<TVertex, TEdge> Clear();
 
 		int GetVertexCount();
 		int GetEdgeCount();
@@ -67,8 +67,8 @@ namespace GraphLibrary.Graphs
 		IOrientedGraph<TVertex, TEdge> RemoveEdgesWith(OrientedEdgePredicate<TEdge> edges);
 
 
-		static abstract IOrientedGraph<TVertex, TEdge> CreateGraph();
-		static abstract IOrientedGraph<TVertex, TEdge> CreateGraph(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges);
+		static abstract IOrientedGraph<TVertex, TEdge> Create();
+		static abstract IOrientedGraph<TVertex, TEdge> Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges);
 		//IOrientedGraph<TVertex, TEdge> ReverseEdge(TEdge edge);
 		//IOrientedGraph<TVertex, TEdge> ReverseEdges();
 		//IOrientedGraph<TVertex, TEdge> ReverseEdges(IEnumerable<TEdge> edges);

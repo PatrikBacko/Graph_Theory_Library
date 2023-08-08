@@ -1,4 +1,5 @@
 ﻿using GraphLibrary.Algorithms.Exceptions;
+using GraphLibraryTests.TestGraphs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GraphLibraryTests.AlgorithmsTests
 {
-	[TestClass]
+    [TestClass]
 	public class TopologicalSortingTests
 	{
 		[TestMethod]
