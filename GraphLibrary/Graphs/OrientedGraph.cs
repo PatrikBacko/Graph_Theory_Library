@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GraphLibrary.Graphs.Delegates;
+using System.Text.Json;
+using GraphLibrary.Graphs.JsonConverters;
 
 //TODO: (maybe) prejsť z eager na lazy a detekovať zmeny
 
@@ -62,7 +64,7 @@ namespace GraphLibrary.Graphs
 		}
 
 		public virtual IEnumerable<TVertex> GetVertices() => _vertices.Values;
-		public virtual IEnumerable<TVertex> GetVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate) {
+		public virtual IEnumerable<TVertex> GetVerticesWith(VertexPredicate<TVertex> vertexPredicate) {
 			List<TVertex> returnVertices = new List<TVertex>();
 			foreach (var vertex in _vertices.Values)
 				if (vertexPredicate(vertex))
@@ -77,7 +79,7 @@ namespace GraphLibrary.Graphs
 					edges.Add(edge);
 			return edges;
 		}
-		public virtual IEnumerable<TEdge> GetEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate) {
+		public virtual IEnumerable<TEdge> GetEdgesWith(EdgePredicate<TEdge> edgePredicate) {
 			List<TEdge> returnEdges = new List<TEdge>();
 			foreach (var edge in GetEdges())
 				if (edgePredicate(edge))
@@ -85,28 +87,28 @@ namespace GraphLibrary.Graphs
 			return returnEdges;
 		}
 
-		public virtual OrientedGraph<TVertex, TEdge> ApplyToVertices(OrientedVertexAction<TVertex> vertexAction) {
+		public virtual OrientedGraph<TVertex, TEdge> ApplyToVertices(VertexAction<TVertex> vertexAction) {
 			var vertices = GetVertices();
 			foreach (var vertex in vertices)
 				vertexAction(vertex);
 			return this;
 		}
 
-		public virtual OrientedGraph<TVertex, TEdge> ApplyToVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate, OrientedVertexAction<TVertex> vertexAction) {
+		public virtual OrientedGraph<TVertex, TEdge> ApplyToVerticesWith(VertexPredicate<TVertex> vertexPredicate, VertexAction<TVertex> vertexAction) {
 			var vertices = GetVerticesWith(vertexPredicate);
 			foreach (var vertex in vertices)
 				vertexAction(vertex);
 			return this;
 		}
 
-		public virtual OrientedGraph<TVertex, TEdge> ApplyToEdges(OrientedEdgeAction<TEdge> edgeAction) {
+		public virtual OrientedGraph<TVertex, TEdge> ApplyToEdges(EdgeAction<TEdge> edgeAction) {
 			var edges = GetEdges();
 			foreach (var edge in edges)
 				edgeAction(edge);
 			return this;
 		}
 
-		public virtual OrientedGraph<TVertex, TEdge> ApplyToEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate, OrientedEdgeAction<TEdge> edgeAction) {
+		public virtual OrientedGraph<TVertex, TEdge> ApplyToEdgesWith(EdgePredicate<TEdge> edgePredicate, EdgeAction<TEdge> edgeAction) {
 			var edges = GetEdgesWith(edgePredicate);
 			foreach (var edge in edges)
 				edgeAction(edge);
@@ -246,7 +248,7 @@ namespace GraphLibrary.Graphs
 				RemoveVertex(vertex);
 			return this;
 		}
-		public virtual OrientedGraph<TVertex, TEdge> RemoveVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate) {
+		public virtual OrientedGraph<TVertex, TEdge> RemoveVerticesWith(VertexPredicate<TVertex> vertexPredicate) {
 			var vertices = GetVerticesWith(vertexPredicate);
 			foreach (var vertex in vertices)
 				RemoveVertex(vertex);
@@ -284,7 +286,7 @@ namespace GraphLibrary.Graphs
 			return this;
 		}
 
-		public virtual OrientedGraph<TVertex, TEdge> RemoveEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate) {
+		public virtual OrientedGraph<TVertex, TEdge> RemoveEdgesWith(EdgePredicate<TEdge> edgePredicate) {
 			var edges = GetEdgesWith(edgePredicate);
 			foreach (var edge in edges)
 				RemoveEdge(edge);
@@ -304,6 +306,29 @@ namespace GraphLibrary.Graphs
 			var graph = new OrientedGraph<TVertex, TEdge>();
 			graph.AddVertices(vertices);
 			graph.AddEdges(edges);
+			return graph;
+		}
+
+		//TODO : Tests - Serialize
+		public virtual void SerializeToJson(string path) 
+			=> SerializeToJson(path, new JsonSerializerOptions() 
+				{ Converters = { new OrientedGraphConverter<TVertex, TEdge>(), new VertexNameConverter() } });
+
+		public virtual void SerializeToJson(string path, JsonSerializerOptions options)
+		{
+			var str = JsonSerializer.Serialize(this, options);
+			File.WriteAllText(path, str);
+		}
+
+		//TODO: Tests - Deserialize
+		public static OrientedGraph<TVertex, TEdge>? DeserializeFromJson(string path) 
+			=> DeserializeFromJson(path, new JsonSerializerOptions()
+				{ Converters = { new OrientedGraphConverter<TVertex, TEdge>(), new VertexNameConverter() } });
+
+		public static OrientedGraph<TVertex, TEdge>? DeserializeFromJson(string path, JsonSerializerOptions options)
+		{
+			var str = File.ReadAllText(path);
+			var graph = JsonSerializer.Deserialize<OrientedGraph<TVertex, TEdge>>(str, options);
 			return graph;
 		}
 
@@ -330,13 +355,13 @@ namespace GraphLibrary.Graphs
 				throw new VertexException("Vertex name can't be empty string");
 		}
 
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToVertices(OrientedVertexAction<TVertex> vertexAction) 
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToVertices(VertexAction<TVertex> vertexAction) 
 			=> ApplyToVertices(vertexAction);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate, OrientedVertexAction<TVertex> vertexAction) 
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToVerticesWith(VertexPredicate<TVertex> vertexPredicate, VertexAction<TVertex> vertexAction) 
 			=> ApplyToVerticesWith(vertexPredicate, vertexAction);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToEdges(OrientedEdgeAction<TEdge> edgeAction) 
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToEdges(EdgeAction<TEdge> edgeAction) 
 			=>	ApplyToEdges(edgeAction);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate, OrientedEdgeAction<TEdge> edgeAction) 
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.ApplyToEdgesWith(EdgePredicate<TEdge> edgePredicate, EdgeAction<TEdge> edgeAction) 
 			=>	ApplyToEdgesWith(edgePredicate, edgeAction);
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.AddVertex(TVertex vertex) 
 			=> AddVertex(vertex);
@@ -356,7 +381,7 @@ namespace GraphLibrary.Graphs
 			=> RemoveVertices(vertices);
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVertices(IEnumerable<TVertex> vertices)
 			=> RemoveVertices(vertices);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate)
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveVerticesWith(VertexPredicate<TVertex> vertexPredicate)
 			=> RemoveVerticesWith(vertexPredicate);
 
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdge(VertexName vertexOut, VertexName vertexIn) 
@@ -367,7 +392,7 @@ namespace GraphLibrary.Graphs
 			=> RemoveEdges(edges);
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdges(IEnumerable<(VertexName vertexOut, VertexName vertexIn)> edges)
 			=> RemoveEdges(edges);
-		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate)
+		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.RemoveEdgesWith(EdgePredicate<TEdge> edgePredicate)
 			=> RemoveEdgesWith(edgePredicate);
 
 		IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.Clear()
@@ -376,5 +401,11 @@ namespace GraphLibrary.Graphs
 			=> Create();
 		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges) 
 			=> Create(vertices, edges);
+
+		static IOrientedGraph<TVertex, TEdge>? IOrientedGraph<TVertex, TEdge>.DeserializeFromJson(string path, JsonSerializerOptions options)
+			=> DeserializeFromJson(path, options);
+
+		static IOrientedGraph<TVertex, TEdge>? IOrientedGraph<TVertex, TEdge>.DeserializeFromJson(string path)
+			=> DeserializeFromJson(path);
 	}
 }

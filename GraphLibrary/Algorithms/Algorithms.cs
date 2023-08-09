@@ -20,7 +20,7 @@ namespace GraphLibrary.Algorithms
 	{
 		//TODO: Add Tests
 		static public void Bfs<TVertex, TEdge>
-		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexAction, OrientedEdgeAction<TEdge> edgeAction)
+		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexAction, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
@@ -48,7 +48,7 @@ namespace GraphLibrary.Algorithms
 			}
 		}
 		static public void Bfs<TVertex, TEdge>
-		(IOrientedGraph<TVertex, TEdge> graph, OrientedVertexAction<TVertex> vertexAction, OrientedEdgeAction<TEdge> edgeAction)
+		(IOrientedGraph<TVertex, TEdge> graph, VertexAction<TVertex> vertexAction, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
@@ -61,7 +61,7 @@ namespace GraphLibrary.Algorithms
 		}
 		//TODO: Add Tests
 		static public void Dfs<TVertex, TEdge>
-		(IOrientedGraph<TVertex, TEdge> graph, OrientedVertexAction<TVertex> vertexActionOpened, OrientedVertexAction<TVertex> vertexActionClosed, OrientedEdgeAction<TEdge> edgeAction)
+		(IOrientedGraph<TVertex, TEdge> graph, VertexAction<TVertex> vertexActionOpened, VertexAction<TVertex> vertexActionClosed, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
@@ -75,8 +75,8 @@ namespace GraphLibrary.Algorithms
 			}
 		}
 		static public void Dfs<TVertex, TEdge>
-		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexActionOpened,
-		OrientedVertexAction<TVertex> vertexActionClosed, OrientedEdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
+		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
+		VertexAction<TVertex> vertexActionClosed, EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
@@ -88,8 +88,8 @@ namespace GraphLibrary.Algorithms
 			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, v => { }, edgeAction, visited);
 		}
 		static public void DfsSpecial<TVertex, TEdge>
-		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexActionOpened,
-		OrientedVertexAction<TVertex> vertexActionClosed, OrientedVertexAction<TVertex> beforeVisitedCheckAction, OrientedEdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
+		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
+		VertexAction<TVertex> vertexActionClosed, VertexAction<TVertex> beforeVisitedCheckAction, EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
@@ -101,8 +101,8 @@ namespace GraphLibrary.Algorithms
 			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, beforeVisitedCheckAction, edgeAction, visited); 
 		}
 		static private void DfsRecursion<TVertex, TEdge>
-		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, OrientedVertexAction<TVertex> vertexActionOpened,
-		OrientedVertexAction<TVertex> vertexActionClosed, OrientedVertexAction<TVertex> beforeVisitedCheckAction,OrientedEdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState> visited)
+		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
+		VertexAction<TVertex> vertexActionClosed, VertexAction<TVertex> beforeVisitedCheckAction,EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState> visited)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{

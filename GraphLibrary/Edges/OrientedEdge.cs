@@ -9,13 +9,13 @@ namespace GraphLibrary.Edges
 {
 	public class OrientedEdge : Edge
 	{
-		public VertexName VertexIn { get; init; }	//internal set for reverse maybe ?
 		public VertexName VertexOut { get; init; }
+		public VertexName VertexIn { get; init; }
 
 		public OrientedEdge(VertexName vertexOut, VertexName vertexIn)
 		{
-			VertexIn = vertexIn;
 			VertexOut = vertexOut;
+			VertexIn = vertexIn;
 		}
 	}
 }

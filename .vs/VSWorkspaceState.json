@@ -4,11 +4,12 @@
     "\\GraphLibrary",
     "\\GraphLibraryTests",
     "\\GraphLibraryTests\\AlgorithmsTests",
+    "\\GraphLibraryTests\\OrientedGraphTests",
     "\\GraphLibrary\\Algorithms",
     "\\GraphLibrary\\Edges",
     "\\GraphLibrary\\Graphs",
     "\\GraphLibrary\\Vertices"
   ],
-  "SelectedNode": "\\GraphLibrary\\GraphLibrary.sln",
+  "SelectedNode": "\\GraphLibraryTests\\OrientedGraphTests\\AddEdgeTests.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace GraphLibrary.Graphs
@@ -19,15 +20,15 @@ namespace GraphLibrary.Graphs
 		int GetEdgeCount();
 
 		IEnumerable<TVertex> GetVertices();
-		IEnumerable<TVertex> GetVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate);
+		IEnumerable<TVertex> GetVerticesWith(VertexPredicate<TVertex> vertexPredicate);
 		IEnumerable<TEdge> GetEdges();
-		IEnumerable<TEdge> GetEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate);
+		IEnumerable<TEdge> GetEdgesWith(EdgePredicate<TEdge> edgePredicate);
 
-		IOrientedGraph<TVertex, TEdge> ApplyToVertices(OrientedVertexAction<TVertex> vertexAction);
-		IOrientedGraph<TVertex, TEdge> ApplyToVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate, OrientedVertexAction<TVertex> vertexAction);
+		IOrientedGraph<TVertex, TEdge> ApplyToVertices(VertexAction<TVertex> vertexAction);
+		IOrientedGraph<TVertex, TEdge> ApplyToVerticesWith(VertexPredicate<TVertex> vertexPredicate, VertexAction<TVertex> vertexAction);
 
-		IOrientedGraph<TVertex, TEdge> ApplyToEdges(OrientedEdgeAction<TEdge> edgeAction);
-		IOrientedGraph<TVertex, TEdge> ApplyToEdgesWith(OrientedEdgePredicate<TEdge> edgePredicate, OrientedEdgeAction<TEdge> edgeAction);
+		IOrientedGraph<TVertex, TEdge> ApplyToEdges(EdgeAction<TEdge> edgeAction);
+		IOrientedGraph<TVertex, TEdge> ApplyToEdgesWith(EdgePredicate<TEdge> edgePredicate, EdgeAction<TEdge> edgeAction);
 
 		TVertex GetVertex(VertexName vertex);
 		TEdge GetEdge(VertexName vertexOut, VertexName vertexIn);
@@ -58,20 +59,27 @@ namespace GraphLibrary.Graphs
 		IOrientedGraph<TVertex, TEdge> RemoveVertex(TVertex vertex);
 		IOrientedGraph<TVertex, TEdge> RemoveVertices(IEnumerable<TVertex> vertices);
 		IOrientedGraph<TVertex, TEdge> RemoveVertices(IEnumerable<VertexName> vertices);
-		IOrientedGraph<TVertex, TEdge> RemoveVerticesWith(OrientedVertexPredicate<TVertex> vertices);
+		IOrientedGraph<TVertex, TEdge> RemoveVerticesWith(VertexPredicate<TVertex> vertices);
 
 		IOrientedGraph<TVertex, TEdge> RemoveEdge(VertexName vertexOut, VertexName vertexIn);
 		IOrientedGraph<TVertex, TEdge> RemoveEdge(TEdge edge);
 		IOrientedGraph<TVertex, TEdge> RemoveEdges(IEnumerable<TEdge> edges);
 		IOrientedGraph<TVertex, TEdge> RemoveEdges(IEnumerable<(VertexName vertexOut, VertexName vertexIn)> edges);
-		IOrientedGraph<TVertex, TEdge> RemoveEdgesWith(OrientedEdgePredicate<TEdge> edges);
+		IOrientedGraph<TVertex, TEdge> RemoveEdgesWith(EdgePredicate<TEdge> edges);
 
 
 		static abstract IOrientedGraph<TVertex, TEdge> Create();
 		static abstract IOrientedGraph<TVertex, TEdge> Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges);
+
 		//IOrientedGraph<TVertex, TEdge> ReverseEdge(TEdge edge);
 		//IOrientedGraph<TVertex, TEdge> ReverseEdges();
 		//IOrientedGraph<TVertex, TEdge> ReverseEdges(IEnumerable<TEdge> edges);
+
+		void SerializeToJson(string path);
+		void SerializeToJson(string path, JsonSerializerOptions options);
+
+		static abstract IOrientedGraph<TVertex, TEdge>? DeserializeFromJson(string path);
+		static abstract IOrientedGraph<TVertex, TEdge>? DeserializeFromJson(string path, JsonSerializerOptions options);
 
 		static IOrientedGraph<TVertex, TEdge> operator +(IOrientedGraph<TVertex, TEdge> graph, TVertex vertex) => graph.AddVertex(vertex);
 		static IOrientedGraph<TVertex, TEdge> operator +(IOrientedGraph<TVertex, TEdge> graph, TEdge edge) => graph.AddEdge(edge);

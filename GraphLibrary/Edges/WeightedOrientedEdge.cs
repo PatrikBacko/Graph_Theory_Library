@@ -12,7 +12,7 @@ namespace GraphLibrary.Edges
 	{
 		public TWeight Weight { get; protected set; }
 
-		public WeightedOrientedEdge(VertexName source, VertexName destination, TWeight weight) : base(source, destination)
+		public WeightedOrientedEdge(VertexName vertexOut, VertexName vertexIn, TWeight weight) : base(vertexOut, vertexIn)
 		{
 			Weight = weight;
 		}
