@@ -10,7 +10,7 @@ using System.Data;
 
 namespace GraphLibrary.Graphs
 {
-	public class WeightedOrientedGraph<TVertex, TEdge, TWeight> : OrientedGraph<TVertex, TEdge>, IWeightedOrientedGraph<TVertex, TEdge, TWeight>
+	public class WeightedOrientedGraph<TVertex, TEdge, TWeight> : OrientedGraph<TVertex, TEdge>, IWeightedOrientedGraph<TVertex, TEdge, TWeight>, IOrientedGraph<TVertex, TEdge>
 		where TVertex : WeightedOrientedVertex<TWeight>
 		where TEdge : WeightedOrientedEdge<TWeight>
 		where TWeight : INumber<TWeight>
@@ -50,6 +50,8 @@ namespace GraphLibrary.Graphs
 			=> ChangeEdgeWeight(vertexOut, vertexIn, weight);
 
 		IWeightedOrientedGraph<TVertex, TEdge, TWeight> IWeightedOrientedGraph<TVertex, TEdge, TWeight>.Clear() => Clear();
+
+		//static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.Create() => Create();
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> IWeightedOrientedGraph<TVertex, TEdge, TWeight>.Create() => Create();
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> IWeightedOrientedGraph<TVertex, TEdge, TWeight>.Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges) => Create(vertices, edges);
 	}

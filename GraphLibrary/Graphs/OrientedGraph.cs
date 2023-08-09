@@ -16,18 +16,18 @@ namespace GraphLibrary.Graphs
 		where TVertex : OrientedVertex
 		where TEdge : OrientedEdge
 	{
-		private Dictionary<VertexName, TVertex> vertices;
-		private Dictionary<VertexName, Dictionary<VertexName, TEdge>> neighbors;
-		private int edgeCount;
+		public Dictionary<VertexName, TVertex> _vertices;
+		private Dictionary<VertexName, Dictionary<VertexName, TEdge>> _neighbors;
+		private int _edgeCount;
 
 		public OrientedGraph() {
-			vertices = new Dictionary<VertexName, TVertex>();
-			neighbors = new Dictionary<VertexName, Dictionary<VertexName, TEdge>>();
-			edgeCount = 0;
+			_vertices = new Dictionary<VertexName, TVertex>();
+			_neighbors = new Dictionary<VertexName, Dictionary<VertexName, TEdge>>();
+			_edgeCount = 0;
 		}
 
 		public virtual bool IsVertex(VertexName vertex) {
-			if (vertices.ContainsKey(vertex))
+			if (_vertices.ContainsKey(vertex))
 				return true;
 			return false;
 		}
@@ -35,7 +35,7 @@ namespace GraphLibrary.Graphs
 			if (!IsVertex(vertex.Name))
 				return false;
 
-			var v = vertices[vertex.Name];
+			var v = _vertices[vertex.Name];
 			if (v == vertex)
 				return true;
 			return false;
@@ -46,7 +46,7 @@ namespace GraphLibrary.Graphs
 			ContainsVertex(vertexOut);
 			ContainsVertex(vertexIn);
 
-			if (neighbors[vertexOut].ContainsKey(vertexIn))
+			if (_neighbors[vertexOut].ContainsKey(vertexIn))
 				return true;
 			return false;
 		}
@@ -55,16 +55,16 @@ namespace GraphLibrary.Graphs
 			if (!IsEdge(edge.VertexOut, edge.VertexIn))
 				return false;
 
-			var e = neighbors[edge.VertexOut][edge.VertexIn];
+			var e = _neighbors[edge.VertexOut][edge.VertexIn];
 			if (e == edge)
 				return true;
 			return false;
 		}
 
-		public virtual IEnumerable<TVertex> GetVertices() => vertices.Values;
+		public virtual IEnumerable<TVertex> GetVertices() => _vertices.Values;
 		public virtual IEnumerable<TVertex> GetVerticesWith(OrientedVertexPredicate<TVertex> vertexPredicate) {
 			List<TVertex> returnVertices = new List<TVertex>();
-			foreach (var vertex in vertices.Values)
+			foreach (var vertex in _vertices.Values)
 				if (vertexPredicate(vertex))
 					returnVertices.Add(vertex);
 			return returnVertices;
@@ -72,8 +72,8 @@ namespace GraphLibrary.Graphs
 
 		public virtual IEnumerable<TEdge> GetEdges() {
 			List<TEdge> edges = new List<TEdge>();
-			foreach (var vertex in vertices.Values)
-				foreach (var edge in neighbors[vertex.Name].Values)
+			foreach (var vertex in _vertices.Values)
+				foreach (var edge in _neighbors[vertex.Name].Values)
 					edges.Add(edge);
 			return edges;
 		}
@@ -115,17 +115,17 @@ namespace GraphLibrary.Graphs
 
 		public virtual TVertex GetVertex(VertexName vertex) {
 			ContainsVertex(vertex);
-			return vertices[vertex];
+			return _vertices[vertex];
 		}
 
 		public virtual TEdge GetEdge(VertexName vertexOut, VertexName vertexIn) {
 			ContainsEdge(vertexOut, vertexIn);
-			return neighbors[vertexOut][vertexIn];
+			return _neighbors[vertexOut][vertexIn];
 		}
 
-		public virtual int GetVertexCount() => vertices.Count;
+		public virtual int GetVertexCount() => _vertices.Count;
 
-		public virtual int GetEdgeCount() => edgeCount;
+		public virtual int GetEdgeCount() => _edgeCount;
 	
 		public virtual IEnumerable<TVertex> GetInAdjacentVertices(VertexName vertex) {
 			ContainsVertex(vertex);
@@ -138,7 +138,7 @@ namespace GraphLibrary.Graphs
 		public virtual IEnumerable<TVertex> GetOutAdjacentVertices(VertexName vertex) {
 			ContainsVertex(vertex);
 			List<TVertex> adjVerticesOut = new List<TVertex>();
-			foreach (var e in neighbors[vertex].Values)
+			foreach (var e in _neighbors[vertex].Values)
 				adjVerticesOut.Add(GetVertex(e.VertexIn));
 			return adjVerticesOut;
 		}
@@ -155,7 +155,7 @@ namespace GraphLibrary.Graphs
 		public virtual IEnumerable<TEdge> GetOutEdges(VertexName vertex) {
 			ContainsVertex(vertex);
 			List<TEdge> edgesOut = new List<TEdge>();
-			foreach (var v in neighbors[vertex].Values)
+			foreach (var v in _neighbors[vertex].Values)
 				edgesOut.Add(v);
 			return edgesOut;
 		}
@@ -176,8 +176,8 @@ namespace GraphLibrary.Graphs
 			ValidVertexName(vertex.Name);
 			if (IsVertex(vertex.Name))
 				throw new VertexException("Vertex already exists in Graph");
-			vertices.Add(vertex.Name, vertex);
-			neighbors.Add(vertex.Name, new Dictionary<VertexName, TEdge>());
+			_vertices.Add(vertex.Name, vertex);
+			_neighbors.Add(vertex.Name, new Dictionary<VertexName, TEdge>());
 			return this;
 		}
 		public virtual OrientedGraph<TVertex, TEdge> AddVertices(IEnumerable<TVertex> vertices) {
@@ -198,11 +198,11 @@ namespace GraphLibrary.Graphs
 			if (edge.VertexIn == edge.VertexOut)
 				throw new EdgeException("Edge cannot be a loop");
 
-			neighbors[edge.VertexOut].Add(edge.VertexIn, edge);
-			edgeCount++;
+			_neighbors[edge.VertexOut].Add(edge.VertexIn, edge);
+			_edgeCount++;
 
-			vertices[edge.VertexOut].DegreeOut++;
-			vertices[edge.VertexIn].DegreeIn++;
+			_vertices[edge.VertexOut].DegreeOut++;
+			_vertices[edge.VertexIn].DegreeIn++;
 			return this;
 			}
 			catch (VertexException e)
@@ -219,15 +219,15 @@ namespace GraphLibrary.Graphs
 		public virtual OrientedGraph<TVertex, TEdge> RemoveVertex(VertexName vertexName) {
 			ContainsVertex(vertexName);
 
-			foreach (var vertex in vertices.Values)
+			foreach (var vertex in _vertices.Values)
 			{
 				if (IsEdge(vertex.Name, vertexName))
 					RemoveEdge(vertexName, vertex.Name);
 			}
 
-			edgeCount -= neighbors[vertexName].Count;
-			vertices.Remove(vertexName);
-			neighbors.Remove(vertexName);
+			_edgeCount -= _neighbors[vertexName].Count;
+			_vertices.Remove(vertexName);
+			_neighbors.Remove(vertexName);
 			
 			return this;
 		}
@@ -257,10 +257,10 @@ namespace GraphLibrary.Graphs
 			try
 			{
 			ContainsEdge(vertexOut, vertexIn);
-			neighbors[vertexOut].Remove(vertexIn);
-			edgeCount--;
-			vertices[vertexOut].DegreeOut--;
-			vertices[vertexIn].DegreeIn--;
+			_neighbors[vertexOut].Remove(vertexIn);
+			_edgeCount--;
+			_vertices[vertexOut].DegreeOut--;
+			_vertices[vertexIn].DegreeIn--;
 			return this;
 			}
 			catch (VertexException e)
@@ -293,9 +293,9 @@ namespace GraphLibrary.Graphs
 
 		public virtual OrientedGraph<TVertex, TEdge> Clear()
 		{
-			vertices.Clear();
-			neighbors.Clear();
-			edgeCount = 0;
+			_vertices.Clear();
+			_neighbors.Clear();
+			_edgeCount = 0;
 			return this;
 		}
 
