@@ -10,7 +10,7 @@ using GraphLibrary.Extensions.StringExtensions;
 
 namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 {
-	static class IOrientedGraphExtensions
+	public static class IOrientedGraphExtensions
 	{
 		public static IOrientedGraph<TVertex, TEdge> AddVertex<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, VertexName vertexName)
 			where TVertex : OrientedVertex, new()
@@ -37,7 +37,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 			return graph.AddEdge(new TEdge() { VertexOut = vertexOut, VertexIn = vertexIn });
 		}
 
-		public static IOrientedGraph<TVertex, TEdge> AddEdges<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, IEnumerable<Tuple<VertexName, VertexName>> edges)
+		public static IOrientedGraph<TVertex, TEdge> AddEdges<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, IEnumerable<(VertexName vertexOut, VertexName vertexIn)> edges)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
 		{
@@ -57,17 +57,30 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 			return graph;
 		}
 
+		public static IOrientedGraph<TVertex, TEdge> ReverseEdge<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, VertexName vertexOut, VertexName vertexIn)
+			where TVertex : OrientedVertex, new()
+			where TEdge : OrientedEdge, new()
+			=> graph.ReverseEdge(graph.GetEdge(vertexOut, vertexIn));
+		
+
+
 		public static IOrientedGraph<TVertex, TEdge> ReverseEdges<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, IEnumerable<TEdge> edges)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
 		{
 			foreach (var edge in edges)
-			{
 				graph.ReverseEdge(edge);
-			}
 			return graph;
 		}
 
+		public static IOrientedGraph<TVertex, TEdge> ReverseEdges<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, IEnumerable<(VertexName vertexOut, VertexName vertexIn)> edges)
+			where TVertex : OrientedVertex, new()
+			where TEdge : OrientedEdge, new()
+		{
+			foreach (var (vertexOut, vertexIn) in edges)
+				graph.ReverseEdge(vertexOut, vertexIn);
+			return graph;
+		}
 		public static IOrientedGraph<TVertex, TEdge> ReverseGraph<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()

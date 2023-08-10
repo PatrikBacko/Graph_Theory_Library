@@ -310,8 +310,8 @@ namespace GraphLibrary.Graphs
 		}
 
 		//TODO : Tests - Serialize
-		public virtual void SerializeToJson(string path) 
-			=> SerializeToJson(path, new JsonSerializerOptions() 
+		public virtual void SerializeToJson(string path)
+			=> SerializeToJson(path, new JsonSerializerOptions()
 				{ Converters = { new OrientedGraphConverter<TVertex, TEdge>(), new VertexNameConverter() } });
 
 		public virtual void SerializeToJson(string path, JsonSerializerOptions options)

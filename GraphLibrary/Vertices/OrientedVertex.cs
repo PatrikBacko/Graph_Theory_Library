@@ -7,6 +7,7 @@ using GraphLibrary.Extensions.StringExtensions;
 
 namespace GraphLibrary.Vertices
 {
+	//TODO: is in graph property needed? (also for edges)
 	public class OrientedVertex : Vertex
 	{
 		public int DegreeOut { get; internal set; }

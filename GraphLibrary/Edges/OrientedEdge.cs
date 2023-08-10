@@ -12,6 +12,11 @@ namespace GraphLibrary.Edges
 		public VertexName VertexOut { get; init; }
 		public VertexName VertexIn { get; init; }
 
+		public OrientedEdge() : base()
+		{
+			VertexOut = new VertexName();
+			VertexIn = new VertexName();
+		}
 		public OrientedEdge(VertexName vertexOut, VertexName vertexIn)
 		{
 			VertexOut = vertexOut;
