@@ -61,7 +61,7 @@ namespace GraphLibrary.Algorithms
 					edgeAction);
 			}
 		}
-		//TODO: Dfs Add Tests
+
 		static public void Dfs<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexAction<TVertex> vertexActionOpened, VertexAction<TVertex> vertexActionClosed, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
