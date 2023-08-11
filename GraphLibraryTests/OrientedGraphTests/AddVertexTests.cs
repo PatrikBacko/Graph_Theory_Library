@@ -1,4 +1,5 @@
-﻿using GraphLibrary.Graphs.Exceptions;
+﻿using GraphLibrary.Extensions.IOrientedGraphExtensions;
+using GraphLibrary.Graphs.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,15 @@ namespace GraphLibraryTests.OrientedGraphTests
 
             Assert.ThrowsException<VertexException>(() => graph.AddVertex(vertex));
         }
+
+        [TestMethod]
+        public void AddVertexTest5()
+        {
+			IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
+
+			
+			Assert.ThrowsException<VertexException>(() => graph.AddVertex(new OrientedVertex("")));
+		}
 
 
         [TestMethod]

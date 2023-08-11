@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphLibrary.Vertices;
 using GraphLibrary.Edges;
-using GraphLibrary.Extensions.StringExtensions;
 
 namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 {
@@ -25,7 +24,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 		{
 			foreach (var vertex in vertices)
 			{
-				graph.AddVertex(vertex);
+				graph.AddVertex(vertex); ;	
 			}
 			return graph;
 		}
@@ -60,7 +59,11 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 		public static IOrientedGraph<TVertex, TEdge> ReverseEdge<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, VertexName vertexOut, VertexName vertexIn)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
-			=> graph.ReverseEdge(graph.GetEdge(vertexOut, vertexIn));
+		{
+			graph.RemoveEdge(vertexOut, vertexIn);
+			graph.AddEdge(vertexIn, vertexOut);
+			return graph;
+		}
 		
 
 
@@ -81,7 +84,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 				graph.ReverseEdge(vertexOut, vertexIn);
 			return graph;
 		}
-		public static IOrientedGraph<TVertex, TEdge> ReverseGraph<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph)
+		public static IOrientedGraph<TVertex, TEdge> GetReversedGraph<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
 		{

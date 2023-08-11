@@ -8,8 +8,9 @@
     "\\GraphLibrary\\Algorithms",
     "\\GraphLibrary\\Edges",
     "\\GraphLibrary\\Graphs",
+    "\\GraphLibrary\\Graphs\\JsonConverters",
     "\\GraphLibrary\\Vertices"
   ],
-  "SelectedNode": "\\GraphLibrary\\GraphLibrary.sln",
+  "SelectedNode": "\\GraphLibrary\\Graphs\\JsonConverters\\OrientedGraphConverter.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -4,5 +4,4 @@ global using GraphLibrary.Graphs;
 global using GraphLibrary.Vertices;
 global using GraphLibrary.Edges;
 global using GraphLibrary.Algorithms;
-global using GraphLibrary.Extensions.StringExtensions;
-global using GraphLibrary.Extensions.IOrientedGraphExtensions;
+global using GraphLibrary.Graphs.Exceptions;

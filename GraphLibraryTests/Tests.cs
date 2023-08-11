@@ -21,10 +21,11 @@ namespace GraphLibraryTests
 			var graph = TestGraphs.TestOrientedGraphs.GetPathTestOrientedGraph(5);
 
 			graph.AddEdge("1", "3");
+			graph.ReverseEdge("1", "3");
+
+			var graph2 = graph.GetReversedGraph();
 
 			double MojaLáskaKuKiki = double.PositiveInfinity;
 		}
 	}
-
-	
 }

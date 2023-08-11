@@ -19,7 +19,7 @@ namespace GraphLibrary.Vertices
 			return new OrientedEdge(this, vertexIn);
 		}
 
-		public OrientedVertex ToorientedVertex(){
+		public OrientedVertex ToOrientedVertex(){
 			return new OrientedVertex(this);
 		}
 		

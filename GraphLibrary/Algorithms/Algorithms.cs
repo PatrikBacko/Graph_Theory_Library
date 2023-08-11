@@ -7,7 +7,6 @@ using System.Numerics;
 using GraphLibrary.Edges;
 using GraphLibrary.Vertices;
 using GraphLibrary.Graphs;
-using GraphLibrary.Extensions.StringExtensions;
 using GraphLibrary.Extensions.IOrientedGraphExtensions;
 using GraphLibrary.Graphs.Delegates;
 using GraphLibrary.Algorithms.Exceptions;
@@ -131,7 +130,7 @@ namespace GraphLibrary.Algorithms
 			var components = new List<List<VertexName>>();
 			var stack = new Stack<VertexName>();
 
-			var reversedGraph = graph.ReverseGraph();
+			var reversedGraph = graph.GetReversedGraph();
 
 			Dfs(graph, v=> { }, v => stack.Push(v.Name), e => { });
 
