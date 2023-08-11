@@ -17,8 +17,8 @@ namespace GraphLibrary.Algorithms
 	public enum VertexState { OPENED, CLOSED, UNVISITED }
 	public static class Algorithms
 	{
-		//TODO: Add Tests
-		static public void Bfs<TVertex, TEdge>
+
+		static public void BfsFromVertex<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexAction, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
@@ -30,11 +30,11 @@ namespace GraphLibrary.Algorithms
 			queue.Enqueue(sourceVertex);
 			visited.Add(sourceVertex, VertexState.OPENED);
 
-			while (queue.Count != 0)
+			while (queue.Count > 0)
 			{
 				var vertex = queue.Dequeue();
-				if (visited.ContainsKey(vertex)) continue;
 
+				graph.GetOutEdges(vertex).Where(e => !visited.ContainsKey(e.VertexIn)).ToList().ForEach(e2 => edgeAction(e2));
 				graph.GetOutAdjacentVertices(vertex)
 					.Where(v => !visited.ContainsKey(v.Name))
 					.ToList()
@@ -42,7 +42,6 @@ namespace GraphLibrary.Algorithms
 											visited.Add(unvisited.Name, VertexState.OPENED); });
 
 				vertexAction(graph.GetVertex(vertex));
-				graph.GetOutEdges(vertex).ToList().ForEach(e => edgeAction(e));
 				visited[vertex] = VertexState.CLOSED;
 			}
 		}
@@ -55,10 +54,10 @@ namespace GraphLibrary.Algorithms
 			while (vertices.Count != 0)
 			{
 				var vertex = vertices.First();
-				Bfs(graph, vertex, v => { vertices.Remove(v.Name); vertexAction(v); }, edgeAction);
+				BfsFromVertex(graph, vertex, v => { vertices.Remove(v.Name); vertexAction(v); }, edgeAction);
 			}
 		}
-		//TODO: Add Tests
+		//TODO: Dfs Add Tests
 		static public void Dfs<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexAction<TVertex> vertexActionOpened, VertexAction<TVertex> vertexActionClosed, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
@@ -69,11 +68,15 @@ namespace GraphLibrary.Algorithms
 			while (unvisited.Count > 0)
 			{
 				var vertex = unvisited.First();
-				Dfs(graph, vertex, vertexActionOpened, v => { vertexActionClosed(v); unvisited.Remove(v.Name); }, edgeAction, visited);
-
+				DfsFromVertex(	graph, 
+								vertex, 
+								vertexActionOpened, 
+								v => { vertexActionClosed(v); unvisited.Remove(v.Name); }, 
+								edgeAction, 
+								visited);
 			}
 		}
-		static public void Dfs<TVertex, TEdge>
+		static public void DfsFromVertex<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
 		VertexAction<TVertex> vertexActionClosed, EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
 			where TVertex : OrientedVertex
@@ -84,9 +87,15 @@ namespace GraphLibrary.Algorithms
 			if (visited is null)
 				visited = new Dictionary<VertexName, VertexState>();
 
-			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, v => { }, edgeAction, visited);
+			DfsRecursion(	graph, 
+							sourceVertex, 
+							vertexActionOpened, 
+							vertexActionClosed, 
+							v => { }, 
+							e => { if (!visited.ContainsKey(e.VertexIn)) edgeAction(e); }, 
+							visited);
 		}
-		static public void DfsSpecial<TVertex, TEdge>
+		static public void DfsFromVertexSpecial<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
 		VertexAction<TVertex> vertexActionClosed, VertexAction<TVertex> beforeVisitedCheckAction, EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
 			where TVertex : OrientedVertex
@@ -97,7 +106,13 @@ namespace GraphLibrary.Algorithms
 			if (visited is null)
 				visited = new Dictionary<VertexName, VertexState>();
 
-			DfsRecursion(graph, sourceVertex, vertexActionOpened, vertexActionClosed, beforeVisitedCheckAction, edgeAction, visited); 
+			DfsRecursion(	graph, 
+							sourceVertex, 
+							vertexActionOpened, 
+							vertexActionClosed, 
+							beforeVisitedCheckAction, 
+							edgeAction, 
+							visited); 
 		}
 		static private void DfsRecursion<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
@@ -116,13 +131,19 @@ namespace GraphLibrary.Algorithms
 			foreach (var vertex in graph.GetOutAdjacentVertices(sourceVertex))
 			{
 				edgeAction(graph.GetEdge(sourceVertex, vertex.Name));
-				DfsRecursion(graph, vertex.Name, vertexActionOpened, vertexActionClosed, beforeVisitedCheckAction, edgeAction, visited);
+				DfsRecursion(	graph, 
+								vertex.Name, 
+								vertexActionOpened, 
+								vertexActionClosed, 
+								beforeVisitedCheckAction, 
+								edgeAction, 
+								visited);
 			}
 			vertexActionClosed(sourceGraphVertex);
 			visited[sourceVertex] = VertexState.CLOSED;
 		}
 
-		//TODO: add tests
+		//TODO: StronglyConnectedComponents add tests
 		static public List<List<VertexName>> GetStronglyConnectedComponents<TVertex, TEdge>(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -140,13 +161,14 @@ namespace GraphLibrary.Algorithms
 				var vertex = stack.Pop();
 				if (visited.ContainsKey(vertex)) continue;
 				var component = new List<VertexName>();
-				Dfs(reversedGraph, vertex, v => component.Add(v.Name), v => { }, e => { }, visited);
+				DfsFromVertex(reversedGraph, vertex, v => component.Add(v.Name), v => { }, e => { }, visited);
 				components.Add(component);
 			}
 
 			return components;
 		}
 
+		// TODO: ContainsEurelianCycle add tests
 		static public bool ContainsEurelianCycle<TVertex, TEdge>(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -156,7 +178,7 @@ namespace GraphLibrary.Algorithms
 			return true;
 		}
 
-		//TODO: add tests
+		//TODO: ShortestPath add tests
 		static public List<VertexName> ShortestPath<TVertex, TEdge, TWeight>
 		(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, VertexName sourceVertex, VertexName destinationVertex, out TWeight pathWeight)
 			where TVertex : WeightedOrientedVertex<TWeight>
@@ -242,7 +264,6 @@ namespace GraphLibrary.Algorithms
 			where TWeight : INumber<TWeight>
 		{
 			if (!graph.IsVertex(sourceVertex)) throw new ArgumentException("Source Vertex is not in the given Graph");
-			if (!graph.IsVertex(sourceVertex)) throw new ArgumentException("Source Vertex is not in the given Graph");
 
 			var distances = new Dictionary<VertexName, TWeight>();
 			var predecessors = new Dictionary<VertexName, VertexName>();
@@ -316,7 +337,7 @@ namespace GraphLibrary.Algorithms
 			{
 				var vertex = unvisited.First();
 
-				DfsSpecial(graph,
+				DfsFromVertexSpecial(graph,
 					vertex,
 					v => { unvisited.Remove(v.Name); }, 
 					v => { stack.Push(v.Name); }, 

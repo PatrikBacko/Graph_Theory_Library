@@ -11,6 +11,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 {
 	public static class IOrientedGraphExtensions
 	{
+		//TODO: prerobiť cez virtual metódu CreateVertex na OrientedVertex
 		public static IOrientedGraph<TVertex, TEdge> AddVertex<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, VertexName vertexName)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -29,6 +30,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 			return graph;
 		}
 
+		//TODO: pretiahnuť cez virtual metódu CreateEdge na OrientedEdge
 		public static IOrientedGraph<TVertex, TEdge> AddEdge<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, VertexName vertexOut, VertexName vertexIn)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -47,6 +49,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 			return graph;
 		}
 
+		//TODO: prerobiť cez virtual ReverseEdge metódu na OrientedEdge
 		public static IOrientedGraph<TVertex, TEdge> ReverseEdge<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, TEdge edge)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()

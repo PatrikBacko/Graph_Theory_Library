@@ -14,6 +14,7 @@ using System.Text.Json;
 
 namespace GraphLibrary.Graphs
 {
+	//TODO: Tests
 	public class WeightedOrientedGraph<TVertex, TEdge, TWeight> : OrientedGraph<TVertex, TEdge>, IWeightedOrientedGraph<TVertex, TEdge, TWeight>
 		where TVertex : WeightedOrientedVertex<TWeight>
 		where TEdge : WeightedOrientedEdge<TWeight>
