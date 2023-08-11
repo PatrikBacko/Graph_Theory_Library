@@ -54,7 +54,11 @@ namespace GraphLibrary.Algorithms
 			while (vertices.Count != 0)
 			{
 				var vertex = vertices.First();
-				BfsFromVertex(graph, vertex, v => { vertices.Remove(v.Name); vertexAction(v); }, edgeAction);
+				BfsFromVertex(
+					graph, 
+					vertex, 
+					v => { vertices.Remove(v.Name); vertexAction(v); }, 
+					edgeAction);
 			}
 		}
 		//TODO: Dfs Add Tests
@@ -68,12 +72,13 @@ namespace GraphLibrary.Algorithms
 			while (unvisited.Count > 0)
 			{
 				var vertex = unvisited.First();
-				DfsFromVertex(	graph, 
-								vertex, 
-								vertexActionOpened, 
-								v => { vertexActionClosed(v); unvisited.Remove(v.Name); }, 
-								edgeAction, 
-								visited);
+				DfsFromVertex(	
+					graph, 
+					vertex, 
+					vertexActionOpened, 
+					v => { vertexActionClosed(v); unvisited.Remove(v.Name); }, 
+					edgeAction, 
+					visited);
 			}
 		}
 		static public void DfsFromVertex<TVertex, TEdge>
@@ -87,13 +92,14 @@ namespace GraphLibrary.Algorithms
 			if (visited is null)
 				visited = new Dictionary<VertexName, VertexState>();
 
-			DfsRecursion(	graph, 
-							sourceVertex, 
-							vertexActionOpened, 
-							vertexActionClosed, 
-							v => { }, 
-							e => { if (!visited.ContainsKey(e.VertexIn)) edgeAction(e); }, 
-							visited);
+			DfsRecursion(	
+				graph, 
+				sourceVertex, 
+				vertexActionOpened, 
+				vertexActionClosed, 
+				v => { }, 
+				e => { if (!visited.ContainsKey(e.VertexIn)) edgeAction(e); }, 
+				visited);
 		}
 		static public void DfsFromVertexSpecial<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
@@ -106,13 +112,14 @@ namespace GraphLibrary.Algorithms
 			if (visited is null)
 				visited = new Dictionary<VertexName, VertexState>();
 
-			DfsRecursion(	graph, 
-							sourceVertex, 
-							vertexActionOpened, 
-							vertexActionClosed, 
-							beforeVisitedCheckAction, 
-							edgeAction, 
-							visited); 
+			DfsRecursion(	
+				graph, 
+				sourceVertex, 
+				vertexActionOpened, 
+				vertexActionClosed, 
+				beforeVisitedCheckAction, 
+				edgeAction, 
+				visited); 
 		}
 		static private void DfsRecursion<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
@@ -131,13 +138,14 @@ namespace GraphLibrary.Algorithms
 			foreach (var vertex in graph.GetOutAdjacentVertices(sourceVertex))
 			{
 				edgeAction(graph.GetEdge(sourceVertex, vertex.Name));
-				DfsRecursion(	graph, 
-								vertex.Name, 
-								vertexActionOpened, 
-								vertexActionClosed, 
-								beforeVisitedCheckAction, 
-								edgeAction, 
-								visited);
+				DfsRecursion(	
+					graph, 
+					vertex.Name, 
+					vertexActionOpened, 
+					vertexActionClosed, 
+					beforeVisitedCheckAction, 
+					edgeAction, 
+					visited);
 			}
 			vertexActionClosed(sourceGraphVertex);
 			visited[sourceVertex] = VertexState.CLOSED;
