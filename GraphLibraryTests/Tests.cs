@@ -8,7 +8,7 @@ using System.Text.Json;
 using GraphLibrary.Edges;
 using System.Numerics;
 using GraphLibrary.Vertices;
-using GraphLibrary.Extensions.IOrientedGraphExtensions;
+using GraphLibrary.Extensions.IWeightedOrientedGraphExtensions;
 
 namespace GraphLibraryTests
 {
@@ -18,14 +18,6 @@ namespace GraphLibraryTests
 		[TestMethod]
 		public void Test1()
 		{
-			var graph = TestGraphs.TestOrientedGraphs.GetPathTestOrientedGraph(5);
-
-			graph.AddEdge("1", "3");
-			graph.ReverseEdge("1", "3");
-
-			var graph2 = graph.GetReversedGraph();
-
-			double MojaLáskaKuKiki = double.PositiveInfinity;
 		}
 	}
 }

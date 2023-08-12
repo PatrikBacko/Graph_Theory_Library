@@ -8,6 +8,7 @@ namespace GraphLibrary
 {
 	internal class TODO
 	{
+		//TODO: trochu zlepšit messages v výnimkach (napr. ukáže sa meno vertex a podobne)
 		//TODO: Comments
 		//TODO: Multithreading
 		//TODO: Serialization to TXT?

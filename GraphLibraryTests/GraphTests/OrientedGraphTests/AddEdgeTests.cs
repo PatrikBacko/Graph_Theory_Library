@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphLibraryTests.OrientedGraphTests
+namespace GraphLibraryTests.GraphTests.OrientedGraphTests
 {
     /// <summary>
     /// Tests for adding edges to graph

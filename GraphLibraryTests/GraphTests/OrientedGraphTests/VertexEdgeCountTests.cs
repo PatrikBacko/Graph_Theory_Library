@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphLibraryTests.TestGraphs;
 
-namespace GraphLibraryTests.OrientedGraphTests
+namespace GraphLibraryTests.GraphTests.OrientedGraphTests
 {
     /// <summary>
     /// Tests for the GetVertexCount and GetEdgeCount methods

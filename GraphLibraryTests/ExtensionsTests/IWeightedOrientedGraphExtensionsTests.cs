@@ -31,7 +31,7 @@ namespace GraphLibraryTests.ExtensionsTests
 
 			// Assert
 			Assert.IsTrue(graph.IsVertex("5"));
-			Assert.AreEqual(graph.GetVertex("5").Weight, 5.0);
+			Assert.AreEqual(graph.GetWeight("5"), 5.0);
 		}
 
 		[TestMethod]
@@ -66,16 +66,16 @@ namespace GraphLibraryTests.ExtensionsTests
 
 			// Assert
 			Assert.IsTrue(graph.IsVertex("0"));
-			Assert.AreEqual(graph.GetVertex("0").Weight, 0);
+			Assert.AreEqual(graph.GetWeight("0"), 0);
 
 			Assert.IsTrue(graph.IsVertex("1"));
-			Assert.AreEqual(graph.GetVertex("1").Weight, 1);
+			Assert.AreEqual(graph.GetWeight("1"), 1);
 
 			Assert.IsTrue(graph.IsVertex("2"));
-			Assert.AreEqual(graph.GetVertex("2").Weight, -2);
+			Assert.AreEqual(graph.GetWeight("2"), -2);
 
 			Assert.IsTrue(graph.IsVertex("3"));
-			Assert.AreEqual(graph.GetVertex("3").Weight, 3);
+			Assert.AreEqual(graph.GetWeight("3"), 3);
 
 			Assert.IsFalse(graph.IsVertex("4"));
 		}
@@ -102,7 +102,7 @@ namespace GraphLibraryTests.ExtensionsTests
 
 			// Assert
 			Assert.IsTrue(graph.IsEdge("0", "1"));
-			Assert.AreEqual(graph.GetEdge("0", "1").Weight, 5.0m);
+			Assert.AreEqual(graph.GetWeight("0", "1"), 5.0m);
 		}
 
 		[TestMethod]
@@ -137,16 +137,16 @@ namespace GraphLibraryTests.ExtensionsTests
 
 			// Assert
 			Assert.IsTrue(graph.IsEdge("0", "1"));
-			Assert.AreEqual(graph.GetEdge("0", "1").Weight, 1.5m);
+			Assert.AreEqual(graph.GetWeight("0", "1"), 1.5m);
 
 			Assert.IsTrue(graph.IsEdge("1", "2"));
-			Assert.AreEqual(graph.GetEdge("1", "2").Weight, -5m);
+			Assert.AreEqual(graph.GetWeight("1", "2"), -5m);
 
 			Assert.IsTrue(graph.IsEdge("2", "3"));
-			Assert.AreEqual(graph.GetEdge("2", "3").Weight, 10m);
+			Assert.AreEqual(graph.GetWeight("2", "3"), 10m);
 
 			Assert.IsTrue(graph.IsEdge("3", "4"));
-			Assert.AreEqual(graph.GetEdge("3", "4").Weight, -5.1m);
+			Assert.AreEqual(graph.GetWeight("3", "4"), -5.1m);
 		}
 
 		[TestMethod]

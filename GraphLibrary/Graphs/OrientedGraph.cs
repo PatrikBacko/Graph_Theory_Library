@@ -122,8 +122,15 @@ namespace GraphLibrary.Graphs
 		}
 
 		public virtual TEdge GetEdge(VertexName vertexOut, VertexName vertexIn) {
-			ContainsEdge(vertexOut, vertexIn);
-			return _neighbors[vertexOut][vertexIn];
+			try
+			{
+				ContainsEdge(vertexOut, vertexIn);
+				return _neighbors[vertexOut][vertexIn];
+			}
+			catch (VertexException e)
+			{
+				throw new EdgeException("One or both vertices are not in the graph", e);
+			}
 		}
 
 		public virtual int GetVertexCount() => _vertices.Count;

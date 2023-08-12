@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GraphLibrary.Graphs.Exceptions;
 using GraphLibraryTests.TestGraphs;
 
-namespace GraphLibraryTests.OrientedGraphTests
+namespace GraphLibraryTests.GraphTests.OrientedGraphTests
 {
     /// <summary>
     /// Tests for the IsEdge method and all its overloads.

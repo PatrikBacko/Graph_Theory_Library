@@ -184,7 +184,6 @@ namespace GraphLibrary.Algorithms
 			return true;
 		}
 
-		//TODO: ShortestPath add tests
 		static public List<VertexName> ShortestPath<TVertex, TEdge, TWeight>
 		(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, VertexName sourceVertex, VertexName destinationVertex, out TWeight pathWeight)
 			where TVertex : WeightedOrientedVertex<TWeight>
@@ -196,7 +195,7 @@ namespace GraphLibrary.Algorithms
 			var (distances, predecessors) = ShortestPathsAllVertices(graph, sourceVertex);
 
 			if (!distances.ContainsKey(destinationVertex))
-				throw new ArgumentException("There is no path from source to destination vertex in given Graph");
+				throw new NoPathException("There is no path from source to destination vertex in given Graph");
 
 			pathWeight = distances[destinationVertex];
 
@@ -279,7 +278,7 @@ namespace GraphLibrary.Algorithms
 
 			distances[sourceVertex] = TWeight.Zero;
 
-			for (int i = 0; i < vertices.Count - 1; i++)
+			for (int i = 0; i <= vertices.Count - 1; i++)
 			{
 				foreach (var edge in edges)
 				{
@@ -299,9 +298,7 @@ namespace GraphLibrary.Algorithms
 				if ((!distances.ContainsKey(edge.VertexOut)) || (!distances.ContainsKey(edge.VertexIn))) continue;
 
 				if (distances[edge.VertexOut] + edge.Weight < distances[edge.VertexIn])
-				{
 					throw new GraphHasNegativeCycleException("Graph contains a negative-weight cycle");
-				}
 			}
 
 			return (distances, predecessors);

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphLibraryTests.OrientedGraphTests
+namespace GraphLibraryTests.GraphTests.OrientedGraphTests
 {
     /// <summary>
     /// Tests for Adding vertices to the graph.
@@ -76,11 +76,11 @@ namespace GraphLibraryTests.OrientedGraphTests
         [TestMethod]
         public void AddVertexTest5()
         {
-			IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
 
-			
-			Assert.ThrowsException<VertexException>(() => graph.AddVertex(new OrientedVertex("")));
-		}
+
+            Assert.ThrowsException<VertexException>(() => graph.AddVertex(new OrientedVertex("")));
+        }
 
 
         [TestMethod]

@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphLibraryTests.OrientedGraphTests
+namespace GraphLibraryTests.GraphTests.OrientedGraphTests
 {
     /// <summary>
     /// Tests for the GetEdges and GetEdges methods.
     /// </summary>
     [TestClass]
-    public class GetEdgesTests
+    public class GetEdgeTests
     {
         [TestMethod]
         public void GetEdgeTest1()
@@ -41,7 +41,19 @@ namespace GraphLibraryTests.OrientedGraphTests
             Assert.ThrowsException<EdgeException>(() => graph.GetEdge("1", "2"));
         }
 
-        [TestMethod]
+		[TestMethod]
+		public void GetEdgeTest3()
+		{
+			// Arrange
+			var graph = TestOrientedGraphs.GetVertexTestOrientedGraph(3);
+			var edge = new OrientedEdge("0", "1");
+			graph.AddEdge(edge);
+
+			// Assert
+			Assert.ThrowsException<EdgeException>(() => graph.GetEdge("1", "5"));
+		}
+
+		[TestMethod]
         public void GetEdgesTest1()
         {
             // Arrange
