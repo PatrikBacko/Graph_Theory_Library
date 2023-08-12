@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphLibrary.Algorithms.Exceptions
 {
-	public class GraphIsNotDAGException : GraphException
+	public class GraphIsNotDAGException : AlgorithmException
 	{
 		public GraphIsNotDAGException() : base() { }
 		public GraphIsNotDAGException(string message) : base(message) { }

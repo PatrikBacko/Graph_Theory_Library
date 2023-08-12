@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using GraphLibrary.Graphs.Delegates;
 using System.Text.Json;
 using GraphLibrary.Graphs.JsonConverters;
+using System.Xml.Linq;
 
 //TODO: (maybe) prejsť z eager na lazy a detekovať zmeny
 
@@ -308,30 +309,59 @@ namespace GraphLibrary.Graphs
 			graph.AddEdges(edges);
 			return graph;
 		}
+		public virtual void SaveToJson(string Path) 
+			=> File.WriteAllText(Path, SerializeToJson());
 
 		//TODO : Tests - Serialize
-		public virtual void SerializeToJson(string path)
-			=> SerializeToJson(path, new JsonSerializerOptions()
-				{ Converters = { new OrientedGraphConverter<TVertex, TEdge>(), new VertexNameConverter() } });
+		public virtual string SerializeToJson()
+			=> SerializeToJson(new JsonSerializerOptions()
+			{
+				Converters =
+				{
+					new OrientedGraphConverter<TVertex, TEdge>(),
+					new VertexNameConverter()
+				}
+			});
 
-		public virtual void SerializeToJson(string path, JsonSerializerOptions options)
+		public virtual string SerializeToJson(JsonSerializerOptions options)
 		{
-			var str = JsonSerializer.Serialize(this, options);
-			File.WriteAllText(path, str);
+			try
+			{
+				return JsonSerializer.Serialize(this, options);
+			}
+			catch (NotSupportedException e)
+			{
+				throw new SerializationException("Serialization could not be done because of a problem with Graph", e);
+			}
+			
 		}
+
+		public static OrientedGraph<TVertex, TEdge> LoadFromJson(string Path) 
+			=> DeserializeFromJson(File.ReadAllText(Path));
 
 		//TODO: Tests - Deserialize
-		public static OrientedGraph<TVertex, TEdge>? DeserializeFromJson(string path) 
-			=> DeserializeFromJson(path, new JsonSerializerOptions()
-				{ Converters = { new OrientedGraphConverter<TVertex, TEdge>(), new VertexNameConverter() } });
-
-		public static OrientedGraph<TVertex, TEdge>? DeserializeFromJson(string path, JsonSerializerOptions options)
+		public static OrientedGraph<TVertex, TEdge> DeserializeFromJson(string jsonString)
+			=> DeserializeFromJson(jsonString, new JsonSerializerOptions()
+			{
+				Converters =
+				{
+					new OrientedGraphConverter<TVertex, TEdge>(),
+					new VertexNameConverter()
+				}
+			});
+		public static OrientedGraph<TVertex, TEdge> DeserializeFromJson(string jsonString, JsonSerializerOptions options)
 		{
-			var str = File.ReadAllText(path);
-			var graph = JsonSerializer.Deserialize<OrientedGraph<TVertex, TEdge>>(str, options);
-			return graph;
+			try{
+				return JsonSerializer.Deserialize<OrientedGraph<TVertex, TEdge>>(jsonString, options)
+					?? throw new DeserializationException("Deserialization could not be done because null was returned");
+			}
+			catch (Exception e)
+			{
+				if (e is JsonException || e is ArgumentNullException || e is NotSupportedException)
+					throw new DeserializationException("Deserialization could not be done, check inner exception for more details", e);
+				throw;
+			}
 		}
-
 
 		public static OrientedGraph<TVertex, TEdge> operator +(OrientedGraph<TVertex, TEdge> graph, TVertex vertex) => graph.AddVertex(vertex);
 		public static OrientedGraph<TVertex, TEdge> operator +(OrientedGraph<TVertex, TEdge> graph, TEdge edge) => graph.AddEdge(edge);
@@ -402,10 +432,10 @@ namespace GraphLibrary.Graphs
 		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges) 
 			=> Create(vertices, edges);
 
-		static IOrientedGraph<TVertex, TEdge>? IOrientedGraph<TVertex, TEdge>.DeserializeFromJson(string path, JsonSerializerOptions options)
-			=> DeserializeFromJson(path, options);
-
-		static IOrientedGraph<TVertex, TEdge>? IOrientedGraph<TVertex, TEdge>.DeserializeFromJson(string path)
+		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.LoadFromJson(string path)
 			=> DeserializeFromJson(path);
+		 
+		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.DeserializeFromJson(string jsonString)
+			=> DeserializeFromJson(jsonString);
 	}
 }

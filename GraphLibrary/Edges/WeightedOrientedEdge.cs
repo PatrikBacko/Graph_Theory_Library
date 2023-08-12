@@ -11,6 +11,10 @@ namespace GraphLibrary.Edges
 	public class WeightedOrientedEdge<TWeight> : OrientedEdge where TWeight : INumber<TWeight>
 	{
 		public TWeight Weight { get; protected set; }
+		public WeightedOrientedEdge() : base()
+		{
+			Weight = TWeight.Zero;
+		}
 
 		public WeightedOrientedEdge(VertexName vertexOut, VertexName vertexIn, TWeight weight) : base(vertexOut, vertexIn)
 		{

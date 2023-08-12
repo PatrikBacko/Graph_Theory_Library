@@ -11,6 +11,10 @@ namespace GraphLibrary.Vertices
 	{
 		public TWeight Weight { get; protected set; }
 
+		public WeightedOrientedVertex() : base()
+		{
+			Weight = TWeight.Zero;
+		}
 		public WeightedOrientedVertex(VertexName name, TWeight weight) : base(name)
 		{
 			Weight = weight;

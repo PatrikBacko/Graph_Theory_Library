@@ -11,6 +11,7 @@ using System.Data;
 using System.Diagnostics;
 using GraphLibrary.Graphs.JsonConverters;
 using System.Text.Json;
+using GraphLibrary.Graphs.Exceptions;
 
 namespace GraphLibrary.Graphs
 {
@@ -93,27 +94,55 @@ namespace GraphLibrary.Graphs
 		(EdgePredicate<TEdge> edgePredicate, EdgeAction<TEdge> edgeAction)
 			=> (WeightedOrientedGraph<TVertex, TEdge, TWeight>) base.ApplyToEdgesWith(edgePredicate, edgeAction);
 
-		//TODO: Tests - Serialize
-		public override void SerializeToJson(string path)
-			=> SerializeToJson(path, new JsonSerializerOptions()
-			{ Converters = { new WeightedOrientedGraphConverter<TVertex, TEdge, TWeight>(), new VertexNameConverter() } });
+		//TODO: Tests - Serialize - pozor či sa SaveToJson a Serialize to json správa správne
+		public override string SerializeToJson()
+			=> SerializeToJson(new JsonSerializerOptions()
+				{ 
+					Converters = { 
+						new WeightedOrientedGraphConverter<TVertex, TEdge, TWeight>(), 
+						new VertexNameConverter() 
+					} 
+				}
+			);
 
-		public override void SerializeToJson(string path, JsonSerializerOptions options)
-		{
-			var str = JsonSerializer.Serialize(this, options);
-			File.WriteAllText(path, str);
-		}
+		//public override string SerializeToJson(JsonSerializerOptions options)
+		//{
+		//	try
+		//	{
+		//		return JsonSerializer.Serialize(this, options);
+		//	}
+		//	catch (NotSupportedException e)
+		//	{
+		//		throw new SerializationException("Serialization could not be done because of a problem with Graph", e);
+		//	}
+		//}
 
+		public static new WeightedOrientedGraph<TVertex, TEdge, TWeight> LoadFromJson(string Path)
+			=> DeserializeFromJson(File.ReadAllText(Path));
 		//TODO: Tests - Deserialize
-		public new static WeightedOrientedGraph<TVertex, TEdge, TWeight>? DeserializeFromJson(string path)
-			=> DeserializeFromJson(path, new JsonSerializerOptions()
-			{ Converters = { new WeightedOrientedGraphConverter<TVertex, TEdge, TWeight>(), new VertexNameConverter() } });
+		public new static WeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString)
+			=> DeserializeFromJson(jsonString, new JsonSerializerOptions()
+				{
+					Converters =
+						{
+							new WeightedOrientedGraphConverter<TVertex, TEdge, TWeight>(),
+							new VertexNameConverter()
+						}
+				});
 
-		public new static WeightedOrientedGraph<TVertex, TEdge, TWeight>? DeserializeFromJson(string path, JsonSerializerOptions options)
+		public new static WeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString, JsonSerializerOptions options)
 		{
-			var str = File.ReadAllText(path);
-			var graph = JsonSerializer.Deserialize<WeightedOrientedGraph<TVertex, TEdge, TWeight>>(str, options);
-			return graph;
+			try
+			{
+				return JsonSerializer.Deserialize<WeightedOrientedGraph<TVertex, TEdge, TWeight>>(jsonString, options)
+					?? throw new DeserializationException("Deserialization could not be done because null was returned");
+			}
+			catch (Exception e)
+			{
+				if (e is JsonException || e is ArgumentNullException || e is NotSupportedException)
+					throw new DeserializationException("Deserialization could not be done, check inner exception for more details", e);
+				throw;
+			}
 		}
 
 		public static WeightedOrientedGraph<TVertex, TEdge, TWeight> operator +(WeightedOrientedGraph<TVertex, TEdge, TWeight> graph, TVertex vertex)
@@ -179,9 +208,10 @@ namespace GraphLibrary.Graphs
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> IWeightedOrientedGraph<TVertex, TEdge, TWeight>.Create() => Create();
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> IWeightedOrientedGraph<TVertex, TEdge, TWeight>.Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges) => Create(vertices, edges);
 
-		static IWeightedOrientedGraph<TVertex, TEdge, TWeight>? IWeightedOrientedGraph<TVertex, TEdge, TWeight>.DeserializeFromJson(string path)
-			=> DeserializeFromJson(path);
-		static IWeightedOrientedGraph<TVertex, TEdge, TWeight>? IWeightedOrientedGraph<TVertex, TEdge, TWeight>.DeserializeFromJson(string path, JsonSerializerOptions options) 
-			=> DeserializeFromJson(path, options);
+		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> IWeightedOrientedGraph<TVertex, TEdge, TWeight>.DeserializeFromJson(string jsonString)
+			=> DeserializeFromJson(jsonString);
+		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> IWeightedOrientedGraph<TVertex, TEdge, TWeight>.LoadFromJson(string path)
+			=> LoadFromJson(path);
+
 	}
 }

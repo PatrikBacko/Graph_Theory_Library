@@ -151,7 +151,6 @@ namespace GraphLibrary.Algorithms
 			visited[sourceVertex] = VertexState.CLOSED;
 		}
 
-		//TODO: StronglyConnectedComponents add tests
 		static public List<List<VertexName>> GetStronglyConnectedComponents<TVertex, TEdge>(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -176,7 +175,6 @@ namespace GraphLibrary.Algorithms
 			return components;
 		}
 
-		// TODO: ContainsEurelianCycle add tests
 		static public bool ContainsEurelianCycle<TVertex, TEdge>(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -216,7 +214,7 @@ namespace GraphLibrary.Algorithms
 
 			return path;
 		}
-		static public (Dictionary<VertexName, TWeight>, Dictionary<VertexName, VertexName>) ShortestPathsAllVertices<TVertex, TEdge, TWeight>
+		static public (Dictionary<VertexName, TWeight> distances, Dictionary<VertexName, VertexName> predecessors) ShortestPathsAllVertices<TVertex, TEdge, TWeight>
 		(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, VertexName sourceVertex)
 			where TVertex : WeightedOrientedVertex<TWeight>
 			where TEdge : WeightedOrientedEdge<TWeight>

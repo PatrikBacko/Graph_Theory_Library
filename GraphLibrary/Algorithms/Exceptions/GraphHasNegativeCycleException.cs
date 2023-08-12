@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphLibrary.Algorithms.Exceptions
 {
-	public class GraphHasNegativeCycleException : GraphException
+	public class GraphHasNegativeCycleException : AlgorithmException
 	{
 		public GraphHasNegativeCycleException() : base() { }
 		public GraphHasNegativeCycleException(string message) : base(message) { }

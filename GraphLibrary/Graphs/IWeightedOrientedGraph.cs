@@ -56,8 +56,9 @@ namespace GraphLibrary.Graphs
 		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeVertexWeight(VertexName vertex, TWeight weight);
 		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeEdgeWeight(VertexName vertexOut, VertexName vertexIn, TWeight weight);
 
-		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight>? DeserializeFromJson(string path);
-		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight>? DeserializeFromJson(string path, JsonSerializerOptions options);
+		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight> LoadFromJson(string path);
+		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString);
+
 
 
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> operator +(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, TVertex vertex) => graph.AddVertex(vertex);
