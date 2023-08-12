@@ -57,7 +57,7 @@ namespace GraphLibrary.Extensions.IWeightedOrientedGraphExtensions
 		{
 			foreach (var edge in edges)
 			{
-				graph.AddEdge(edge.vertexOut, edge.vertexOut, edge.weight);
+				graph.AddEdge(edge.vertexOut, edge.vertexIn, edge.weight);
 			}
 			return graph;
 		}
