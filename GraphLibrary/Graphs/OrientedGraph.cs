@@ -240,7 +240,10 @@ namespace GraphLibrary.Graphs
 					RemoveEdge(vertexName, vertex.Name);
 			}
 
-			GetVertex(vertexName).IsInGraph = false;
+			var vertexToRemove = GetVertex(vertexName);
+			vertexToRemove.IsInGraph = false;
+			vertexToRemove.DegreeIn = 0;
+			vertexToRemove.DegreeOut = 0;
 
 			_edgeCount -= _neighbors[vertexName].Count;
 			_vertices.Remove(vertexName);
