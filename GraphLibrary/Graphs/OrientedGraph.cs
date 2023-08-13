@@ -11,6 +11,7 @@ using System.Text.Json;
 using GraphLibrary.Graphs.JsonConverters;
 using System.Xml.Linq;
 
+//TODO: Ostrihaj komentáre z interfacu, potom ich zdeď sem a pridaj to čo si urezal z interface komentov
 namespace GraphLibrary.Graphs
 {
     public class OrientedGraph<TVertex, TEdge> : IOrientedGraph<TVertex, TEdge>
