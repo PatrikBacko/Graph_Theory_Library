@@ -82,6 +82,20 @@ namespace GraphLibraryTests.GraphTests.OrientedGraphTests
             Assert.ThrowsException<VertexException>(() => graph.AddVertex(new OrientedVertex("")));
         }
 
+        [TestMethod] public void AddVertexTest6()
+        {
+            // Arrange
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph1 = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
+            IOrientedGraph<OrientedVertex, OrientedEdge> graph2 = OrientedGraph<OrientedVertex, OrientedEdge>.Create();
+            var vertex = new OrientedVertex("0");
+
+            // Act
+            graph1.AddVertex(vertex);
+
+            // Assert
+            Assert.ThrowsException<VertexException>(() => graph2.AddVertex(vertex));
+        }
+
 
         [TestMethod]
         public void AddVerticesTest1()

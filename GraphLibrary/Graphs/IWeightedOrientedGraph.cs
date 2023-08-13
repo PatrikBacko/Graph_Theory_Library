@@ -58,6 +58,7 @@ namespace GraphLibrary.Graphs
 
 		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight> LoadFromJson(string path);
 		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString);
+		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString, JsonSerializerOptions options);
 
 
 

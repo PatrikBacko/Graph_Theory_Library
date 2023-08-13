@@ -20,16 +20,20 @@ namespace GraphLibraryTests.SerializationTests.JsonSerializationTests
             var graph = TestGraphs.TestOrientedGraphs.GetPathTestOrientedGraph(5);
 
 			// Act
-			var expectedVertices = graph.GetVertices().Select(v => v.Name).ToList();
+			var expectedVertices = graph.GetVertices().Select(v => (v.Name, v.DegreeIn, v.DegreeOut)).ToList();
             var expectedEdges = graph.GetEdges().Select(e => (e.VertexOut, e.VertexIn)).ToList();
 
 			var jsonString = graph.SerializeToJson();
             var deserializedGraph = OrientedGraph<OrientedVertex, OrientedEdge>.DeserializeFromJson(jsonString);
             
-            var actualVertices = deserializedGraph.GetVertices().Select(v => v.Name).ToList();
+            var actualVertices = deserializedGraph.GetVertices().Select(v => (v.Name, v.DegreeIn, v.DegreeOut)).ToList();
             var actualEdges = deserializedGraph.GetEdges().Select(e => (e.VertexOut, e.VertexIn)).ToList();
 
 			// Assert
+            Assert.AreEqual(graph.GetType(), deserializedGraph.GetType());
+            Assert.AreEqual(expectedVertices.First().GetType(), actualVertices.First().GetType());
+            Assert.AreEqual(expectedEdges.First().GetType(), actualEdges.First().GetType());
+
             CollectionAssert.AreEqual(expectedVertices, actualVertices);
             CollectionAssert.AreEqual(expectedEdges, actualEdges);
 		}

@@ -11,7 +11,6 @@ using GraphLibrary.Extensions.IOrientedGraphExtensions;
 
 namespace GraphLibrary.Extensions.IWeightedOrientedGraphExtensions
 {
-	//TODO: Tests IWeightedOrientedGraphExtensions
 	public static class IWeightedOrientedGraphExtensions
 	{
 		public static IWeightedOrientedGraph<TVertex, TEdge, TWeight> AddVertex<TVertex, TEdge, TWeight>

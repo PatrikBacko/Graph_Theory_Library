@@ -15,9 +15,9 @@ namespace GraphLibrary.Vertices
 		{
 			Weight = TWeight.Zero;
 		}
-		public WeightedOrientedVertex(VertexName name, TWeight weight) : base(name)
+		public WeightedOrientedVertex(VertexName name, TWeight Weight) : base(name)
 		{
-			Weight = weight;
+			this.Weight = Weight;
 		}
 
 		virtual public WeightedOrientedVertex<TWeight> ChangeWeight(TWeight weight)
@@ -25,5 +25,6 @@ namespace GraphLibrary.Vertices
 			Weight = weight;
 			return this;
 		}
+
 	}
 }

@@ -110,6 +110,23 @@ namespace GraphLibraryTests.GraphTests.OrientedGraphTests
 
             Assert.ThrowsException<VertexException>(() => graph.GetVertex("0"));
         }
+        [TestMethod] public void RemoveVertexTest8()
+        {
+            // Arrange
+            var graph1 = TestGraphs.TestOrientedGraphs.ClearTestOrientedGraph;
+            var graph2 = TestGraphs.TestOrientedGraphs.ClearTestOrientedGraph;
+            var vertex = new OrientedVertex("0");
+
+            // Act
+            graph1.AddVertex(vertex);
+            graph1.RemoveVertex(vertex);
+            graph2.AddVertex(vertex);
+
+            // Assert
+            Assert.IsFalse(graph1.IsVertex(vertex));
+            Assert.IsTrue(graph2.IsVertex(vertex));
+            Assert.ThrowsException<VertexException>(() => graph1.AddVertex(vertex));
+        }
 
 
         [TestMethod]

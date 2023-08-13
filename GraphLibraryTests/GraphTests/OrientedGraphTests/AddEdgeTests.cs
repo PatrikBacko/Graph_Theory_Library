@@ -73,8 +73,21 @@ namespace GraphLibraryTests.GraphTests.OrientedGraphTests
 
             Assert.ThrowsException<EdgeException>(() => graph.AddEdge(edge));
         }
+        [TestMethod] public void AddEdgeTest6()
+        {
+            // Arrange
+            var graph1 = TestOrientedGraphs.GetVertexTestOrientedGraph(3);
+			var graph2 = TestOrientedGraphs.GetVertexTestOrientedGraph(3);
+            var edge = new OrientedEdge("0", "1"); 
 
-        [TestMethod]
+            // Act
+            graph1.AddEdge(edge);
+
+            // Assert
+            Assert.ThrowsException<EdgeException>(() => graph2.AddEdge(edge));
+		}
+
+		[TestMethod]
         public void AddEdgesTest1()
         {
             IOrientedGraph<OrientedVertex, OrientedEdge> graph = TestOrientedGraphs.GetVertexTestOrientedGraph(10);

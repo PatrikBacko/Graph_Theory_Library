@@ -7,9 +7,6 @@ using GraphLibrary.Vertices;
 
 namespace GraphLibrary.Edges
 {
-	//TODO: is in graph property needed?
-	//TODO Copy method
-	//TODO: Reverse method
 	public class OrientedEdge : Edge
 	{
 		public VertexName VertexOut { get; init; }

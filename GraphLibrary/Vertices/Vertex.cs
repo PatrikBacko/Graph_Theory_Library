@@ -8,7 +8,9 @@ namespace GraphLibrary.Vertices
 {
 	public abstract class Vertex
 	{
+		internal bool IsInGraph { get; set; } = false;
 		public VertexName Name { get; init; }
+
 
 		public Vertex() { }
 		public Vertex(VertexName name)

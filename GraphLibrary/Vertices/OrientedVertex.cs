@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace GraphLibrary.Vertices
 {
-	//TODO: is in graph property needed? (also for edges)
-	//TODO: Copy method
 	public class OrientedVertex : Vertex
 	{
 		public int DegreeOut { get; internal set; }
@@ -21,5 +19,6 @@ namespace GraphLibrary.Vertices
 			DegreeIn = 0;
 			DegreeOut = 0;
 		}
+
 	}
 }

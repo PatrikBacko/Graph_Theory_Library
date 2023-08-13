@@ -89,7 +89,25 @@ namespace GraphLibraryTests.GraphTests.OrientedGraphTests
             CollectionAssert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
+        [TestMethod] public void RemoveEdgeTest7()
+        {
+            // Arrange
+            var graph1 = TestGraphs.TestOrientedGraphs.GetVertexTestOrientedGraph(3);
+			var graph2 = TestGraphs.TestOrientedGraphs.GetVertexTestOrientedGraph(3);
+            var edge = new OrientedEdge("0", "1");
+
+            // Act
+            graph1.AddEdge(edge);
+            graph1.RemoveEdge(edge);
+            graph2.AddEdge(edge);
+
+            // Assert
+            Assert.IsFalse(graph1.IsEdge(edge));
+            Assert.IsTrue(graph2.IsEdge(edge));
+            Assert.ThrowsException<EdgeException>(() => graph1.AddEdge(edge));
+		}
+
+		[TestMethod]
         public void RemoveEdgesTest1()
         {
             IOrientedGraph<OrientedVertex, OrientedEdge> graph = TestOrientedGraphs.GetVertexTestOrientedGraph(10);

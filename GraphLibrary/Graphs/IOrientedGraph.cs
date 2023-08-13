@@ -71,11 +71,13 @@ namespace GraphLibrary.Graphs
 		static abstract IOrientedGraph<TVertex, TEdge> Create();
 		static abstract IOrientedGraph<TVertex, TEdge> Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges);
 
-		string SerializeToJson();
 		void SaveToJson(string path);
+		string SerializeToJson();
+		string SerializeToJson(JsonSerializerOptions options);
 
 
 		static abstract IOrientedGraph<TVertex, TEdge> DeserializeFromJson(string jsonString);
+		static abstract IOrientedGraph<TVertex, TEdge> DeserializeFromJson(string jsonString, JsonSerializerOptions options);
 		static abstract IOrientedGraph<TVertex, TEdge> LoadFromJson(string path);
 
 		static IOrientedGraph<TVertex, TEdge> operator +(IOrientedGraph<TVertex, TEdge> graph, TVertex vertex) => graph.AddVertex(vertex);

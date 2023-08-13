@@ -11,8 +11,6 @@ using System.Text.Json;
 using GraphLibrary.Graphs.JsonConverters;
 using System.Xml.Linq;
 
-//TODO: (maybe) prejsť z eager na lazy a detekovať zmeny
-
 namespace GraphLibrary.Graphs
 {
     public class OrientedGraph<TVertex, TEdge> : IOrientedGraph<TVertex, TEdge>
@@ -185,7 +183,10 @@ namespace GraphLibrary.Graphs
 		public virtual OrientedGraph<TVertex, TEdge> AddVertex(TVertex vertex) {
 			ValidVertexName(vertex.Name);
 			if (IsVertex(vertex.Name))
-				throw new VertexException("Vertex already exists in Graph");
+				throw new VertexException("Vertex with the same name already exists in Graph");
+			if (vertex.IsInGraph)
+				throw new VertexException("Vertex already belongs to a different Graph");
+			vertex.IsInGraph = true;
 			_vertices.Add(vertex.Name, vertex);
 			_neighbors.Add(vertex.Name, new Dictionary<VertexName, TEdge>());
 			return this;
@@ -207,6 +208,10 @@ namespace GraphLibrary.Graphs
 
 			if (edge.VertexIn == edge.VertexOut)
 				throw new EdgeException("Edge cannot be a loop");
+
+			if (edge.IsInGraph)
+				throw new EdgeException("This edge already belongs to a different Graph");
+			edge.IsInGraph = true;
 
 			_neighbors[edge.VertexOut].Add(edge.VertexIn, edge);
 			_edgeCount++;
@@ -235,9 +240,12 @@ namespace GraphLibrary.Graphs
 					RemoveEdge(vertexName, vertex.Name);
 			}
 
+			GetVertex(vertexName).IsInGraph = false;
+
 			_edgeCount -= _neighbors[vertexName].Count;
 			_vertices.Remove(vertexName);
 			_neighbors.Remove(vertexName);
+			
 			
 			return this;
 		}
@@ -267,10 +275,13 @@ namespace GraphLibrary.Graphs
 			try
 			{
 			ContainsEdge(vertexOut, vertexIn);
+			GetEdge(vertexOut, vertexIn).IsInGraph = false;
+
 			_neighbors[vertexOut].Remove(vertexIn);
 			_edgeCount--;
 			_vertices[vertexOut].DegreeOut--;
 			_vertices[vertexIn].DegreeIn--;
+			
 			return this;
 			}
 			catch (VertexException e)
@@ -319,13 +330,14 @@ namespace GraphLibrary.Graphs
 		public virtual void SaveToJson(string Path) 
 			=> File.WriteAllText(Path, SerializeToJson());
 
-		//TODO : Tests - Serialize
 		public virtual string SerializeToJson()
 			=> SerializeToJson(new JsonSerializerOptions()
 			{
 				Converters =
 				{
 					new OrientedGraphConverter<TVertex, TEdge>(),
+					new OrientedVertexConverter(),
+					new OrientedEdgeConverter(),
 					new VertexNameConverter()
 				}
 			});
@@ -346,13 +358,14 @@ namespace GraphLibrary.Graphs
 		public static OrientedGraph<TVertex, TEdge> LoadFromJson(string Path) 
 			=> DeserializeFromJson(File.ReadAllText(Path));
 
-		//TODO: Tests - Deserialize
 		public static OrientedGraph<TVertex, TEdge> DeserializeFromJson(string jsonString)
 			=> DeserializeFromJson(jsonString, new JsonSerializerOptions()
 			{
 				Converters =
 				{
 					new OrientedGraphConverter<TVertex, TEdge>(),
+					new OrientedVertexConverter(),
+					new OrientedEdgeConverter(),
 					new VertexNameConverter()
 				}
 			});
@@ -441,8 +454,9 @@ namespace GraphLibrary.Graphs
 
 		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.LoadFromJson(string path)
 			=> DeserializeFromJson(path);
-		 
 		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.DeserializeFromJson(string jsonString)
 			=> DeserializeFromJson(jsonString);
+		static IOrientedGraph<TVertex, TEdge> IOrientedGraph<TVertex, TEdge>.DeserializeFromJson(string jsonString, JsonSerializerOptions options)
+			=> DeserializeFromJson(jsonString, options);
 	}
 }

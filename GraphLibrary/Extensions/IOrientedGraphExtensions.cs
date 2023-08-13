@@ -46,8 +46,6 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 			}
 			return graph;
 		}
-
-		//TODO: prerobiť cez virtual ReverseEdge metódu na OrientedEdge
 		public static IOrientedGraph<TVertex, TEdge> ReverseEdge<TVertex, TEdge>(this IOrientedGraph<TVertex, TEdge> graph, TEdge edge)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -92,7 +90,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 			var newGraph = new OrientedGraph<TVertex, TEdge>();
 			foreach (var vertex in graph.GetVertices())
 			{
-				newGraph.AddVertex(vertex);
+				newGraph.AddVertex(vertex.Name);
 			}
 			foreach (var edge in graph.GetEdges())
 			{
