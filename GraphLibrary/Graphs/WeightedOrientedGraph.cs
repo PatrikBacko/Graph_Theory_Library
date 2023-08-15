@@ -49,6 +49,8 @@ namespace GraphLibrary.Graphs
 			return graph;
 		}
 
+		/// <inheritdoc cref="IWeightedOrientedGraph{TVertex, TEdge, TWeight}.AddVertex(TVertex)"/>
+		/// <inheritdoc/>
 		public override WeightedOrientedGraph<TVertex, TEdge, TWeight> AddVertex(TVertex vertex)
 			=> (WeightedOrientedGraph<TVertex, TEdge, TWeight>) base.AddVertex(vertex);
 		

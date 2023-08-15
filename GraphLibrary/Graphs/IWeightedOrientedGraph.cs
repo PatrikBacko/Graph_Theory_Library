@@ -19,53 +19,161 @@ namespace GraphLibrary.Graphs
 		where TEdge : WeightedOrientedEdge<TWeight> 
 		where TWeight : INumber<TWeight>
 	{
+		#region GetWeightMethods
 		TWeight GetWeight(VertexName vertex);
 		TWeight GetWeight(VertexName vertexOut, VertexName vertexIn);
+		#endregion
+
+		#region ChangeWeightMethods
+		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeVertexWeight(VertexName vertex, TWeight weight);
+		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeEdgeWeight(VertexName vertexOut, VertexName vertexIn, TWeight weight);
+		#endregion
+
+
+		#region CoverMethodsOfIOrientedGraphMethods
+		// Cover methods of IOrientedGraph methods because of the fluent syntax
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.ApplyToVertices(VertexAction{TVertex})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> ApplyToVertices(VertexAction<TVertex> vertexAction);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.ApplyToVerticesWith(VertexPredicate{TVertex}, VertexAction{TVertex})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> ApplyToVerticesWith(VertexPredicate<TVertex> vertexPredicate, VertexAction<TVertex> vertexAction);
 
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.ApplyToEdges(EdgeAction{TEdge})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> ApplyToEdges(EdgeAction<TEdge> edgeAction);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.ApplyToEdgesWith(EdgePredicate{TEdge}, EdgeAction{TEdge})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> ApplyToEdgesWith(EdgePredicate<TEdge> edgePredicate, EdgeAction<TEdge> edgeAction);
 
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.AddVertex(TVertex)"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> AddVertex(TVertex vertex);
-		//IOrientedGraph<TVertex, TEdge> AddVertex(VertexName vertex);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.AddVertices(IEnumerable{TVertex}"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> AddVertices(IEnumerable<TVertex> vertices);
 
 
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.AddEdge(TEdge)"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> AddEdge(TEdge edge);
-		//IOrientedGraph<TVertex, TEdge> AddEdge(VertexName vertexOut, VertexName vertexIn);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.AddEdges(IEnumerable{TEdge})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> AddEdges(IEnumerable<TEdge> edges);
 
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveVertex(VertexName)"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveVertex(VertexName vertex);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveVertex(TVertex)"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveVertex(TVertex vertex);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveVertices(IEnumerable{TVertex})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveVertices(IEnumerable<TVertex> vertices);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveVertices(IEnumerable{VertexName)"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveVertices(IEnumerable<VertexName> vertices);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveVerticesWith(VertexPredicate{TVertex})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveVerticesWith(VertexPredicate<TVertex> vertices);
 
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveEdge(VertexName, VertexName)"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveEdge(VertexName vertexOut, VertexName vertexIn);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveEdge(TEdge)"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveEdge(TEdge edge);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveEdges(IEnumerable{TEdge})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveEdges(IEnumerable<TEdge> edges);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveEdges(IEnumerable{ValueTuple{VertexName, VertexName}})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveEdges(IEnumerable<(VertexName vertexOut, VertexName vertexIn)> edges);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.RemoveEdgesWith(EdgePredicate{TEdge})"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> RemoveEdgesWith(EdgePredicate<TEdge> edges);
 
 
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.Clear"/>
 		new IWeightedOrientedGraph<TVertex, TEdge, TWeight> Clear();
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.Create()"/>
 		new static abstract IWeightedOrientedGraph<TVertex, TEdge, TWeight> Create();
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.Create(IEnumerable{TVertex}, IEnumerable{TEdge})"/>
 		new static abstract IWeightedOrientedGraph<TVertex, TEdge, TWeight> Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges);
 
-		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeVertexWeight(VertexName vertex, TWeight weight);
-		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeEdgeWeight(VertexName vertexOut, VertexName vertexIn, TWeight weight);
 
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.LoadFromJson(string)"/>
 		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight> LoadFromJson(string path);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.DeserializeFromJson(string)"/>
 		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString);
+
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.DeserializeFromJson(string, JsonSerializerOptions)"/>
 		static abstract new IWeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString, JsonSerializerOptions options);
+		#endregion
 
-
-
+		#region Operators
+		/// <summary>
+		/// Overriden operator + <br />
+		/// Functions same as <see cref="AddVertex(TVertex)"/> <br />
+		/// </summary>
+		/// <param name="graph">
+		/// graph to which vertex is added
+		/// </param>
+		/// <param name="vertex">
+		/// vertex to be added to the graph
+		/// </param>
+		/// <returns>
+		/// Itself after adding vertex
+		/// </returns>
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> operator +(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, TVertex vertex) => graph.AddVertex(vertex);
+
+		/// <summary>
+		/// Overriden operator + <br />
+		/// Functions same as <see cref="AddEdge(TEdge)"/> <br />
+		/// </summary>
+		/// <param name="graph">
+		/// graph to which edge is added
+		/// </param>
+		/// <param name="edge">
+		/// edge to be added to the graph
+		/// </param>
+		/// <returns>
+		/// Itself after adding edge
+		/// </returns>
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> operator +(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, TEdge edge) => graph.AddEdge(edge);
 
+
+		/// <summary>
+		/// Overriden operator - <br />
+		/// Functions same as <see cref="RemoveVertex(TVertex)"/> <br />
+		/// </summary>
+		/// <param name="graph">
+		/// graph from which vertex is removed
+		/// </param>
+		/// <param name="vertex">
+		/// vertex to be removed from the graph
+		/// </param>
+		/// <returns>
+		/// Itself after removing vertex
+		/// </returns>
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> operator -(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, TVertex vertex) => graph.RemoveVertex(vertex);
+
+		/// <summary>
+		/// Overriden operator - <br />
+		/// Functions same as <see cref="RemoveEdge(TEdge)"/> <br />
+		/// </summary>
+		/// <param name="graph">
+		/// graph from which edge is removed
+		/// </param>
+		/// <param name="edge">
+		/// edge to be removed from the graph
+		/// </param>
+		/// <returns>
+		/// Itself after removing edge
+		/// </returns>
 		static IWeightedOrientedGraph<TVertex, TEdge, TWeight> operator -(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, TEdge edge) => graph.RemoveEdge(edge);
+		#endregion
 	}
 }
