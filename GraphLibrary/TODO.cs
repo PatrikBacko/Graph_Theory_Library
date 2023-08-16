@@ -16,5 +16,8 @@ namespace GraphLibrary
 		//TODO: Change extensions AddVertex and AddEdge with VertexName, so it uses delegates saved in graph to generate vertices and edges ??? (aj v OrientedGraph aj v WeightedOrientedGraph)
 		//TODO: maybe Extension aj pre OrientedGraph a pre WeightedOrientedGraph ???
 		//TODO: (maybe) prejsť z eager na lazy a detekovať zmeny v OrientedGraph a WeightedOrientedGraph
+		//TODO: Non-OrientedGraph
+		//TODO: AdjacencyMatrix graph
+		//TODO: ColoredGraph ?
 	}
 }
