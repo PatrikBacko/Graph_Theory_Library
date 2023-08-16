@@ -14,6 +14,18 @@ using System.Text.Json;
 
 namespace GraphLibrary.Graphs
 {
+	/// <summary>
+	/// Interface for weighted oriented graph
+	/// </summary>
+	/// <typeparam name="TVertex">
+	/// Vertex type of graph, must be inherited from <see cref="WeightedOrientedVertex{TWeight}"/>
+	/// </typeparam>
+	/// <typeparam name="TEdge">
+	/// Edge type of graph, must be inherited from <see cref="WeightedOrientedEdge{TWeight}"/>
+	/// </typeparam>
+	/// <typeparam name="TWeight">
+	/// Weight type for both vertices and edges, must be inherited from <see cref="INumber{TWeight}"/>
+	/// </typeparam>
 	public interface IWeightedOrientedGraph<TVertex, TEdge,  TWeight> : IOrientedGraph<TVertex, TEdge>
 		where TVertex : WeightedOrientedVertex<TWeight> 
 		where TEdge : WeightedOrientedEdge<TWeight> 

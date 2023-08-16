@@ -17,7 +17,35 @@ namespace GraphLibrary.Algorithms
 	public enum VertexState { OPENED, CLOSED, UNVISITED }
 	public static class Algorithms
 	{
-
+		#region Bfs
+		/// <summary>
+		/// Breadth First Search from a given Vertex. <br />
+		/// If there are vertices that are not connected to the sourceVertex by a path, they will not be visited. <br />
+		/// When vertex is visited, vertexAction is called on it. <br />
+		/// When algorithm goes through an edge, edgeAction is called on it. 
+		/// (When the end of Edge is a vertex which was already visited, EdgeAction will not be performed on that edge)
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph. <br />
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph. <br />
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed. <br />
+		/// </param>
+		/// <param name="sourceVertex">
+		/// Vertex from which algorithm starts. <br />
+		/// </param>
+		/// <param name="vertexAction">
+		/// Action performed on a Vertex when it is visited. <br />
+		/// </param>
+		/// <param name="edgeAction">
+		/// Action performed on an Edge when it is visited. <br />
+		/// </param>
+		/// <exception cref="ArgumentException">
+		/// Exception thrown when sourceVertex is not in the graph. <br />
+		/// </exception>
 		static public void BfsFromVertex<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexAction, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
@@ -45,6 +73,28 @@ namespace GraphLibrary.Algorithms
 				visited[vertex] = VertexState.CLOSED;
 			}
 		}
+
+		/// <summary>
+		/// Breadth First Search on a Graph, visits all the vertices, but innitial vertex can´t be chosen <br />
+		/// When vertex is visited, vertexAction is called on it. <br />
+		/// When algorithm goes through an edge, edgeAction is called on it.
+		/// (When the end of Edge is a vertex which was already visited, EdgeAction will not be performed on that edge)
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// type of Vertex in the Graph. <br />
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// type of Edge in the Graph. <br />
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed. <br />
+		/// </param>
+		/// <param name="vertexAction">
+		/// Action performed on a Vertex when it is visited. <br />
+		/// </param>
+		/// <param name="edgeAction">
+		/// Action performed on an Edge when it is visited. <br />
+		/// </param>
 		static public void Bfs<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexAction<TVertex> vertexAction, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
@@ -61,7 +111,34 @@ namespace GraphLibrary.Algorithms
 					edgeAction);
 			}
 		}
+		#endregion
 
+		#region Dfs
+		/// <summary>
+		/// Depth First Search on a Graph, visits all the vertices, but innitial vertex can´t be chosen <br />
+		/// When vertex is opened, vertexActionOpened is called on it. <br />
+		/// When vertex is closed, vertexActionClosed is called on it. <br />
+		/// When algorithm goes through an edge, edgeAction is called on it.
+		/// (When the end of Edge is a vertex which was already visited, EdgeAction will not be performed on that edge) <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="vertexActionOpened">
+		/// Action performed on a Vertex when it is opened.
+		/// </param>
+		/// <param name="vertexActionClosed">
+		/// Action performed on a Vertex when it is closed.
+		/// </param>
+		/// <param name="edgeAction">
+		/// Action performed on an Edge when it is visited.
+		/// </param>
 		static public void Dfs<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexAction<TVertex> vertexActionOpened, VertexAction<TVertex> vertexActionClosed, EdgeAction<TEdge> edgeAction)
 			where TVertex : OrientedVertex
@@ -81,6 +158,39 @@ namespace GraphLibrary.Algorithms
 					visited);
 			}
 		}
+
+		/// <summary>
+		/// Depth First Search on a Graph from a given Vertex. <br />
+		/// If there are vertices that are not connected to the sourceVertex by a path, they will not be visited. <br /> <br />
+		/// When vertex is opened, vertexActionOpened is called on it. <br />
+		/// When vertex is closed, vertexActionClosed is called on it. <br />
+		/// When algorithm goes through an edge, edgeAction is called on it.
+		/// (When the end of Edge is a vertex which was already visited, EdgeAction will not be performed on that edge) <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="vertexActionOpened">
+		/// Action performed on a Vertex when it is opened.
+		/// </param>
+		/// <param name="vertexActionClosed">
+		/// Action performed on a Vertex when it is closed.
+		/// </param>
+		/// <param name="edgeAction">
+		/// Action performed on an Edge when it is visited.
+		/// </param>
+		/// <param name="visited">
+		/// Dict of visited vertices and their states.
+		/// </param>
+		/// <exception cref="ArgumentException">
+		/// Exception thrown when sourceVertex is not in the given Graph.
+		/// </exception>
 		static public void DfsFromVertex<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
 		VertexAction<TVertex> vertexActionClosed, EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
@@ -101,9 +211,50 @@ namespace GraphLibrary.Algorithms
 				e => { if (!visited.ContainsKey(e.VertexIn)) edgeAction(e); }, 
 				visited);
 		}
+
+		/// <summary>
+		/// Depth First Search on a Graph from a given Vertex. <br />
+		/// If there are vertices that are not connected to the sourceVertex by a path, they will not be visited. <br />
+		/// When vertex is opened, vertexActionOpened is called on it. <br />
+		/// When vertex is closed, vertexActionClosed is called on it. <br />
+		/// Every time before algorithm goes into a vertex, even if it was already visited, beforeVisitedCheckAction is called on it. <br />
+		/// but if it is opened or closed, algorithm wont call dfs on it´s children. <br />
+		/// When algorithm goes through an edge, edgeAction is called on it.
+		/// (When the end of Edge is a vertex which was already visited, EdgeAction will be performed anyways) <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="sourceVertex">
+		/// Vertex from which algorithm starts.
+		/// </param>
+		/// <param name="vertexActionOpened">
+		/// Action performed on a Vertex when it is opened.
+		/// </param>
+		/// <param name="vertexActionClosed">
+		/// Action performed on a Vertex when it is closed.
+		/// </param>
+		/// <param name="vertexActionEveryTime">
+		/// Action performed on a Vertex every time it is visited, even if it was already opened or closed.
+		/// </param>
+		/// <param name="edgeAction">
+		/// Action performed on an Edge when it is visited.
+		/// </param>
+		/// <param name="visited">
+		/// Dict of visited vertices and their states.
+		/// </param>
+		/// <exception cref="ArgumentException">
+		/// Exception thrown when sourceVertex is not in the given Graph.
+		/// </exception>
 		static public void DfsFromVertexSpecial<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
-		VertexAction<TVertex> vertexActionClosed, VertexAction<TVertex> beforeVisitedCheckAction, EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
+		VertexAction<TVertex> vertexActionClosed, VertexAction<TVertex> vertexActionEveryTime, EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState>? visited = null)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
@@ -117,10 +268,42 @@ namespace GraphLibrary.Algorithms
 				sourceVertex, 
 				vertexActionOpened, 
 				vertexActionClosed, 
-				beforeVisitedCheckAction, 
+				vertexActionEveryTime, 
 				edgeAction, 
 				visited); 
 		}
+
+		/// <summary>
+		/// Recursive part of Depth First Search on a Graph from a given Vertex. <br />
+		/// Used by all other Dfs methods. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="sourceVertex">
+		/// Vertex from which algorithm starts.
+		/// </param>
+		/// <param name="vertexActionOpened">
+		/// Action performed on a Vertex when it is opened.
+		/// </param>
+		/// <param name="vertexActionClosed">
+		/// Action performed on a Vertex when it is closed.
+		/// </param>
+		/// <param name="vertexActionEveryTime">
+		/// Action performed on a Vertex every time it is visited, even if it was already opened or closed.
+		/// </param>
+		/// <param name="edgeAction">
+		/// Action performed on an Edge when it is visited.
+		/// </param>
+		/// <param name="visited">
+		/// Dict of visited vertices and their states.
+		/// </param>
 		static private void DfsRecursion<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
 		VertexAction<TVertex> vertexActionClosed, VertexAction<TVertex> beforeVisitedCheckAction,EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState> visited)
@@ -150,7 +333,24 @@ namespace GraphLibrary.Algorithms
 			vertexActionClosed(sourceGraphVertex);
 			visited[sourceVertex] = VertexState.CLOSED;
 		}
+		#endregion
 
+		#region Strongly Connected Components
+		/// <summary>
+		/// Algorithm for finding strongly connected components in a Graph. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <returns>
+		/// List of strongly connected components in a Graph.
+		/// </returns>
 		static public List<List<VertexName>> GetStronglyConnectedComponents<TVertex, TEdge>(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -174,7 +374,24 @@ namespace GraphLibrary.Algorithms
 
 			return components;
 		}
+		#endregion
 
+		#region Contains Eurelian Cycle
+		/// <summary>
+		/// Checks if a Graph contains Eurelian Cycle. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Grpah on which algorithm is performed.
+		/// </param>
+		/// <returns>
+		/// bool value indicating if a Graph contains Eurelian Cycle.
+		/// </returns>
 		static public bool ContainsEurelianCycle<TVertex, TEdge>(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex, new()
 			where TEdge : OrientedEdge, new()
@@ -183,7 +400,47 @@ namespace GraphLibrary.Algorithms
 			if (graph.GetVerticesWith(v => v.DegreeIn != v.DegreeOut).Count() > 0) return false;
 			return true;
 		}
+		#endregion
 
+		#region Shortest Path
+		/// <summary>
+		/// Algorithm for finding shortest path between two vertices in a Graph. <br />
+		/// If Graph has no negative edges, Dijkstra algorithm is used. <br />
+		/// Otherwise Bellman-Ford algorithm is used. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TWeight">
+		/// Type of Weight of Edges in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="sourceVertex">
+		/// Vertex from which the path starts.
+		/// </param>
+		/// <param name="destinationVertex">
+		/// Vertex at which the path ends.
+		/// </param>
+		/// <param name="pathWeight">
+		/// Output parameter for the weight of the path.
+		/// </param>
+		/// <returns>
+		/// List of vertices on the shortest path.
+		/// </returns>
+		/// <exception cref="ArgumentException">
+		/// Exception thrown When destination or source vertex is not in the given Graph.
+		/// </exception>
+		/// <exception cref="NoPathException">
+		/// Exception thrown when no path exists between source and destination vertex.
+		/// </exception>
+		/// <exception cref="GraphHasNegativeCycleException">
+		/// Exception thrown when Graph contains negative cycle.
+		/// </exception>
 		static public List<VertexName> ShortestPath<TVertex, TEdge, TWeight>
 		(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, VertexName sourceVertex, VertexName destinationVertex, out TWeight pathWeight)
 			where TVertex : WeightedOrientedVertex<TWeight>
@@ -213,6 +470,42 @@ namespace GraphLibrary.Algorithms
 
 			return path;
 		}
+
+		/// <summary>
+		/// Algorithm for finding shortest path from sourceVertex to every vertex in a Graph. <br />
+		/// If Graph has no negative edges, Dijkstra algorithm is used. <br />
+		/// Otherwise Bellman-Ford algorithm is used. <br />
+		/// Algorithm returns distances dict and predecessors dict. 
+		/// In distances dict, key is vertex name and value is distance from source vertex. <br />
+		/// In predecessors dict, key is vertex name and value is predecessor of the vertex on the shortest path from source vertex. <br />
+		/// If Vertex is not reachable from source vertex, neither of dicts will contain its name <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TWeight">
+		/// Type of Weight of Edges in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="sourceVertex">
+		/// Vertex from which the path starts.
+		/// </param>
+		/// <returns>
+		/// Tuple of two dictionaries. <br />
+		/// First dictionary (distances) contains distances from source vertex to every vertex in the Graph. <br />
+		/// Second dictionary (precedessors) contains predecessors of every vertex on the shortest path from source vertex. <br />
+		/// </returns>
+		/// <exception cref="ArgumentException">
+		/// Exception thrown When source vertex is not in the given Graph.
+		/// </exception>
+		/// <exception cref="GraphHasNegativeCycleException">
+		/// Exception thrown when Graph contains negative cycle.
+		/// </exception>
 		static public (Dictionary<VertexName, TWeight> distances, Dictionary<VertexName, VertexName> predecessors) ShortestPathsAllVertices<TVertex, TEdge, TWeight>
 		(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, VertexName sourceVertex)
 			where TVertex : WeightedOrientedVertex<TWeight>
@@ -227,6 +520,34 @@ namespace GraphLibrary.Algorithms
 				return DjikstraShortestPath(graph, sourceVertex);
 		}
 
+		/// <summary>
+		/// Djikstra algorithm for finding shortest path from sourceVertex to every vertex in a Graph. <br />
+		/// Cant be used if Graph contains negative edges. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TWeight">
+		/// Type of Weight of Edges in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="sourceVertex">
+		/// Vertex from which the path starts.
+		/// </param>
+		/// <returns>
+		/// Tuple of two dictionaries. <br />
+		/// First dictionary (distances) contains distances from source vertex to every vertex in the Graph. <br />
+		/// Second dictionary (precedessors) contains predecessors of every vertex on the shortest path from source vertex. <br />
+		/// </returns>
+		/// <exception cref="ArgumentException">
+		/// Exception thrown When source vertex is not in the given Graph,
+		/// or when Graph contains negative edges.
+		/// </exception>
 		static private (Dictionary<VertexName, TWeight>, Dictionary<VertexName, VertexName>) DjikstraShortestPath<TVertex, TEdge, TWeight>
 		(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, VertexName sourceVertex)
 			where TVertex : WeightedOrientedVertex<TWeight>
@@ -262,6 +583,38 @@ namespace GraphLibrary.Algorithms
 			}
 			return (distances, predecessors);
 		}
+
+		/// <summary>
+		/// Bellman-Ford algorithm for finding shortest path from sourceVertex to every vertex in a Graph. <br />
+		/// Can be used if Graph contains negative edges. <br />
+		/// Can detect negative cycles. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TWeight">
+		/// Type of Weight of Edges in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="sourceVertex">
+		/// Vertex from which the path starts.
+		/// </param>
+		/// <returns>
+		/// Tuple of two dictionaries. <br />
+		/// First dictionary (distances) contains distances from source vertex to every vertex in the Graph. <br />
+		/// Second dictionary (precedessors) contains predecessors of every vertex on the shortest path from source vertex. <br />
+		/// </returns>
+		/// <exception cref="ArgumentException">
+		/// Exception thrown When source vertex is not in the given Graph.
+		/// </exception>
+		/// <exception cref="GraphHasNegativeCycleException">
+		/// Exception thrown When Graph contains negative cycle.
+		/// </exception>
 		static private (Dictionary<VertexName, TWeight>, Dictionary<VertexName, VertexName>) BellmanFordShortestPath<TVertex, TEdge, TWeight>
 		(IWeightedOrientedGraph<TVertex, TEdge, TWeight> graph, VertexName sourceVertex)
 			where TVertex : WeightedOrientedVertex<TWeight>
@@ -303,7 +656,28 @@ namespace GraphLibrary.Algorithms
 
 			return (distances, predecessors);
 		}
+		#endregion
 
+		#region Topological Sorting
+
+		/// <summary>
+		/// Algorithm for finding topological sorting of a Directed Acyclic Graph. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <returns>
+		/// List of vertices in topological order.
+		/// </returns>
+		/// <exception cref="GraphIsNotDAGException">
+		/// Exception thrown When Graph is not a DAG.
+		/// </exception>
 		static public List<VertexName> TopologicalSorting<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex
@@ -317,6 +691,21 @@ namespace GraphLibrary.Algorithms
 			return topologicalSorting;
 		}
 
+		/// <summary>
+		/// Algorithm for checking if a Graph is a DAG. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <returns>
+		/// bool value indicating if Graph is a DAG.
+		/// </returns>
 		static public bool IsDag<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph)
 			where TVertex : OrientedVertex
@@ -325,6 +714,27 @@ namespace GraphLibrary.Algorithms
 			return HasTopologicalSorting(graph, out var topologicalSorting);
 		}
 
+		/// <summary>
+		/// Private method for finding topological sorting of a Directed Acyclic Graph. <br />
+		/// returns true if Graph is a DAG, false otherwise. <br />
+		/// out parameter topologicalSorting is set to null if Graph is not a DAG. <br />
+		/// </summary>
+		/// <typeparam name="TVertex">
+		/// Type of Vertex in the Graph.
+		/// </typeparam>
+		/// <typeparam name="TEdge">
+		/// Type of Edge in the Graph.
+		/// </typeparam>
+		/// <param name="graph">
+		/// Graph on which algorithm is performed.
+		/// </param>
+		/// <param name="topologicalSorting">
+		/// Out parameter for topological sorting of the Graph.
+		/// Is set to null if Graph is not a DAG.
+		/// </param>
+		/// <returns>
+		/// bool value indicating if Graph is a DAG. (and thus has topological order)
+		/// </returns>
 		static private bool HasTopologicalSorting<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, out List<VertexName>? topologicalSorting)
 			where TVertex : OrientedVertex
@@ -355,5 +765,6 @@ namespace GraphLibrary.Algorithms
 				topologicalSorting = null;
 			return isDag;
 		}
+		#endregion
 	}
 }

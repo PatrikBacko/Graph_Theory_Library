@@ -15,12 +15,25 @@ using GraphLibrary.Graphs.Exceptions;
 
 namespace GraphLibrary.Graphs
 {
+	/// <summary>
+	/// Class representing weighted oriented graph and implementing IWeightedOrientedGraph interface <br />
+	/// inherited from OrientedGraph <br />
+	/// It is represented by list of neighbours (and implemented by dict of neighbours)
+	/// </summary>
+	/// <typeparam name="TVertex">
+	/// Vertex type of graph, must be inherited from <see cref="WeightedOrientedVertex{TWeight}"/>
+	/// </typeparam>
+	/// <typeparam name="TEdge">
+	/// Edge type of graph, must be inherited from <see cref="WeightedOrientedEdge{TWeight}"/>
+	/// </typeparam>
+	/// <typeparam name="TWeight">
+	/// Weight type for both vertices and edges, must be inherited from <see cref="INumber{TWeight}"/>
+	/// </typeparam>
 	public class WeightedOrientedGraph<TVertex, TEdge, TWeight> : OrientedGraph<TVertex, TEdge>, IWeightedOrientedGraph<TVertex, TEdge, TWeight>
 		where TVertex : WeightedOrientedVertex<TWeight>
 		where TEdge : WeightedOrientedEdge<TWeight>
 		where TWeight : INumber<TWeight>
 	{
-
 		public WeightedOrientedGraph() : base() { }
 
 		#region GetWeightMethods
