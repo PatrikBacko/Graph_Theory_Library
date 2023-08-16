@@ -11,6 +11,10 @@ using GraphLibrary.Extensions.IOrientedGraphExtensions;
 
 namespace GraphLibrary.Extensions.IWeightedOrientedGraphExtensions
 {
+	/// <summary>
+	/// Extension methods for <see cref="IWeightedOrientedGraph{TVertex, TEdge, TWeight}"/> <br />
+	/// Idealy IWeightedOrientedGraph<WeightedOrientedVertex<TWeight>, WeightedOrientedEdge<TWeight>, TWeight>
+	/// </summary>
 	public static class IWeightedOrientedGraphExtensions
 	{
 		#region AddVertexMethods

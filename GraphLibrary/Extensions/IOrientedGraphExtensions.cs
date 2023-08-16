@@ -9,6 +9,10 @@ using GraphLibrary.Edges;
 
 namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 {
+	/// <summary>
+	/// Extension methods for <see cref="IOrientedGraph{TVertex, TEdge}"/>
+	/// Idealy IWeightedOrientedGraph<OrientedVertex, OrientedEdge>
+	/// </summary>
 	public static class IOrientedGraphExtensions
 	{
 		#region AddVertexMethods

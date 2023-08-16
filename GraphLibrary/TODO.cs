@@ -9,7 +9,6 @@ namespace GraphLibrary
 	internal class TODO
 	{
 		//TODO: trochu zlepšit messages v výnimkach (napr. ukáže sa meno vertex a podobne)
-		//TODO: Comments
 		//TODO: Multithreading
 		//TODO: Serialization to TXT?
 		//TODO: Pridať nejaké základné šablóny grafov (podobne ako v testGraphs)
