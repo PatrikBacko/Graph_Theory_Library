@@ -20,15 +20,66 @@ namespace GraphLibrary.Graphs
 		where TWeight : INumber<TWeight>
 	{
 		#region GetWeightMethods
+		/// <summary>
+		/// Get weight of vertex with given name
+		/// </summary>
+		/// <param name="vertex">
+		/// Name of vertex
+		/// </param>
+		/// <returns>
+		/// Weight of vertex with given name
+		/// </returns>
 		TWeight GetWeight(VertexName vertex);
+
+		/// <summary>
+		/// Get weight of edge with given vertices
+		/// </summary>
+		/// <param name="vertexOut">
+		/// name of source vertex of edge
+		/// </param>
+		/// <param name="vertexIn">
+		/// name of destination vertex of edge
+		/// </param>
+		/// <returns>
+		/// Weight of edge with given vertices
+		/// </returns>
 		TWeight GetWeight(VertexName vertexOut, VertexName vertexIn);
 		#endregion
 
 		#region ChangeWeightMethods
+		/// <summary>
+		/// Change weight of vertex with given name,
+		/// weight type must remain the same
+		/// </summary>
+		/// <param name="vertex">
+		/// Vertex name of vertex which weight will be changed
+		/// </param>
+		/// <param name="weight">
+		/// New value of weight
+		/// </param>
+		/// <returns>
+		/// Itself with changed weight of vertex
+		/// </returns>
 		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeVertexWeight(VertexName vertex, TWeight weight);
+
+		/// <summary>
+		/// Change weight of edge with given vertices,
+		/// weight type must remain the same
+		/// </summary>
+		/// <param name="vertexOut">
+		/// name of source vertex of edge
+		/// </param>
+		/// <param name="vertexIn">
+		/// name of destination vertex of edge
+		/// </param>
+		/// <param name="weight">
+		/// new value of weight
+		/// </param>
+		/// <returns>
+		/// Itself with changed weight of edge
+		/// </returns>
 		IWeightedOrientedGraph<TVertex, TEdge, TWeight> ChangeEdgeWeight(VertexName vertexOut, VertexName vertexIn, TWeight weight);
 		#endregion
-
 
 		#region CoverMethodsOfIOrientedGraphMethods
 		// Cover methods of IOrientedGraph methods because of the fluent syntax
