@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using GraphLibrary.Graphs.Delegates;
 using System.Text.Json;
 using GraphLibrary.Graphs.JsonConverters;
-using System.Xml.Linq;
 
 namespace GraphLibrary.Graphs
 {
@@ -596,12 +595,22 @@ namespace GraphLibrary.Graphs
 		/// <exception cref="SerializationException">
 		/// Exception thrown when serialization fails
 		/// </exception>
+		/// <remarks>
+		/// For different types of TVertex and TEdge you might need to create string with <see cref="SerializeToJson(JsonSerializerOptions)"/>
+		/// and then save it to file with <see cref="File.WriteAllText(string, string)"/> <br />
+		/// </remarks>
 		public virtual void SaveToJson(string Path) 
 			=> File.WriteAllText(Path, SerializeToJson());
 		/// <inheritdoc/>
 		/// <exception cref="SerializationException">
 		/// Exception thrown when serialization fails
 		/// </exception>
+		/// <remarks>
+		/// Serialization with default options is mainly for <see cref="OrientedVertex"/> and <see cref="OrientedEdge"/>. <br />
+		/// If you want to serialize your own type of Vertex and edge, you might want to use <see cref="SerializeToJson(JsonSerializerOptions)"/> method,
+		/// And provide your own <see cref="JsonSerializerOptions"/> with your own converters <br />
+		/// (for graph converter you can use <see cref="OrientedGraphConverter{TVertex, TEdge}"/>) and for vertexName <see cref="VertexNameConverter"/>. <br />"/>
+		/// </remarks>
 		public virtual string SerializeToJson()
 			=> SerializeToJson(new JsonSerializerOptions()
 			{
@@ -617,6 +626,10 @@ namespace GraphLibrary.Graphs
 		/// <exception cref="SerializationException">
 		/// Exception thrown when serialization fails
 		/// </exception>
+		/// <remarks>
+		/// You need to provide your own <see cref="JsonSerializerOptions"/> with your own converters <br />
+		/// (for graph converter you can use <see cref="OrientedGraphConverter{TVertex, TEdge}"/>) and for vertexName <see cref="VertexNameConverter"/>. <br />"/>
+		/// </remarks>
 		public virtual string SerializeToJson(JsonSerializerOptions options)
 		{
 			try
@@ -636,12 +649,23 @@ namespace GraphLibrary.Graphs
 		/// <exception cref="DeserializationException">
 		/// exception thrown when there is a problem with deserialization
 		/// </exception>
+		/// <remarks>
+		/// With different types of TVertex and TEdge you might need to load string with <see cref="File.ReadAllText(string)"/>
+		/// and then deserialize it with <see cref="DeserializeFromJson(string, JsonSerializerOptions)"/> <br />
+		/// </remarks>
 		public static OrientedGraph<TVertex, TEdge> LoadFromJson(string Path) 
 			=> DeserializeFromJson(File.ReadAllText(Path));
+
 		/// <inheritdoc/>
 		/// <exception cref="DeserializationException">
 		/// exception thrown when there is a problem with deserialization
 		/// </exception>
+		/// <remarks>
+		/// Deserialization with default options is mainly for <see cref="OrientedVertex"/> and <see cref="OrientedEdge"/>. <br />
+		/// If you want to Deserialize your own type of Vertex and edge, you might want to use <see cref="DeserializeFromJson(string, JsonSerializerOptions)"/> method,
+		/// And provide your own <see cref="JsonSerializerOptions"/> with your own converters <br />
+		/// (for graph converter you can use <see cref="OrientedGraphConverter{TVertex, TEdge}"/>) and for vertexName <see cref="VertexNameConverter"/>. <br />"/>
+		/// </remarks>
 		public static OrientedGraph<TVertex, TEdge> DeserializeFromJson(string jsonString)
 			=> DeserializeFromJson(jsonString, new JsonSerializerOptions()
 			{
@@ -653,10 +677,16 @@ namespace GraphLibrary.Graphs
 					new VertexNameConverter()
 				}
 			});
+
 		/// <inheritdoc/>
 		/// <exception cref="DeserializationException">
 		/// exception thrown when there is a problem with deserialization
 		/// </exception>
+		/// <remarks>
+		/// Intended for use with different types of vertex and edge <br />
+		/// You need to provide your own <see cref="JsonSerializerOptions"/> with your own converters <br />
+		/// (for graph converter you can use <see cref="OrientedGraphConverter{TVertex, TEdge}"/>) and for vertexName <see cref="VertexNameConverter"/>. <br />"/>
+		/// </remarks>
 		public static OrientedGraph<TVertex, TEdge> DeserializeFromJson(string jsonString, JsonSerializerOptions options)
 		{
 			try{

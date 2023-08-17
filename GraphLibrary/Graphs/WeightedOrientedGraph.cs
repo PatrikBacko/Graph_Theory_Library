@@ -11,6 +11,7 @@ using System.Data;
 using System.Diagnostics;
 using GraphLibrary.Graphs.JsonConverters;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using GraphLibrary.Graphs.Exceptions;
 
 namespace GraphLibrary.Graphs
@@ -193,7 +194,17 @@ namespace GraphLibrary.Graphs
 		#endregion
 
 		#region JsonSaveAndSerializationMethods
-		/// <inheritdoc cref="OrientedGraph{TVertex, TEdge}.SerializeToJson()"/>
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.SerializeToJson()"/>
+		/// <exception cref="SerializationException">
+		/// Exception thrown when serialization fails
+		/// </exception>
+		/// <remarks>
+		/// Intended to be used with <see cref="WeightedOrientedVertex{TWeight}"/> and <see cref="WeightedOrientedEdge{TWeight}"/>
+		/// With different types of vertex and edge you might need to use <see cref="SerializeToJson(JsonSerializerOptions)"/>
+		/// with custom <see cref="JsonSerializerOptions"/> with custom <see cref="JsonConverter"/>s <br />
+		/// For graph you can use <see cref="WeightedOrientedGraphConverter{TVertex, TEdge, TWeight}"/> <br />
+		/// For VertexName you can use <see cref="VertexNameConverter"/> <br />
+		/// </remarks>
 		public override string SerializeToJson()
 			=> SerializeToJson(new JsonSerializerOptions()
 				{ 
@@ -206,7 +217,16 @@ namespace GraphLibrary.Graphs
 				}
 			);
 
-		/// <inheritdoc cref="OrientedGraph{TVertex, TEdge}.SerializeToJson(JsonSerializerOptions)"/>
+		/// <inheritdoc cref="IOrientedGraph{TVertex, TEdge}.SerializeToJson(JsonSerializerOptions)"/>
+		/// <exception cref="SerializationException">
+		/// Exception thrown when serialization fails
+		/// </exception>
+		/// <remarks>
+		/// Intended for use with different types of vertex and edge <br />
+		/// You need to provide custom <see cref="JsonSerializerOptions"/> with custom <see cref="JsonConverter"/>s <br />
+		/// For graph you can use <see cref="WeightedOrientedGraphConverter{TVertex, TEdge, TWeight}"/> <br />
+		/// For VertexName you can use <see cref="VertexNameConverter"/> <br />
+		/// </remarks>
 		public override string SerializeToJson(JsonSerializerOptions options)
 		{
 			try
@@ -224,12 +244,26 @@ namespace GraphLibrary.Graphs
 		#region JsonLoadAndDeserializationMethods
 
 		/// <inheritdoc cref="IWeightedOrientedGraph{TVertex, TEdge, TWeight}.LoadFromJson(string)"/>
-		/// <inheritdoc cref="OrientedGraph{TVertex, TEdge}.LoadFromJson(string)"/>
+		/// <exception cref="DeserializationException">
+		/// exception thrown when there is a problem with deserialization
+		/// </exception>
+		/// <remarks>
+		/// With different types of TVertex and TEdge you might need to load string with <see cref="File.ReadAllText(string)"/>
+		/// and then deserialize it with <see cref="DeserializeFromJson(string, JsonSerializerOptions)"/> <br />
+		/// </remarks>
 		public static new WeightedOrientedGraph<TVertex, TEdge, TWeight> LoadFromJson(string Path)
 			=> DeserializeFromJson(File.ReadAllText(Path));
 
 		/// <inheritdoc cref="IWeightedOrientedGraph{TVertex, TEdge, TWeight}.DeserializeFromJson(string)"/>
-		/// <inheritdoc cref="OrientedGraph{TVertex, TEdge}.DeserializeFromJson(string)"/>
+		/// <exception cref="DeserializationException">
+		/// exception thrown when there is a problem with deserialization
+		/// </exception>
+		/// <remarks>
+		/// Deserialization with default options is mainly for <see cref="WeightedOrientedVertex{TWeight}"/> and <see cref="WeightedOrientedEdge{TWeight}"/>. <br />
+		/// If you want to Deserialize your own type of Vertex and edge, you might want to use <see cref="DeserializeFromJson(string, JsonSerializerOptions)"/> method,
+		/// And provide your own <see cref="JsonSerializerOptions"/> with your own converters <br />
+		/// (for graph converter you can use <see cref="WeightedOrientedGraphConverter{TVertex, TEdge, TWeight}"/>) and for vertexName <see cref="VertexNameConverter"/>. <br />"/>
+		/// </remarks>
 		public new static WeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString)
 			=> DeserializeFromJson(jsonString, new JsonSerializerOptions()
 				{
@@ -243,7 +277,11 @@ namespace GraphLibrary.Graphs
 				});
 
 		/// <inheritdoc cref="IWeightedOrientedGraph{TVertex, TEdge, TWeight}.DeserializeFromJson(string, JsonSerializerOptions)"/>
-		/// <inheritdoc cref="OrientedGraph{TVertex, TEdge}.DeserializeFromJson(string, JsonSerializerOptions)"/>
+		/// <remarks>
+		/// Intended for use with different types of vertex and edge <br />
+		/// You need to provide your own <see cref="JsonSerializerOptions"/> with your own converters <br />
+		/// (for graph converter you can use <see cref="WeightedOrientedGraphConverter{TVertex, TEdge, TWeight}"/>) and for vertexName <see cref="VertexNameConverter"/>. <br />"/>
+		/// </remarks>
 		public new static WeightedOrientedGraph<TVertex, TEdge, TWeight> DeserializeFromJson(string jsonString, JsonSerializerOptions options)
 		{
 			try
