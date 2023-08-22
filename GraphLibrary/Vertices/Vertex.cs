@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GraphLibrary.Vertices
 {
 	/// <summary>
-	/// Abstract class for vertices.
+	/// Abstract class representing vertices.
 	/// </summary>
 	public abstract class Vertex
 	{
@@ -18,7 +18,6 @@ namespace GraphLibrary.Vertices
 		internal bool IsInGraph { get; set; } = false;
 		/// <summary>
 		/// Name and identification of the vertex.
-		/// Type of name is <see cref="VertexName"/>.
 		/// </summary>
 		public VertexName Name { get; init; }
 

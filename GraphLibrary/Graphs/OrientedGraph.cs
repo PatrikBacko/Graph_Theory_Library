@@ -25,7 +25,7 @@ namespace GraphLibrary.Graphs
 		where TVertex : OrientedVertex
 		where TEdge : OrientedEdge
 	{
-		#region ProtectedFields
+		#region Fields and Properties
 		/// <summary>
 		/// Dictionary of vertices in the graph.
 		/// </summary>
@@ -177,7 +177,7 @@ namespace GraphLibrary.Graphs
 		/// Exception thrown when vertex with the given name does not exist in the graph
 		/// </exception>
 		/// <remarks>
-		/// Time complexity: O(number of edges)
+		/// Time complexity: O(number of vertices)
 		/// </remarks>
 		public virtual IEnumerable<TVertex> GetInAdjacentVertices(VertexName vertex)
 		{
@@ -211,7 +211,7 @@ namespace GraphLibrary.Graphs
 		/// Exception thrown when vertex with the given name does not exist in the graph
 		/// </exception>
 		/// <remarks>
-		/// Time complexity: O(number of edges)
+		/// Time complexity: O(number of vertices)
 		/// </remarks>
 		public virtual IEnumerable<TEdge> GetInEdges(VertexName vertex)
 		{
@@ -289,7 +289,7 @@ namespace GraphLibrary.Graphs
 		/// - when name of the given vertex is empty string
 		/// </exception>
 		/// <remarks>
-		/// If instance of the given vertex belongs to a different graph, <see cref="EdgeException"/> will be thrown <br />
+		/// If instance of the given vertex belongs to a different graph, <see cref="VertexException"/> will be thrown <br />
 		/// </remarks>
 		public virtual OrientedGraph<TVertex, TEdge> AddVertex(TVertex vertex)
 		{
@@ -322,7 +322,7 @@ namespace GraphLibrary.Graphs
 		/// <inheritdoc/>
 		/// <exception cref="EdgeException">
 		/// Exception thrown :
-		/// - whenedge with same end vertices already exists in the graph,
+		/// - when edge with same end vertices already exists in the graph,
 		/// - when instance of the given edge belongs to a different graph,
 		/// - when one of end vertices of the given edge does not exist in the graph
 		/// </exception>
@@ -378,6 +378,9 @@ namespace GraphLibrary.Graphs
 		/// <exception cref="VertexException">
 		/// Exception thrown when vertex with the given name does not exist in the graph
 		/// </exception>
+		/// <remarks>
+		/// time complexicity: O(number of vertices)
+		/// </remarks>
 		public virtual OrientedGraph<TVertex, TEdge> RemoveVertex(VertexName vertexName)
 		{
 			ContainsVertex(vertexName);
@@ -404,6 +407,9 @@ namespace GraphLibrary.Graphs
 		/// <exception cref="VertexException">
 		/// exception thrown when vertex does not exist in the graph
 		/// </exception>
+		/// <remarks>
+		/// time complexicity: O(number of vertices)
+		/// </remarks>
 		public virtual OrientedGraph<TVertex, TEdge> RemoveVertex(TVertex vertex)
 		{
 			if (!IsVertex(vertex))
@@ -434,8 +440,7 @@ namespace GraphLibrary.Graphs
 		public virtual OrientedGraph<TVertex, TEdge> RemoveVerticesWith(VertexPredicate<TVertex> vertexPredicate)
 		{
 			var vertices = GetVerticesWith(vertexPredicate);
-			foreach (var vertex in vertices)
-				RemoveVertex(vertex);
+			RemoveVertices(vertices);
 			return this;
 		}
 		#endregion
@@ -446,6 +451,9 @@ namespace GraphLibrary.Graphs
 		/// Exception thrown when edge between given vertices does not exist in the graph
 		/// or when one of the vertices does not exist in the graph
 		/// </exception>
+		/// <remarks>
+		/// Time complexity: O(1)
+		/// </remarks>
 		public virtual OrientedGraph<TVertex, TEdge> RemoveEdge(VertexName vertexOut, VertexName vertexIn)
 		{
 			try
@@ -470,6 +478,9 @@ namespace GraphLibrary.Graphs
 		/// Exception thrown when edge does not exist in the graph,
 		/// or one of the vertices of the edge does not exist in the graph
 		/// </exception>
+		/// <remarks>
+		/// Time complexity: O(1)
+		/// </remarks>
 		public virtual OrientedGraph<TVertex, TEdge> RemoveEdge(TEdge edge)
 		{
 			if (!IsEdge(edge))
@@ -500,8 +511,7 @@ namespace GraphLibrary.Graphs
 		public virtual OrientedGraph<TVertex, TEdge> RemoveEdgesWith(EdgePredicate<TEdge> edgePredicate)
 		{
 			var edges = GetEdgesWith(edgePredicate);
-			foreach (var edge in edges)
-				RemoveEdge(edge);
+			RemoveEdges(edges);
 			return this;
 		}
 		#endregion
@@ -596,6 +606,7 @@ namespace GraphLibrary.Graphs
 		/// Exception thrown when serialization fails
 		/// </exception>
 		/// <remarks>
+		/// Intended for <see cref="OrientedVertex"/> and <see cref="OrientedEdge"/> <br />
 		/// For different types of TVertex and TEdge you might need to create string with <see cref="SerializeToJson(JsonSerializerOptions)"/>
 		/// and then save it to file with <see cref="File.WriteAllText(string, string)"/> <br />
 		/// </remarks>
@@ -685,7 +696,7 @@ namespace GraphLibrary.Graphs
 		/// <remarks>
 		/// Intended for use with different types of vertex and edge <br />
 		/// You need to provide your own <see cref="JsonSerializerOptions"/> with your own converters <br />
-		/// (for graph converter you can use <see cref="OrientedGraphConverter{TVertex, TEdge}"/>) and for vertexName <see cref="VertexNameConverter"/>. <br />"/>
+		/// (for graph converter you can use <see cref="OrientedGraphConverter{TVertex, TEdge}"/> and for vertexName <see cref="VertexNameConverter"/>.) <br />"/>
 		/// </remarks>
 		public static OrientedGraph<TVertex, TEdge> DeserializeFromJson(string jsonString, JsonSerializerOptions options)
 		{

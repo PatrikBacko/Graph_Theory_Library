@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace GraphLibrary.Vertices
 {
 	/// <summary>
-	/// Struct for vertex name, contain only one field - "string Value". Used in Vertices and Edges.
+	/// Struct for vertex name, contain only one field - "string Value". Used in Library as ID for vertices.
 	/// </summary>
 	public struct VertexName
 	{
@@ -22,6 +22,15 @@ namespace GraphLibrary.Vertices
 		public VertexName(string value) {  Value = value; }
 
 		/// <summary>
+		/// Creates new instance of <see cref="OrientedVertex"/> with this as name. <br />
+		/// </summary>
+		/// <returns>a new instance of <see cref="OrientedVertex"/></returns>
+		public OrientedVertex ToOrientedVertex()
+		{
+			return new OrientedVertex(this);
+		}
+
+		/// <summary>
 		/// Creates new instance of <see cref="OrientedEdge"/> with this as vertexOut and vertexIn as vertexIn. <br />
 		/// </summary>
 		/// <param name="vertexIn"> Name of Vertex into which new edge ends. </param>
@@ -31,11 +40,15 @@ namespace GraphLibrary.Vertices
 		}
 
 		/// <summary>
-		/// Creates new instance of <see cref="OrientedVertex"/> with this as name. <br />
+		/// Creates new instance of <see cref="WeightedOrientedVertex{TWeight}"/> with this as name. <br />
 		/// </summary>
-		/// <returns>a new instance of <see cref="OrientedVertex"/></returns>
-		public OrientedVertex ToOrientedVertex(){
-			return new OrientedVertex(this);
+		/// <typeparam name="TWeight">Weight type</typeparam>
+		/// <param name="weight">weight value of the new Vertex</param>
+		/// <returns>a new instance of <see cref="WeightedOrientedVertex{TWeight}"/></returns>
+		public WeightedOrientedVertex<TWeight> ToWeightedOrientedVertex<TWeight>(TWeight weight)
+			where TWeight : INumber<TWeight>
+		{
+			return new WeightedOrientedVertex<TWeight>(this, weight);
 		}
 
 		/// <summary>
@@ -48,17 +61,6 @@ namespace GraphLibrary.Vertices
 		public WeightedOrientedEdge<TWeight> ToWeightedOrientedEdge<TWeight>(VertexName vertexIn, TWeight weight) 
 			where TWeight : INumber<TWeight>{
 			return new WeightedOrientedEdge<TWeight>(this, vertexIn, weight);
-		}
-
-		/// <summary>
-		/// Creates new instance of <see cref="WeightedOrientedVertex{TWeight}"/> with this as name. <br />
-		/// </summary>
-		/// <typeparam name="TWeight">Weight type</typeparam>
-		/// <param name="weight">weight value of the new Vertex</param>
-		/// <returns>a new instance of <see cref="WeightedOrientedVertex{TWeight}"/></returns>
-		public WeightedOrientedVertex<TWeight> ToWeightedOrientedVertex<TWeight>(TWeight weight) 
-			where TWeight : INumber<TWeight>{
-			return new WeightedOrientedVertex<TWeight>(this, weight);
 		}
 
 		/// <summary>

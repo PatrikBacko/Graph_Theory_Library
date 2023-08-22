@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GraphLibrary.Graphs.Exceptions
 {
+	/// <summary>
+	/// Exception for problems with vertices in a graph. (e.g. vertex not found ...)
+	/// </summary>
 	public class VertexException : Exception
 	{
 		public VertexException() : base() { }

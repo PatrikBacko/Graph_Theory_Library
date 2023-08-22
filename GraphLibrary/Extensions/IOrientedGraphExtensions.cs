@@ -11,7 +11,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 {
 	/// <summary>
 	/// Extension methods for <see cref="IOrientedGraph{TVertex, TEdge}"/>
-	/// Idealy IWeightedOrientedGraph<OrientedVertex, OrientedEdge>
+	/// meant for IOrientedGraph<OrientedVertex, OrientedEdge>, could do some unexpected things with different types of vertices and edges and graphs
 	/// </summary>
 	public static class IOrientedGraphExtensions
 	{
@@ -42,7 +42,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 		}
 
 		/// <summary>
-		/// Extension method to add vertices to a graph only with <see cref="IEnumerable{ValueTuple{VertexName, TWeight}}"/> with vertexNames <br />
+		/// Extension method to add vertices to a graph only with <see cref="IEnumerable{VertexName}"/> with vertexNames <br />
 		/// (Be Aware, it is possible it wont work as intented with different type of vertex than <see cref="OrientedVertex"/>)
 		/// </summary>
 		/// <typeparam name="TVertex">
@@ -74,8 +74,8 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 		#region AddEdgeMethods
 
 		/// <summary>
-		/// Extension method to add edge to graph only with names of source and dest vertices <br />
-		/// (Be Aware, it is possible it wont work as intented with different type of edge than <see cref="OrientedEdge"/>)
+		/// Extension method to add edge to graph only with names of source and destination vertices <br />
+		/// (Be Aware, it is possible it wont work as intended with different type of edge than <see cref="OrientedEdge"/>)
 		/// </summary>
 		/// <typeparam name="TVertex">
 		/// Type of vertex. Must be inherited from <see cref="OrientedVertex"/>
@@ -197,7 +197,7 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 
 		/// <summary>
 		/// Extension method to reverse edges in graph with given <see cref="IEnumerable{TEdge}"/> of edges to be reversed <br />
-		/// (Be Aware, it is possible it wont work as intented with different type of edge than <see cref="OrientedEdge"/>)
+		/// (Be Aware, it is possible it will not work as intended with different type of edge than <see cref="OrientedEdge"/>)
 		/// </summary>
 		/// <typeparam name="TVertex">
 		/// Type of vertex. Must be inherited from <see cref="OrientedVertex"/>
@@ -253,8 +253,8 @@ namespace GraphLibrary.Extensions.IOrientedGraphExtensions
 		}
 
 		/// <summary>
-		/// Gets new instance of graph with reversed edges
-		/// (Be Aware, it is possible it wont work as intented with different type of edge than <see cref="OrientedEdge"/>
+		/// Gets new instance of graph with reversed edges <br />
+		/// (Be Aware, it is possible it will not work as intended with different type of edge than <see cref="OrientedEdge"/>
 		/// and different type of graph than <see cref="IOrientedGraph{TVertex, TEdge}"/>)
 		/// </summary>
 		/// <typeparam name="TVertex">

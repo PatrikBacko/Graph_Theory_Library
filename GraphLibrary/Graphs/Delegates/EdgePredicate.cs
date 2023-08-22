@@ -19,5 +19,6 @@ namespace GraphLibrary.Graphs.Delegates
     /// <returns>
     /// bool value, which is true if TEdge satisfies some condition, false otherwise.
     /// </returns>
-    public delegate bool EdgePredicate<TEdge>(TEdge edge) where TEdge : Edge;
+    public delegate bool EdgePredicate<TEdge>(TEdge edge) 
+        where TEdge : Edge;
 }

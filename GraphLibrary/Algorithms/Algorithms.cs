@@ -25,7 +25,7 @@ namespace GraphLibrary.Algorithms
 		/// When algorithm goes through an edge, edgeAction is called on it. 
 		/// (When the end of Edge is a vertex which was already visited, EdgeAction will not be performed on that edge)
 		/// </summary>
-		/// <typeparam name="TVertex">
+		/// <typeparam name="TVertex"> 
 		/// Type of Vertex in the Graph. <br />
 		/// </typeparam>
 		/// <typeparam name="TEdge">
@@ -217,8 +217,8 @@ namespace GraphLibrary.Algorithms
 		/// If there are vertices that are not connected to the sourceVertex by a path, they will not be visited. <br />
 		/// When vertex is opened, vertexActionOpened is called on it. <br />
 		/// When vertex is closed, vertexActionClosed is called on it. <br />
-		/// Every time before algorithm goes into a vertex, even if it was already visited, beforeVisitedCheckAction is called on it. <br />
-		/// but if it is opened or closed, algorithm wont call dfs on it´s children. <br />
+		/// Every time before algorithm goes into a vertex, even if it was already visited, vertexActionEveryTime is called on it. <br />
+		/// but if it is opened or closed, algorithm will not call dfs on its children. <br />
 		/// When algorithm goes through an edge, edgeAction is called on it.
 		/// (When the end of Edge is a vertex which was already visited, EdgeAction will be performed anyways) <br />
 		/// </summary>
@@ -306,13 +306,13 @@ namespace GraphLibrary.Algorithms
 		/// </param>
 		static private void DfsRecursion<TVertex, TEdge>
 		(IOrientedGraph<TVertex, TEdge> graph, VertexName sourceVertex, VertexAction<TVertex> vertexActionOpened,
-		VertexAction<TVertex> vertexActionClosed, VertexAction<TVertex> beforeVisitedCheckAction,EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState> visited)
+		VertexAction<TVertex> vertexActionClosed, VertexAction<TVertex> vertexActionEveryTime,EdgeAction<TEdge> edgeAction, Dictionary<VertexName, VertexState> visited)
 			where TVertex : OrientedVertex
 			where TEdge : OrientedEdge
 		{
 			var sourceGraphVertex = graph.GetVertex(sourceVertex);
 
-			beforeVisitedCheckAction(sourceGraphVertex);
+			vertexActionEveryTime(sourceGraphVertex);
 			if (visited.ContainsKey(sourceVertex)) return;
 
 			vertexActionOpened(sourceGraphVertex);
@@ -326,7 +326,7 @@ namespace GraphLibrary.Algorithms
 					vertex.Name, 
 					vertexActionOpened, 
 					vertexActionClosed, 
-					beforeVisitedCheckAction, 
+					vertexActionEveryTime, 
 					edgeAction, 
 					visited);
 			}
@@ -387,7 +387,7 @@ namespace GraphLibrary.Algorithms
 		/// Type of Edge in the Graph.
 		/// </typeparam>
 		/// <param name="graph">
-		/// Grpah on which algorithm is performed.
+		/// Graph on which algorithm is performed.
 		/// </param>
 		/// <returns>
 		/// bool value indicating if a Graph contains Eurelian Cycle.

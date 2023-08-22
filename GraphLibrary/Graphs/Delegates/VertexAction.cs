@@ -16,5 +16,6 @@ namespace GraphLibrary.Graphs.Delegates
     /// <param name="vertex">
     /// TVertex on which action is performed.
     /// </param>
-    public delegate void VertexAction<TVertex>(TVertex vertex) where TVertex : Vertex;
+    public delegate void VertexAction<TVertex>(TVertex vertex) 
+        where TVertex : Vertex;
 }

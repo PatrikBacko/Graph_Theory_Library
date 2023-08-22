@@ -32,7 +32,9 @@ namespace GraphLibrary.Vertices
 		/// Changes weight of the vertex, but weight type must be the same as the previous one.
 		/// </summary>
 		/// <param name="weight"> value to which weight will be changed </param>
-		/// <returns> this </returns>
+		/// <returns>
+		/// Itself with changed weight
+		/// </returns>
 		virtual public WeightedOrientedVertex<TWeight> ChangeWeight(TWeight weight)
 		{
 			Weight = weight;

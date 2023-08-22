@@ -13,7 +13,8 @@ namespace GraphLibrary.Extensions.IWeightedOrientedGraphExtensions
 {
 	/// <summary>
 	/// Extension methods for <see cref="IWeightedOrientedGraph{TVertex, TEdge, TWeight}"/> <br />
-	/// Idealy IWeightedOrientedGraph<WeightedOrientedVertex<TWeight>, WeightedOrientedEdge<TWeight>, TWeight>
+	/// meant for IWeightedOrientedGraph<WeightedOrientedVertex<TWeight>, IWeightedOrientedEdge<TWeight>, TWeight>,
+	/// could do some unexpected things with different types of vertices and edges and graphs
 	/// </summary>
 	public static class IWeightedOrientedGraphExtensions
 	{
@@ -21,7 +22,7 @@ namespace GraphLibrary.Extensions.IWeightedOrientedGraphExtensions
 
 		/// <summary>
 		/// Extension method to add vertex to graph only with name and weight <br />
-		/// (Be Aware, it is possible it wont work as intented with different type of vertex than <see cref="WeightedOrientedVertex{TWeight}"/>)
+		/// (Be Aware, it is possible it will not work as intended with different type of vertex than <see cref="WeightedOrientedVertex{TWeight}"/>)
 		/// </summary>
 		/// <typeparam name="TVertex">
 		/// Type of vertex. Must be inherited from <see cref="WeightedOrientedVertex{TWeight}"/>
@@ -57,7 +58,7 @@ namespace GraphLibrary.Extensions.IWeightedOrientedGraphExtensions
 
 		/// <summary>
 		/// Extension method to add vertices to a graph only with <see cref="IEnumerable{ValueTuple{VertexName, TWeight}}"/> with vertexNames and weights <br />
-		/// (Be Aware, it is possible it wont work as intented with different type of vertex than <see cref="WeightedOrientedVertex{TWeight}"/>)
+		/// (Be Aware, it is possible it wont will not as intended with different type of vertex than <see cref="WeightedOrientedVertex{TWeight}"/>)
 		/// </summary>
 		/// <typeparam name="TVertex">
 		/// Type of vertex. Must be inherited from <see cref="WeightedOrientedVertex{TWeight}"/>

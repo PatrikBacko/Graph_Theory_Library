@@ -19,5 +19,6 @@ namespace GraphLibrary.Graphs.Delegates
     /// <returns>
     /// bool value, which is true if TVertex satisfies some condition, false otherwise.
     /// </returns>
-    public delegate bool VertexPredicate<TVertex>(TVertex vertex) where TVertex : Vertex;
+    public delegate bool VertexPredicate<TVertex>(TVertex vertex) 
+        where TVertex : Vertex;
 }

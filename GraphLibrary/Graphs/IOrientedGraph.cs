@@ -43,10 +43,10 @@ namespace GraphLibrary.Graphs
 		/// Gets the edge with the given name. <br />
 		/// </summary>
 		/// <param name="vertexOut">
-		/// <see cref="VertexName"/> of the vertex that is the source of the edge to be returned"/>
+		/// <see cref="VertexName"/> of the vertex that is the source of the edge to be returned
 		/// </param>
 		/// <param name="vertexIn">
-		/// <see cref="VertexName"/> of the vertex that is the destination of the edge to be returned"/>"/>
+		/// <see cref="VertexName"/> of the vertex that is the destination of the edge to be returned
 		/// </param>
 		/// <returns>
 		/// TEgde with the given vertices as source and destination
@@ -65,11 +65,12 @@ namespace GraphLibrary.Graphs
 		/// bool indicating whether the graph contains vertex with the given name
 		/// </returns>
 		bool IsVertex(VertexName vertexName);
+
 		/// <summary>
 		/// Returns true if the graph contains the given vertex and false otherwise <br />
 		/// </summary>
 		/// <param name="vertex">
-		/// <see cref="TVertex"/> to be checked"/>"/>
+		/// <see cref="TVertex"/> to be checked
 		/// </param>
 		/// <returns>
 		/// bool indicating whether the graph contains the given vertex
@@ -91,6 +92,7 @@ namespace GraphLibrary.Graphs
 		/// bool indicating whether the graph contains edge with the given vertices as source and destination
 		/// </returns>
 		bool IsEdge(VertexName vertexOut, VertexName vertexIn);
+
 		/// <summary>
 		/// Returns true if the graph contains the given edge and false otherwise <br />
 		/// </summary>
@@ -111,6 +113,7 @@ namespace GraphLibrary.Graphs
 		/// <see cref="IEnumerable{TVertex}"/> of all (TVertex) vertices in graph 
 		/// </returns>
 		IEnumerable<TVertex> GetVertices();
+
 		/// <summary>
 		/// Gets all vertices in the graph that satisfy the given predicate. <br />
 		/// </summary>
@@ -407,7 +410,6 @@ namespace GraphLibrary.Graphs
 		static abstract IOrientedGraph<TVertex, TEdge> Create(IEnumerable<TVertex> vertices, IEnumerable<TEdge> edges);
 		/// <summary>
 		/// Removes all vertices and edges from the graph. <br />
-		/// Time complexity: O(1)
 		/// </summary>
 		/// <returns>
 		/// itself after clearing
@@ -459,7 +461,7 @@ namespace GraphLibrary.Graphs
 		/// <see cref="EdgePredicate{TEdge}"/> that decides which edges will be affected by edgeAction
 		/// </param>
 		/// <param name="edgeAction">
-		/// <see cref="EdgeAction{TEdge}"/> that is applied to requested edges"/>
+		/// <see cref="EdgeAction{TEdge}"/> that is applied to requested edges
 		/// </param>
 		/// <returns>
 		/// Itself after applying the action
