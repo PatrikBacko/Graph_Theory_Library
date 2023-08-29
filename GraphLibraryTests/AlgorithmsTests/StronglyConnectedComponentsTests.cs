@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GraphLibrary.Extensions.IOrientedGraphExtensions;
-using GraphLibrary.MaybeLater;
 
 namespace GraphLibraryTests.AlgorithmsTests
 {
